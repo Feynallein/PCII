@@ -20,6 +20,7 @@ public class Gfx extends JPanel {
     @Override
     public void paint(Graphics g){
         super.paint(g);
+        System.out.println(moto.getX());
         g.drawLine(0, HORIZON, WIDTH, HORIZON);
         g.drawLine(0, HEIGHT, WIDTH/2 - 50, HORIZON);
         g.drawLine(WIDTH, HEIGHT, WIDTH/2 + 50, HORIZON);

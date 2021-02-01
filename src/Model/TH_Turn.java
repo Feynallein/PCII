@@ -2,16 +2,14 @@ package Model;
 
 import Controller.KeyManager;
 
-import java.util.concurrent.TimeUnit;
-
-public class TH_Turn implements Runnable {
+public class TH_Turn extends Thread {
     private KeyManager kl;
 
     @Override
     public void run() {
-        while(true){
+        while(true) {
             try {
-                TimeUnit.MILLISECONDS.sleep(10);
+                sleep(TH_Game.GAME_SPEED);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

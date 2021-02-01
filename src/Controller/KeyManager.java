@@ -6,13 +6,11 @@ import View.Gfx;
 import java.awt.event.KeyEvent;
 
 public class KeyManager implements java.awt.event.KeyListener {
-    private Gfx gfx;
     private boolean[] keys;
     private boolean left = false, right = false;
     private Moto moto;
 
-    public KeyManager(Gfx gfx, Moto moto) {
-        this.gfx = gfx;
+    public KeyManager(Moto moto) {
         keys = new boolean[256];
         this.moto = moto;
     }
@@ -21,10 +19,6 @@ public class KeyManager implements java.awt.event.KeyListener {
         if(left) moto.moveLeft();
 
         if(right) moto.moveRight();
-
-        if(left || right){
-            gfx.repaint();
-        }
 
         left = keys[KeyEvent.VK_LEFT];
         right = keys[KeyEvent.VK_RIGHT];
