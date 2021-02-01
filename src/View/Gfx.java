@@ -63,6 +63,10 @@ public class Gfx extends JPanel {
             if(b[i]) g.setColor(Color.GRAY);
             else g.setColor(Color.DARK_GRAY);
             g.drawLine(0, HEIGHT-i, WIDTH, HEIGHT-i);
+            if(b[i]) {
+                g.setColor(Color.white);
+                g.drawLine(WIDTH / 2 - 10, HEIGHT - i, WIDTH / 2 + 10, HEIGHT - i);
+            }
         }
     }
 }
