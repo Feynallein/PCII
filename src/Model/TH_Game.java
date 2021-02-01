@@ -34,6 +34,10 @@ public class TH_Game extends Thread {
      */
     private TH_Turn turn;
 
+    private TH_Scrolling scroll;
+
+    private Road road;
+
     /**
      * Repaint the entire screen
      */
@@ -55,9 +59,12 @@ public class TH_Game extends Thread {
     public TH_Game() {
         // Defines game objects and utils
         this.moto = new Moto();
-        this.gfx = new Gfx(moto);
+        this.road = new Road();
+        this.gfx = new Gfx(moto, road);
         this.keyManager = new KeyManager(moto);
         this.turn = new TH_Turn(keyManager);
+        this.scroll = new TH_Scrolling(road);
+
 
         // Creating the game frame
         JFrame display = new JFrame();
@@ -71,5 +78,6 @@ public class TH_Game extends Thread {
 
         // Starting every threads
         turn.start();
+        scroll.start();
     }
 }

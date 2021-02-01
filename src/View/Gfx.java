@@ -1,6 +1,7 @@
 package View;
 
 import Model.Moto;
+import Model.Road;
 
 import javax.swing.*;
 import java.awt.*;
@@ -29,13 +30,16 @@ public class Gfx extends JPanel {
      */
     private Moto moto;
 
+    private Road road;
+
     /**
      * Constructor
      * @param moto the player
      */
-    public Gfx(Moto moto) {
+    public Gfx(Moto moto, Road road) {
         this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         this.moto = moto;
+        this.road = road;
     }
 
     /**
@@ -45,9 +49,20 @@ public class Gfx extends JPanel {
     @Override
     public void paint(Graphics g){
         super.paint(g);
+        drawRoad(g);
+        g.setColor(Color.BLACK);
         g.drawLine(0, HORIZON, WIDTH, HORIZON);
         g.drawLine(0, HEIGHT, WIDTH/2 - 50, HORIZON);
         g.drawLine(WIDTH, HEIGHT, WIDTH/2 + 50, HORIZON);
         g.drawRect(moto.getX(), Moto.Y, Moto.WIDTH, Moto.HEIGHT);
+    }
+
+    private void drawRoad(Graphics g){
+        boolean[] b = road.getPoints();
+        for(int i = 0; i < b.length; i++){
+            if(b[i]) g.setColor(Color.GRAY);
+            else g.setColor(Color.DARK_GRAY);
+            g.drawLine(0, HEIGHT-i, WIDTH, HEIGHT-i);
+        }
     }
 }
