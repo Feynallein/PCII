@@ -9,7 +9,7 @@ public class Road {
     public static final int SQUARE_SIZE = 60;
 
     public Road(){
-        this.points = new boolean[Gfx.HEIGHT - Gfx.HORIZON];
+        this.points = new boolean[Gfx.HEIGHT];
         for(int i = 0; i < points.length; i++){
             if(counter == SQUARE_SIZE) {
                 b = !b;
