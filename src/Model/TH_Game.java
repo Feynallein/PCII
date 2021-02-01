@@ -5,13 +5,38 @@ import View.Gfx;
 
 import javax.swing.*;
 
+/**
+ * Main thread
+ */
 public class TH_Game extends Thread {
+    /**
+     * Const : Every threads' speed
+     */
     public static final int GAME_SPEED = 10;
+
+    /**
+     * The graphics
+     */
     private Gfx gfx;
+
+    /**
+     * The player
+     */
     private Moto moto;
+
+    /**
+     * The game's key manager
+     */
     private KeyManager keyManager;
+
+    /**
+     * Player's movement
+     */
     private TH_Turn turn;
 
+    /**
+     * Repaint the entire screen
+     */
     @Override
     public void run() {
         while(true){
@@ -24,8 +49,11 @@ public class TH_Game extends Thread {
         }
     }
 
+    /**
+     * Constructor of this thread, create the windows, set up every elements and start other threads
+     */
     public TH_Game() {
-        // Defines variables aka game objects and utils
+        // Defines game objects and utils
         this.moto = new Moto();
         this.gfx = new Gfx(moto);
         this.keyManager = new KeyManager(moto);

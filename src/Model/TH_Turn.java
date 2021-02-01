@@ -2,9 +2,18 @@ package Model;
 
 import Controller.KeyManager;
 
+/**
+ * Player's movement thread
+ */
 public class TH_Turn extends Thread {
+    /**
+     * The key manager
+     */
     private KeyManager kl;
 
+    /**
+     * Update the key manager
+     */
     @Override
     public void run() {
         while(true) {
@@ -17,6 +26,10 @@ public class TH_Turn extends Thread {
         }
     }
 
+    /**
+     * Constructor
+     * @param kl the key manager
+     */
     public TH_Turn(KeyManager kl){
         this.kl = kl;
     }
