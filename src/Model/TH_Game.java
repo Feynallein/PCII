@@ -63,7 +63,7 @@ public class TH_Game extends Thread {
         this.gfx = new Gfx(moto, road);
         this.keyManager = new KeyManager(moto);
         this.turn = new TH_Turn(keyManager);
-        this.scroll = new TH_Scrolling(road);
+        this.scroll = new TH_Scrolling(road, moto);
 
 
         // Creating the game frame
