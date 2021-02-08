@@ -1,8 +1,8 @@
 package Model;
 
 public class TH_Scrolling extends Thread {
-    private Road road;
-    private Moto moto;
+    private final Road road;
+    private final Moto moto;
 
     @Override
     public void run(){

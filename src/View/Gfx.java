@@ -57,11 +57,30 @@ public class Gfx extends JPanel {
     @Override
     public void paint(Graphics g){
         super.paint(g);
-        if(Assets.bg2 != null) g.drawImage(Assets.bg2.getSubimage((Assets.bg2.getWidth()-WIDTH)/2 - moto.getOffset(), Assets.bg2.getHeight()/2, WIDTH, HORIZON), 0, 0, WIDTH, HORIZON, null);
+        drawBackground(g);
         drawRoad(g);
         g.setColor(Color.BLACK);
-        if(Assets.player != null) g.drawImage(Assets.player[moto.getState()][moto.getAnimation()], Moto.X, Moto.Y, Moto.WIDTH, Moto.HEIGHT, null);
+        g.drawImage(Assets.player[moto.getState()][moto.getAnimation()], Moto.X, Moto.Y, Moto.WIDTH, Moto.HEIGHT, null);
         g.drawLine(WIDTH/2, 0, WIDTH/2, HEIGHT);
+    }
+
+    private void drawBackground(Graphics g){
+        // If the image is over on the left
+        if(moto.getOffset() < 0){
+            int offset = Math.abs(moto.getOffset()) % Assets.bg.getWidth();
+            g.drawImage(Assets.bg.getSubimage(0, 0, WIDTH, HORIZON), offset, 0, WIDTH, HORIZON, null);
+            g.drawImage(Assets.bg.getSubimage(Assets.bg.getWidth() - offset, 0, offset, HORIZON), 0, 0, offset, HORIZON, null);
+        }
+
+        // If the image is over on the right
+        else if(moto.getOffset() + WIDTH > Assets.bg.getWidth()){
+            int offset = ((moto.getOffset() + WIDTH) - Assets.bg.getWidth()) % Assets.bg.getWidth();
+            g.drawImage(Assets.bg.getSubimage(Assets.bg.getWidth() - (WIDTH - offset), 0, WIDTH - offset, HORIZON), 0, 0, WIDTH - offset, HORIZON, null);
+            g.drawImage(Assets.bg.getSubimage(0, 0, offset, HORIZON), WIDTH - offset, 0, offset, HORIZON, null);
+        }
+
+        // Default case
+        else g.drawImage(Assets.bg.getSubimage(moto.getOffset(), 0, WIDTH, HORIZON), 0, 0, WIDTH, HORIZON, null);
     }
 
     private void drawRoad(Graphics g){
@@ -74,7 +93,8 @@ public class Gfx extends JPanel {
             // y calculation
             double coeff = 2d*(HORIZON - HEIGHT)/(WIDTH - ROAD_FINAL_WIDTH);
             int y = (int) (coeff * i + HEIGHT);
-            g.drawLine(moto.getOffset() + i, y, (WIDTH - i) + moto.getOffset(), y);
+            int offset = -(moto.getOffset() - (Assets.bg.getWidth() - WIDTH)/2);
+            g.drawLine(offset + i, y, (WIDTH - i) + offset, y);
         }
     }
 }

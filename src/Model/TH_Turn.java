@@ -9,7 +9,7 @@ public class TH_Turn extends Thread {
     /**
      * The key manager
      */
-    private KeyManager kl;
+    private final KeyManager kl;
 
     /**
      * Update the key manager
@@ -18,7 +18,7 @@ public class TH_Turn extends Thread {
     public void run() {
         while(true) {
             try {
-                sleep(TH_Game.FRAME_PER_SECONDS/6);
+                sleep(TH_Game.GAME_SPEED);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

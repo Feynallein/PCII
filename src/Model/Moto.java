@@ -1,5 +1,6 @@
 package Model;
 
+import View.Assets;
 import View.Gfx;
 
 /**
@@ -52,21 +53,21 @@ public class Moto {
      */
     public Moto() {
         speed = 0;
-        offset = 0;
+        offset = (Assets.bg.getWidth() - Gfx.WIDTH)/2;
     }
 
     /**
      * Move the player to the left
      */
     public void moveLeft(){
-        if(offset < Gfx.WIDTH/2) offset += MOVE_SPEED;
+        /*if(offset < Gfx.WIDTH/2) */offset -= MOVE_SPEED;
     }
 
     /**
      * Move the player to the right
      */
     public void moveRight(){
-        if(offset > - Gfx.WIDTH/2) offset -= MOVE_SPEED;
+        /*if(offset > - Gfx.WIDTH/2) */offset += MOVE_SPEED;
     }
 
     public void accelerate(){

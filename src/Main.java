@@ -1,4 +1,4 @@
-import Model.TH_Game;
+import Model.*;
 
 /**
  * Main class

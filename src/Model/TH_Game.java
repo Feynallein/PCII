@@ -13,7 +13,7 @@ public class TH_Game extends Thread {
     /**
      * Const : Every threads' speed
      */
-    public static final int FRAME_PER_SECONDS = 60;
+    public static final int GAME_SPEED = 10;
 
     /**
      * The graphics
@@ -50,26 +50,13 @@ public class TH_Game extends Thread {
      */
     @Override
     public void run() {
-        double timePerUpdate = 1000000000f / FRAME_PER_SECONDS;
-        double delta = 0;
-        long now;
-        long lastTime = System.nanoTime();
-        long timer = 0;
-
-        while (true) {
-            now = System.nanoTime();
-            timer += now - lastTime;
-            delta += timer / timePerUpdate;
-            lastTime = now;
-
-            if (delta >= 1) {
-                gfx.repaint();
-                delta--;
+        while(true) {
+            try {
+                sleep(GAME_SPEED);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-
-            if (timer >= 1000000000) {
-                timer = 0;
-            }
+            gfx.repaint();
         }
     }
 
@@ -77,6 +64,9 @@ public class TH_Game extends Thread {
      * Constructor of this thread, create the windows, set up every elements and start other threads
      */
     public TH_Game() {
+        // Init the sprites
+        Assets.init();
+
         // Defines game objects and utils
         this.moto = new Moto();
         this.road = new Road();
@@ -95,9 +85,6 @@ public class TH_Game extends Thread {
         display.pack();
         display.setVisible(true);
         display.addKeyListener(keyManager);
-
-        // Init the sprites
-        Assets.init();
 
         // Starting every threads
         turn.start();
