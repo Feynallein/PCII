@@ -9,7 +9,7 @@ public class Road {
     public static final int SQUARE_SIZE = 60;
 
     public Road(){
-        this.points = new boolean[Gfx.HEIGHT];
+        this.points = new boolean[(Gfx.WIDTH - Gfx.ROAD_FINAL_WIDTH)/2];
         for(int i = 0; i < points.length; i++){
             if(counter == SQUARE_SIZE) {
                 b = !b;
@@ -21,7 +21,7 @@ public class Road {
     }
 
     public void update(){
-        if (points.length - 1 >= 0) System.arraycopy(points, 1, points, 0, points.length - 1);
+        if(points.length - 2 >= 0) System.arraycopy(points, 2, points, 0, points.length - 2);
         if(counter == SQUARE_SIZE){
             b = !b;
             counter = 1;

@@ -6,14 +6,14 @@ public class TH_Scrolling extends Thread {
 
     @Override
     public void run(){
-        while(true){
-            System.out.println(moto.getSpeed());
+        while(true) {
             try {
-                sleep((long) ((700/(1 + (moto.getSpeed()* 2L))) + 1));
+                sleep(moto.calculateSleep());
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            if(moto.getSpeed() > 0) road.update();
+            if (moto.getSpeed() > 0) road.update();
+            //System.out.println(moto.getSpeed());
         }
     }
 

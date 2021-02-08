@@ -18,7 +18,7 @@ public class TH_Turn extends Thread {
     public void run() {
         while(true) {
             try {
-                sleep(TH_Game.GAME_SPEED);
+                sleep(TH_Game.FRAME_PER_SECONDS/6);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

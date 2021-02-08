@@ -28,13 +28,17 @@ public class Gfx extends JPanel {
     /**
      * The player
      */
-    private Moto moto;
+    private final Moto moto;
 
-    private Road road;
+    /**
+     * The road
+     */
+    private final Road road;
 
-    public static final int ROAD_FINAL_WIDTH = 100;
-
-    private int lastX = 0, lastY = HEIGHT;
+    /**
+     * The road's width at the horizon
+     */
+    public static final int ROAD_FINAL_WIDTH = 50;
 
     /**
      * Constructor
@@ -53,32 +57,24 @@ public class Gfx extends JPanel {
     @Override
     public void paint(Graphics g){
         super.paint(g);
+        if(Assets.bg2 != null) g.drawImage(Assets.bg2.getSubimage((Assets.bg2.getWidth()-WIDTH)/2 - moto.getOffset(), Assets.bg2.getHeight()/2, WIDTH, HORIZON), 0, 0, WIDTH, HORIZON, null);
         drawRoad(g);
         g.setColor(Color.BLACK);
-        g.fillRect(0, 0, WIDTH, HORIZON);
-        g.drawRect(moto.getX(), Moto.Y, Moto.WIDTH, Moto.HEIGHT);
+        if(Assets.player != null) g.drawImage(Assets.player[moto.getState()][moto.getAnimation()], Moto.X, Moto.Y, Moto.WIDTH, Moto.HEIGHT, null);
+        g.drawLine(WIDTH/2, 0, WIDTH/2, HEIGHT);
     }
 
     private void drawRoad(Graphics g){
         boolean[] b = road.getPoints();
         for(int i = 0; i < b.length; i++){
             // Color selection
-            if(b[i]) g.setColor(Color.GRAY);
-            else g.setColor(Color.DARK_GRAY);
+            if(b[i]) g.setColor(new Color(45, 45, 45));
+            else g.setColor(new Color(40, 40, 40));
 
-            // Offset calculation
-            int x = i - HEIGHT/6;
-            //float coeff = (float) - (2*HORIZON - HEIGHT*10/6)/(WIDTH + ROAD_FINAL_WIDTH);
-            float coeff = (float) -24/59;
-
-            int y = (int) (coeff * x) + HEIGHT*5/6;
-            if(i < HEIGHT/6) {
-                x = 0;
-                y = HEIGHT - i;
-            }
-            g.fillPolygon(new int[]{lastX, WIDTH - lastX, x, WIDTH - x}, new int[]{lastY, lastY, y, y}, 4);
-            lastX = x;
-            lastY = y;
+            // y calculation
+            double coeff = 2d*(HORIZON - HEIGHT)/(WIDTH - ROAD_FINAL_WIDTH);
+            int y = (int) (coeff * i + HEIGHT);
+            g.drawLine(moto.getOffset() + i, y, (WIDTH - i) + moto.getOffset(), y);
         }
     }
 }

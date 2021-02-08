@@ -1,6 +1,7 @@
 package Model;
 
 import Controller.KeyManager;
+import View.Assets;
 import View.Gfx;
 
 import javax.swing.*;
@@ -12,44 +13,63 @@ public class TH_Game extends Thread {
     /**
      * Const : Every threads' speed
      */
-    public static final int GAME_SPEED = 10;
+    public static final int FRAME_PER_SECONDS = 60;
 
     /**
      * The graphics
      */
-    private Gfx gfx;
+    private final Gfx gfx;
 
     /**
      * The player
      */
-    private Moto moto;
+    private final Moto moto;
 
     /**
      * The game's key manager
      */
-    private KeyManager keyManager;
+    private final KeyManager keyManager;
 
     /**
      * Player's movement
      */
-    private TH_Turn turn;
+    private final TH_Turn turn;
 
-    private TH_Scrolling scroll;
+    /**
+     * The road and objects scrolling
+     */
+    private final TH_Scrolling scroll;
 
-    private Road road;
+    /**
+     * The road
+     */
+    private final Road road;
 
     /**
      * Repaint the entire screen
      */
     @Override
     public void run() {
-        while(true){
-            try {
-                sleep(GAME_SPEED);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+        double timePerUpdate = 1000000000f / FRAME_PER_SECONDS;
+        double delta = 0;
+        long now;
+        long lastTime = System.nanoTime();
+        long timer = 0;
+
+        while (true) {
+            now = System.nanoTime();
+            timer += now - lastTime;
+            delta += timer / timePerUpdate;
+            lastTime = now;
+
+            if (delta >= 1) {
+                gfx.repaint();
+                delta--;
             }
-            gfx.repaint();
+
+            if (timer >= 1000000000) {
+                timer = 0;
+            }
         }
     }
 
@@ -75,6 +95,9 @@ public class TH_Game extends Thread {
         display.pack();
         display.setVisible(true);
         display.addKeyListener(keyManager);
+
+        // Init the sprites
+        Assets.init();
 
         // Starting every threads
         turn.start();

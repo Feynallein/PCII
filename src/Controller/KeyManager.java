@@ -52,12 +52,12 @@ public class KeyManager implements java.awt.event.KeyListener {
      */
     public void update(){
         // Doing actions if correspondent key is pressed
-        if(up) moto.accelerate();
+        if(up)moto.accelerate();
         else if(down) moto.brake();
         else moto.decelerate();
 
-        if(left) moto.moveLeft();
-        if(right) moto.moveRight();
+        if(left && moto.getSpeed() > 0) moto.moveLeft();
+        if(right && moto.getSpeed() > 0) moto.moveRight();
 
         // Updating if the keys are being pressed
         left = keys[KeyEvent.VK_LEFT];
