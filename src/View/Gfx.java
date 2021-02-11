@@ -59,9 +59,7 @@ public class Gfx extends JPanel {
         super.paint(g);
         drawBackground(g);
         drawRoad(g);
-        g.setColor(Color.BLACK);
         g.drawImage(Assets.player[moto.getState()][moto.getAnimation()], Moto.X, Moto.Y, Moto.WIDTH, Moto.HEIGHT, null);
-        g.drawLine(WIDTH/2, 0, WIDTH/2, HEIGHT);
     }
 
     private void drawBackground(Graphics g){
@@ -74,7 +72,7 @@ public class Gfx extends JPanel {
 
         // If the image is over on the right
         else if(moto.getOffset() + WIDTH > Assets.bg.getWidth()){
-            int offset = ((moto.getOffset() + WIDTH) - Assets.bg.getWidth()) % Assets.bg.getWidth();
+            int offset = Math.abs(((moto.getOffset() + WIDTH) - Assets.bg.getWidth())) % (Assets.bg.getWidth() - WIDTH);
             g.drawImage(Assets.bg.getSubimage(Assets.bg.getWidth() - (WIDTH - offset), 0, WIDTH - offset, HORIZON), 0, 0, WIDTH - offset, HORIZON, null);
             g.drawImage(Assets.bg.getSubimage(0, 0, offset, HORIZON), WIDTH - offset, 0, offset, HORIZON, null);
         }
@@ -85,16 +83,16 @@ public class Gfx extends JPanel {
 
     private void drawRoad(Graphics g){
         boolean[] b = road.getPoints();
-        for(int i = 0; i < b.length; i++){
+        for(int x = 0; x < b.length; x++){
             // Color selection
-            if(b[i]) g.setColor(new Color(45, 45, 45));
+            if(b[x]) g.setColor(new Color(45, 45, 45));
             else g.setColor(new Color(40, 40, 40));
 
             // y calculation
             double coeff = 2d*(HORIZON - HEIGHT)/(WIDTH - ROAD_FINAL_WIDTH);
-            int y = (int) (coeff * i + HEIGHT);
+            int y = (int) (coeff * x + HEIGHT);
             int offset = -(moto.getOffset() - (Assets.bg.getWidth() - WIDTH)/2);
-            g.drawLine(offset + i, y, (WIDTH - i) + offset, y);
+            g.drawLine(offset + x, y, offset + (WIDTH - x), y);
         }
     }
 }
