@@ -5,6 +5,8 @@ import Model.Road;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.awt.image.RasterFormatException;
 
 /**
  * Class graphics
@@ -63,21 +65,28 @@ public class Gfx extends JPanel {
     }
 
     private void drawBackground(Graphics g){
-        // If the image is over on the left
-        if(moto.getOffset() < 0){
-            int offset = Math.abs(moto.getOffset()) % Assets.bg.getWidth();
-            g.drawImage(Assets.bg.getSubimage(0, 0, WIDTH, HORIZON), offset, 0, WIDTH, HORIZON, null);
-            g.drawImage(Assets.bg.getSubimage(Assets.bg.getWidth() - offset, 0, offset, HORIZON), 0, 0, offset, HORIZON, null);
+        // If it has to draw two images
+        if(Math.abs(moto.getOffset()) % Assets.bg.getWidth() != 0) {
+            // If the image is over on the left
+            if (moto.getOffset() < 0) {
+                int offset = Math.abs(moto.getOffset()) % Assets.bg.getWidth();
+                BufferedImage subImage = Assets.bg.getSubimage(0, 0, WIDTH, HORIZON);
+                g.drawImage(subImage, offset, 0, WIDTH, HORIZON, null);
+                subImage = Assets.bg.getSubimage(Assets.bg.getWidth() - offset, 0, offset, HORIZON);
+                g.drawImage(subImage, 0, 0, offset, HORIZON, null);
+            }
+
+            // If the image is over on the right
+            else if (moto.getOffset() + WIDTH > Assets.bg.getWidth()) {
+                int offset = (Math.abs(moto.getOffset() + WIDTH) - Assets.bg.getWidth()) % Assets.bg.getWidth();
+                BufferedImage subImage = Assets.bg.getSubimage(Assets.bg.getWidth() - WIDTH + offset, 0, WIDTH - offset, HORIZON);
+                g.drawImage(subImage, 0, 0, WIDTH - offset, HORIZON, null);
+                subImage = Assets.bg.getSubimage(0, 0, offset, HORIZON);
+                g.drawImage(subImage, WIDTH - offset, 0, offset, HORIZON, null);
+            }
         }
 
-        // If the image is over on the right
-        else if(moto.getOffset() + WIDTH > Assets.bg.getWidth()){
-            int offset = Math.abs(((moto.getOffset() + WIDTH) - Assets.bg.getWidth())) % (Assets.bg.getWidth() - WIDTH);
-            g.drawImage(Assets.bg.getSubimage(Assets.bg.getWidth() - (WIDTH - offset), 0, WIDTH - offset, HORIZON), 0, 0, WIDTH - offset, HORIZON, null);
-            g.drawImage(Assets.bg.getSubimage(0, 0, offset, HORIZON), WIDTH - offset, 0, offset, HORIZON, null);
-        }
-
-        // Default case
+        // Default case (1 image)
         else g.drawImage(Assets.bg.getSubimage(moto.getOffset(), 0, WIDTH, HORIZON), 0, 0, WIDTH, HORIZON, null);
     }
 

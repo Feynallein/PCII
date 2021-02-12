@@ -53,7 +53,7 @@ public class Moto {
      */
     public Moto() {
         speed = 0;
-        offset = (Assets.bg.getWidth() - Gfx.WIDTH)/2;
+        offset = 0;
     }
 
     /**
