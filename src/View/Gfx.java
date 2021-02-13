@@ -6,7 +6,6 @@ import Model.Road;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.awt.image.RasterFormatException;
 
 /**
  * Class graphics
@@ -91,7 +90,7 @@ public class Gfx extends JPanel {
     }
 
     private void drawRoad(Graphics g){
-        boolean[] b = road.getPoints();
+        boolean[] b = road.getStrip();
         for(int x = 0; x < b.length; x++){
             // Color selection
             if(b[x]) g.setColor(new Color(45, 45, 45));

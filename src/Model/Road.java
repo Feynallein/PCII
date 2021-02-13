@@ -2,35 +2,38 @@ package Model;
 
 import View.Gfx;
 
+import java.awt.*;
+
 public class Road {
-    private final boolean[] points;
+
+    private final Strip[] strip;
     private int counter = 1;
     boolean b = false;
     public static final int SQUARE_SIZE = 60;
 
     public Road(){
-        this.points = new boolean[(Gfx.WIDTH - Gfx.ROAD_FINAL_WIDTH)/2];
-        for(int i = 0; i < points.length; i++){
-            if(counter == SQUARE_SIZE) {
-                b = !b;
-                counter = 1;
-            }
-            points[i] = b;
-            counter++;
+        this.strip = new Strip[((Gfx.WIDTH - Gfx.ROAD_FINAL_WIDTH)/2)/SQUARE_SIZE];
+        Color c;
+        for(int i = 0; i < strip.length; i++){
+            if(b) c = new Color(45, 45, 45);
+            else c = new Color(40, 40, 40);
+            b = !b;
+            strip[i] = new Strip(new Strip.Position(), new Strip.Position(),
+                    new Strip.Position(), new Strip.Position(), c);
         }
     }
 
     public void update(){
-        if(points.length - 2 >= 0) System.arraycopy(points, 2, points, 0, points.length - 2);
+        if(strip.length - 2 >= 0) System.arraycopy(strip, 2, strip, 0, strip.length - 2);
         if(counter == SQUARE_SIZE){
             b = !b;
             counter = 1;
         }
-        points[points.length - 1] = b;
+        strip[strip.length - 1] = b;
         counter++;
     }
 
-    public boolean[] getPoints() {
-        return points;
+    public Strip[] getStrip() {
+        return strip;
     }
 }
