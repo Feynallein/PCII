@@ -90,17 +90,12 @@ public class Gfx extends JPanel {
     }
 
     private void drawRoad(Graphics g){
-        boolean[] b = road.getStrip();
-        for(int x = 0; x < b.length; x++){
-            // Color selection
-            if(b[x]) g.setColor(new Color(45, 45, 45));
-            else g.setColor(new Color(40, 40, 40));
-
-            // y calculation
-            double coeff = 2d*(HORIZON - HEIGHT)/(WIDTH - ROAD_FINAL_WIDTH);
-            int y = (int) (coeff * x + HEIGHT);
-            int offset = -(moto.getOffset() - (Assets.bg.getWidth() - WIDTH)/2);
-            g.drawLine(offset + x, y, offset + (WIDTH - x), y);
+        int maxY = HORIZON;
+        Road.Segment seg;
+        for(int i = 0; i < HORIZON; i++){
+            seg = road.road.get(i % road.road.size());
+            g.setColor(seg.getColor());
+            g.drawPolygon(seg.getX(), seg.getY(), 4);
         }
     }
 }
