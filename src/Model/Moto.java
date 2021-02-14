@@ -1,6 +1,5 @@
 package Model;
 
-import View.Assets;
 import View.Gfx;
 
 /**
@@ -35,9 +34,12 @@ public class Moto {
     private int state = 0;
 
     private int animation = 0;
+
     private int clock = 0;
 
     private int offset;
+
+    private int position;
 
     /**
      * The speed of the player
@@ -54,6 +56,7 @@ public class Moto {
     public Moto() {
         speed = 0;
         offset = 0;
+        position = 1;
     }
 
     /**
@@ -115,5 +118,14 @@ public class Moto {
 
     public int getAnimation(){
         return animation;
+    }
+
+    public int getPosition(){
+        return position;
+    }
+
+    public void addPosition(){
+        // Distance traveled
+        position += speed;
     }
 }

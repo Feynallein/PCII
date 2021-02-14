@@ -90,12 +90,12 @@ public class Gfx extends JPanel {
     }
 
     private void drawRoad(Graphics g){
-        int maxY = HORIZON;
         Road.Segment seg;
         for(int i = 0; i < HORIZON; i++){
-            seg = road.road.get(i % road.road.size());
+            seg = road.segments.get(i % road.segments.size());
             g.setColor(seg.getColor());
-            g.drawPolygon(seg.getX(), seg.getY(), 4);
+            if(seg.getP1() >= HORIZON && seg.getP2() <= HEIGHT)
+                g.fillPolygon(seg.getX(), seg.getY(),4);
         }
     }
 }

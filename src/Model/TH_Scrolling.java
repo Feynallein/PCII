@@ -12,7 +12,7 @@ public class TH_Scrolling extends Thread {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            //if (moto.getSpeed() > 0) road.update();
+            if (moto.getSpeed() > 0) road.update();
             //System.out.println(moto.getSpeed());
         }
     }

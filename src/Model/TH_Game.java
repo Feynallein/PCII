@@ -57,6 +57,7 @@ public class TH_Game extends Thread {
                 e.printStackTrace();
             }
             gfx.repaint();
+            moto.addPosition();
         }
     }
 
@@ -69,7 +70,7 @@ public class TH_Game extends Thread {
 
         // Defines game objects and utils
         this.moto = new Moto();
-        this.road = new Road();
+        this.road = new Road(moto);
         this.gfx = new Gfx(moto, road);
         this.keyManager = new KeyManager(moto);
         this.turn = new TH_Turn(keyManager);
