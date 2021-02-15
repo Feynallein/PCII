@@ -6,6 +6,8 @@ import Model.Road;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.Arrays;
+import java.util.Random;
 
 /**
  * Class graphics
@@ -53,14 +55,14 @@ public class Gfx extends JPanel {
     @Override
     public void paint(Graphics g){
         super.paint(g);
-        drawBackground(g);
         drawRoad(g);
+        //drawBackground(g);
         g.drawImage(Assets.player[moto.getState()][moto.getAnimation()], Moto.X, Moto.Y, Moto.WIDTH, Moto.HEIGHT, null);
     }
 
     private void drawBackground(Graphics g){
         // If it has to draw two images
-        if(Math.abs(moto.getOffset()) % Assets.bg.getWidth() != 0) {
+        if (Math.abs(moto.getOffset()) % Assets.bg.getWidth() != 0) {
             // If the image is over on the left
             if (moto.getOffset() < 0) {
                 int offset = Math.abs(moto.getOffset()) % Assets.bg.getWidth();
@@ -86,10 +88,10 @@ public class Gfx extends JPanel {
 
     private void drawRoad(Graphics g){
         Road.Segment seg;
-        for(int i = 0; i < HORIZON; i++){
-            seg = road.getSegment(i % road.segments.size());
+        for(int i = 0; i < road.getSegmentSize(); i++){
+            seg = road.getSegment(i);
             g.setColor(seg.getColor());
-            //if(seg.getP1() >= HORIZON && seg.getP2() <= HEIGHT)
+            //if(seg.getP2() >= HORIZON && seg.getP1() <= HEIGHT)
                 g.fillPolygon(seg.getX(), seg.getY(),4);
         }
     }

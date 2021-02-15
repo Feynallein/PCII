@@ -50,6 +50,10 @@ public class TH_Game extends Thread {
      */
     @Override
     public void run() {
+        // Starting every threads
+        turn.start();
+        scroll.start();
+
         while(true) {
             try {
                 sleep(GAME_SPEED);
@@ -70,7 +74,7 @@ public class TH_Game extends Thread {
 
         // Defines game objects and utils
         this.moto = new Moto();
-        this.road = new Road();
+        this.road = new Road(moto);
         this.gfx = new Gfx(moto, road);
         this.keyManager = new KeyManager(moto);
         this.turn = new TH_Turn(keyManager);
@@ -80,15 +84,11 @@ public class TH_Game extends Thread {
         // Creating the game frame
         JFrame display = new JFrame();
         display.setTitle("nom du jeu");
-        display.setResizable(false);
+        display.setResizable(true);
         display.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         display.add(gfx);
         display.pack();
         display.setVisible(true);
         display.addKeyListener(keyManager);
-
-        // Starting every threads
-        turn.start();
-        scroll.start();
     }
 }
