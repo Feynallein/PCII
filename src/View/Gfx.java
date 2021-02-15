@@ -37,11 +37,6 @@ public class Gfx extends JPanel {
     private final Road road;
 
     /**
-     * The road's width at the horizon
-     */
-    public static final int ROAD_FINAL_WIDTH = 50;
-
-    /**
      * Constructor
      * @param moto the player
      */
@@ -92,9 +87,9 @@ public class Gfx extends JPanel {
     private void drawRoad(Graphics g){
         Road.Segment seg;
         for(int i = 0; i < HORIZON; i++){
-            seg = road.segments.get(i % road.segments.size());
+            seg = road.getSegment(i % road.segments.size());
             g.setColor(seg.getColor());
-            if(seg.getP1() >= HORIZON && seg.getP2() <= HEIGHT)
+            //if(seg.getP1() >= HORIZON && seg.getP2() <= HEIGHT)
                 g.fillPolygon(seg.getX(), seg.getY(),4);
         }
     }
