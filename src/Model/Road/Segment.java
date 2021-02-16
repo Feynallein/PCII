@@ -33,26 +33,6 @@ public class Segment extends Elements {
     }
 
     /**
-     * Calculate the widths of this segment
-     */
-    protected void scale() {
-        width1 = (int) ((y1 - Gfx.HEIGHT) / coeff + Road.INITIAL_WIDTH);
-        width2 = (int) ((y2 - Gfx.HEIGHT) / coeff + Road.INITIAL_WIDTH);
-    }
-
-    /**
-     * Updating the position of this segment
-     */
-    public void update() {
-        // Incrementing the y
-        y1++;
-        y2++;
-
-        // Re-scaling to the new y
-        scale();
-    }
-
-    /**
      * Getter to color
      *
      * @return the color of this segment
