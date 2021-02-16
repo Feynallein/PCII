@@ -56,7 +56,7 @@ public class Gfx extends JPanel {
     public void paint(Graphics g){
         super.paint(g);
         drawRoad(g);
-        //drawBackground(g);
+        drawBackground(g);
         g.drawImage(Assets.player[moto.getState()][moto.getAnimation()], Moto.X, Moto.Y, Moto.WIDTH, Moto.HEIGHT, null);
     }
 
@@ -91,7 +91,7 @@ public class Gfx extends JPanel {
         for(int i = 0; i < road.getSegmentSize(); i++){
             seg = road.getSegment(i);
             g.setColor(seg.getColor());
-            //if(seg.getP2() >= HORIZON && seg.getP1() <= HEIGHT)
+            if(seg.getP1() >= HORIZON)
                 g.fillPolygon(seg.getX(), seg.getY(),4);
         }
     }
