@@ -1,6 +1,8 @@
-package Model;
+package Model.Threads;
 
 import Controller.KeyManager;
+import Model.Moto;
+import Model.Road.Road;
 import View.Assets;
 import View.Gfx;
 
@@ -54,7 +56,7 @@ public class TH_Game extends Thread {
         turn.start();
         scroll.start();
 
-        while(true) {
+        while (true) {
             try {
                 sleep(GAME_SPEED);
             } catch (InterruptedException e) {

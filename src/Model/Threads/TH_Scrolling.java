@@ -1,4 +1,7 @@
-package Model;
+package Model.Threads;
+
+import Model.Moto;
+import Model.Road.Road;
 
 /**
  * Thread : scroll the road
@@ -18,8 +21,8 @@ public class TH_Scrolling extends Thread {
      * The thread itself
      */
     @Override
-    public void run(){
-        while(true) {
+    public void run() {
+        while (true) {
             try {
                 // Updating time based on the player's speed
                 sleep(moto.calculateSleep());
@@ -34,10 +37,11 @@ public class TH_Scrolling extends Thread {
 
     /**
      * Constructor
+     *
      * @param road the road
      * @param moto the player
      */
-    public TH_Scrolling(Road road, Moto moto){
+    public TH_Scrolling(Road road, Moto moto) {
         this.road = road;
         this.moto = moto;
     }

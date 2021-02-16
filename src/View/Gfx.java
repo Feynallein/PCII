@@ -1,7 +1,8 @@
 package View;
 
 import Model.Moto;
-import Model.Road;
+import Model.Road.Road;
+import Model.Road.Segment;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,7 +26,7 @@ public class Gfx extends JPanel {
     /**
      * Const : horizon's line position
      */
-    public final static int HORIZON = HEIGHT/2;
+    public final static int HORIZON = HEIGHT / 2;
 
     /**
      * The player
@@ -39,6 +40,7 @@ public class Gfx extends JPanel {
 
     /**
      * Constructor
+     *
      * @param moto the player
      */
     public Gfx(Moto moto, Road road) {
@@ -49,10 +51,11 @@ public class Gfx extends JPanel {
 
     /**
      * Paint the different elements
+     *
      * @param g the graphics
      */
     @Override
-    public void paint(Graphics g){
+    public void paint(Graphics g) {
         super.paint(g);
         // Draw the road
         drawRoad(g);
@@ -66,9 +69,10 @@ public class Gfx extends JPanel {
 
     /**
      * Draw the background
+     *
      * @param g the graphics
      */
-    private void drawBackground(Graphics g){
+    private void drawBackground(Graphics g) {
         // If it has to draw two images
         if (Math.abs(moto.getOffset()) % Assets.bg.getWidth() != 0) {
 
@@ -115,19 +119,20 @@ public class Gfx extends JPanel {
 
     /**
      * Draw the road
+     *
      * @param g the graphics
      */
-    private void drawRoad(Graphics g){
+    private void drawRoad(Graphics g) {
         // To not have a concurrent modification exception
-        ArrayList<Road.Segment> seg = road.getSegment();
+        ArrayList<Segment> seg = road.getSegment();
 
         // For each segments of the road (not an actual for each because of concurrent modification exception)
-        for(int i = 0; i < seg.size(); i++){
+        for (int i = 0; i < seg.size(); i++) {
             // Get his color
             g.setColor(seg.get(i).getColor());
 
             // Print it if below horizon
-            if(seg.get(i).getY1() >= HORIZON) g.fillPolygon(seg.get(i).getX(), seg.get(i).getY(),4);
+            if (seg.get(i).getY1() >= HORIZON) g.fillPolygon(seg.get(i).getX(), seg.get(i).getY(), 4);
         }
     }
 }

@@ -36,9 +36,9 @@ public class Assets {
         player = new BufferedImage[4][4];
 
         // Crop each different sprites of the player
-        for(int i = 0; i < player.length; i++) {
-            for(int y = 0; y < player[0].length; y++){
-                player[i][y] = playerSheet.crop(i*player_img_width, y*player_img_height, player_img_width, player_img_height);
+        for (int i = 0; i < player.length; i++) {
+            for (int y = 0; y < player[0].length; y++) {
+                player[i][y] = playerSheet.crop(i * player_img_width, y * player_img_height, player_img_width, player_img_height);
             }
         }
 

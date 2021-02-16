@@ -1,4 +1,4 @@
-package Model;
+package Model.Threads;
 
 import Controller.KeyManager;
 
@@ -16,7 +16,7 @@ public class TH_Turn extends Thread {
      */
     @Override
     public void run() {
-        while(true) {
+        while (true) {
             try {
                 // Updating at game's speed
                 sleep(TH_Game.GAME_SPEED);
@@ -30,9 +30,10 @@ public class TH_Turn extends Thread {
 
     /**
      * Constructor
+     *
      * @param kl the key manager
      */
-    public TH_Turn(KeyManager kl){
+    public TH_Turn(KeyManager kl) {
         this.kl = kl;
     }
 }

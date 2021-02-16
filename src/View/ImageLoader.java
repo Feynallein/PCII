@@ -10,10 +10,11 @@ import java.io.IOException;
 class ImageLoader {
     /**
      * Load an image
+     *
      * @param path the path to the image
      * @return the loaded image
      */
-    public static BufferedImage loadImage(String path){
+    public static BufferedImage loadImage(String path) {
         try {
             return ImageIO.read(ImageLoader.class.getResource(path));
         } catch (IOException e) {

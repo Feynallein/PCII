@@ -1,4 +1,4 @@
-import Model.*;
+import Model.Threads.TH_Game;
 
 /**
  * Main class
@@ -6,6 +6,7 @@ import Model.*;
 public class Main {
     /**
      * Start the game
+     *
      * @param args args of the program (useless)
      */
     public static void main(String[] args) {
