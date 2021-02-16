@@ -6,8 +6,7 @@ import Model.Road;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.Arrays;
-import java.util.Random;
+import java.util.ArrayList;
 
 /**
  * Class graphics
@@ -55,8 +54,13 @@ public class Gfx extends JPanel {
     @Override
     public void paint(Graphics g){
         super.paint(g);
+        // Draw the road
         drawRoad(g);
+
+        // Draw the background
         drawBackground(g);
+
+        // Draw the player
         g.drawImage(Assets.player[moto.getState()][moto.getAnimation()], Moto.X, Moto.Y, Moto.WIDTH, Moto.HEIGHT, null);
     }
 
@@ -86,12 +90,21 @@ public class Gfx extends JPanel {
         else g.drawImage(Assets.bg.getSubimage(moto.getOffset(), 0, WIDTH, HORIZON), 0, 0, WIDTH, HORIZON, null);
     }
 
+    /**
+     * Draw the road
+     * @param g graphics
+     */
     private void drawRoad(Graphics g){
-        Road.Segment seg;
-        for(int i = 0; i < road.getSegmentSize(); i++){
-            seg = road.getSegment(i);
-            g.setColor(seg.getColor());
-            if(seg.getP1() >= HORIZON) g.fillPolygon(seg.getX(), seg.getY(),4);
+        // To not have a concurrent modification exception
+        ArrayList<Road.Segment> seg = road.getSegment();
+
+        // For each segments of the road (not an actual for each because of concurrent modification exception)
+        for(int i = 0; i < seg.size(); i++){
+            // Get his color
+            g.setColor(seg.get(i).getColor());
+
+            // Print it if below horizon
+            if(seg.get(i).getY1() >= HORIZON) g.fillPolygon(seg.get(i).getX(), seg.get(i).getY(),4);
         }
     }
 }

@@ -12,43 +12,59 @@ public class Moto {
     public final static int MOVE_SPEED = 3;
 
     /**
-     * Const : the player's width
+     * Const : The player's width
      */
     public final static int WIDTH = 470/3;
 
     /**
-     * Const : the player's height
+     * Const : The player's height
      */
     public final static int HEIGHT = 580/3;
 
     /**
-     * Const : the player's initial position
+     * Const : The player's y position
      */
     public final static int Y = Gfx.HEIGHT - HEIGHT;
 
+    /**
+     * Const : The player's x position
+     */
     public final static int X = (Gfx.WIDTH - WIDTH)/2;
 
-
+    /**
+     * Const : The player's max speed
+     */
     public static final int MAX_SPEED = 300;
 
+    /**
+     * Which state (Braking, accelerating, free wheel)
+     */
     private int state = 0;
 
+    /**
+     * Which frame of the animation
+     */
     private int animation = 0;
 
+    /**
+     * A clock to calculate the animation
+     */
     private int clock = 0;
 
+    /**
+     * X offset of the player
+     */
     private int offset;
 
+    /**
+     * The distance traveled, based on the speed
+     */
     private int position;
 
     /**
      * The speed of the player
      */
     private float speed;
-
-    public int getOffset() {
-        return offset;
-    }
 
     /**
      * Constructor
@@ -70,15 +86,21 @@ public class Moto {
      * Move the player to the right
      */
     public void moveRight(){
-        /*if(offset > - Gfx.WIDTH/2) */offset += MOVE_SPEED;
+        offset += MOVE_SPEED;
     }
 
+    /**
+     * Accelerating
+     */
     public void accelerate(){
         if(speed < MAX_SPEED) speed += 0.5;
         state = 2;
         anim();
     }
 
+    /**
+     * Braking
+     */
     public void brake(){
         if(speed >= 0.75) speed -= 0.75;
         else if (speed > 0) speed = 0;
@@ -86,6 +108,9 @@ public class Moto {
         anim();
     }
 
+    /**
+     * Decelerating (free wheel)
+     */
     public void decelerate(){
         if(speed >= 0.25) speed -= 0.25;
         else if(speed > 0) speed = 0;
@@ -94,6 +119,9 @@ public class Moto {
         anim();
     }
 
+    /**
+     * Calculate the animation frame
+     */
     private void anim(){
         long setup = calculateSleep();
         clock++;
@@ -104,28 +132,59 @@ public class Moto {
         }
     }
 
+    /**
+     * Calculate the sleep time of TH_Scrolling, based on speed
+     * @return the sleep time
+     */
     public long calculateSleep(){
         return (long) (MAX_SPEED/(speed+1)) + 1;
     }
 
+    /**
+     * Getter for the speed
+     * @return the speed
+     */
     public float getSpeed(){
         return speed;
     }
 
+    /**
+     * Getter for the state
+     * @return the state of the player
+     */
     public int getState() {
         return state;
     }
 
+    /**
+     * Getter for the animation's frame
+     * @return which frame of the animation it has to display
+     */
     public int getAnimation(){
         return animation;
     }
 
+    /**
+     * Getter for the position
+     * @return the distance traveled
+     */
     public int getPosition(){
         return position;
     }
 
+    /**
+     * Add a calculated distance traveled since last time based on speed
+     */
     public void addPosition(){
         // Distance traveled
         position += speed;
+    }
+
+    /**
+     * Getter for the offset
+     * @return the offset
+     */
+    public int getOffset() {
+        return offset;
     }
 }

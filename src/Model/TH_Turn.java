@@ -18,10 +18,12 @@ public class TH_Turn extends Thread {
     public void run() {
         while(true) {
             try {
+                // Updating at game's speed
                 sleep(TH_Game.GAME_SPEED);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            // Updating the key manager
             kl.update();
         }
     }
