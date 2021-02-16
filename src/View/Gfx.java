@@ -91,8 +91,7 @@ public class Gfx extends JPanel {
         for(int i = 0; i < road.getSegmentSize(); i++){
             seg = road.getSegment(i);
             g.setColor(seg.getColor());
-            if(seg.getP1() >= HORIZON)
-                g.fillPolygon(seg.getX(), seg.getY(),4);
+            if(seg.getP1() >= HORIZON) g.fillPolygon(seg.getX(), seg.getY(),4);
         }
     }
 }
