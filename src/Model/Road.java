@@ -11,7 +11,7 @@ public class Road {
          * Const : Height of a segment
          */
         public static final int HEIGHT = RUMBLE_HEIGHT/RUMBLE_SIZE;
-        private static final double coeff = 2d*(Gfx.HORIZON - HEIGHT)/(Gfx.WIDTH - FINAL_WIDTH);
+        private static final double coeff = -2d*(Gfx.HORIZON - Gfx.HEIGHT)/(Gfx.WIDTH - FINAL_WIDTH);
         private int p1;
         private int p2;
         private final static int x = Gfx.WIDTH/2;
@@ -28,12 +28,9 @@ public class Road {
             scale();
         }
 
-        //TODO
         private void scale(){
-            /*width1 = p1 - (int) (coeff * idx + Gfx.HEIGHT);
-            width2 = p2 - (int) (coeff * idx + Gfx.HEIGHT);*/
-            width1 = 1280;
-            width2 = width1;
+            width1 = (int) ((p1 - Gfx.HEIGHT)/coeff + ROAD_WIDTH);
+            width2 = (int) ((p2 - Gfx.HEIGHT)/coeff + ROAD_WIDTH);
         }
 
         public void update(){
@@ -81,7 +78,7 @@ public class Road {
     /**
      * Const : Road's minimum width
      */
-    public static final int FINAL_WIDTH = 50;
+    public static final int FINAL_WIDTH = ROAD_WIDTH/12;
 
     /**
      * Every segments
@@ -93,7 +90,7 @@ public class Road {
     public Road(Moto moto) {
         this.moto = moto;
         int idx;
-        for(int i = (int) Math.ceil((float) Gfx.HEIGHT/RUMBLE_HEIGHT); i >= 0; i--){
+        for(int i = (int) Math.ceil((float) Gfx.HEIGHT/RUMBLE_HEIGHT); i > 0; i--){
             for(idx = (i * Segment.HEIGHT) - 1; idx >= (i * Segment.HEIGHT) - RUMBLE_SIZE; idx--) {
                 segments.add(new Segment(idx * Segment.HEIGHT, (idx - 1) * Segment.HEIGHT, Math.abs((idx / RUMBLE_SIZE)) % 2 == 0 ? new Color(45, 45, 45) : new Color(40, 40, 40), this.moto));
             }
@@ -104,8 +101,7 @@ public class Road {
         for(Segment s : segments){
             s.update();
         }
-        // to fix (color bug)
-        if(segments.get(0).getP2() >= Gfx.HEIGHT + 1){
+        if(segments.get(0).getP2() >= Gfx.HEIGHT){
             segments.add(new Segment(segments.get(segments.size() - 1).getP2(), segments.get(segments.size() - 1).getP2() - Segment.HEIGHT, segments.get(0).getColor(), moto));
             segments.remove(0);
         }
