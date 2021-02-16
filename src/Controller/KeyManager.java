@@ -40,6 +40,7 @@ public class KeyManager implements java.awt.event.KeyListener {
 
     /**
      * Constructor
+     *
      * @param moto the player
      */
     public KeyManager(Moto moto) {
@@ -50,14 +51,14 @@ public class KeyManager implements java.awt.event.KeyListener {
     /**
      * Update which keys are pressed based on the key listener
      */
-    public void update(){
+    public void update() {
         // Doing actions if correspondent key is pressed
-        if(up)moto.accelerate();
-        else if(down) moto.brake();
+        if (up) moto.accelerate();
+        else if (down) moto.brake();
         else moto.decelerate();
 
-        if(left && moto.getSpeed() > 0) moto.moveLeft();
-        if(right && moto.getSpeed() > 0) moto.moveRight();
+        if (left && moto.getSpeed() > 0) moto.moveLeft();
+        if (right && moto.getSpeed() > 0) moto.moveRight();
 
         // Updating if the keys are being pressed
         left = keys[KeyEvent.VK_LEFT];
@@ -68,29 +69,33 @@ public class KeyManager implements java.awt.event.KeyListener {
 
     /**
      * Key listener's key typed
+     *
      * @param e a key event
      */
     @Override
-    public void keyTyped(KeyEvent e) { }
+    public void keyTyped(KeyEvent e) {
+    }
 
     /**
      * Key listener's key pressed
+     *
      * @param e a key event
      */
     @Override
     public void keyPressed(KeyEvent e) {
-        if(e.getKeyCode() < 0 || e.getKeyCode() >= keys.length)
+        if (e.getKeyCode() < 0 || e.getKeyCode() >= keys.length)
             return;
         keys[e.getKeyCode()] = true;
     }
 
     /**
      * Key listener's key released
+     *
      * @param e a key event
      */
     @Override
     public void keyReleased(KeyEvent e) {
-        if(e.getKeyCode() < 0 || e.getKeyCode() >= keys.length)
+        if (e.getKeyCode() < 0 || e.getKeyCode() >= keys.length)
             return;
         keys[e.getKeyCode()] = false;
     }

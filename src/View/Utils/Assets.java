@@ -27,7 +27,10 @@ public class Assets {
      */
     public static BufferedImage bg;
 
-    public static Font font40 = FontLoader.loadFont("Resources/Others/times.ttf",40);
+    /**
+     * The font at size 40
+     */
+    public static Font font40 = FontLoader.loadFont("Resources/Others/times.ttf", 40);
 
     /**
      * Initialize all assets

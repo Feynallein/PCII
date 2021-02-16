@@ -53,8 +53,14 @@ public class Moto {
      */
     private int clock = 0;
 
+    /**
+     * The accumulated time, serves as a clock for the distance traveled
+     */
     private int accumulatedTime = 0;
 
+    /**
+     * The timer
+     */
     private int timer = 60;
 
     /**
@@ -78,14 +84,13 @@ public class Moto {
     public Moto() {
         speed = 0;
         offset = 0;
-        distanceTraveled = 1;
+        distanceTraveled = 0;
     }
 
     /**
      * Move the player to the left
      */
     public void moveLeft() {
-        /*if(offset < Gfx.WIDTH/2) */
         offset -= MOVE_SPEED;
     }
 
@@ -192,21 +197,36 @@ public class Moto {
         // Divided by 3.6 to get m/s therefore the distance traveled is in meters
         // Clock to update this only every seconds, not as every tick (1 tick = 10 milliseconds)
 
-        if(accumulatedTime == 1000) {
-            distanceTraveled += Math.floor(speed/3.6);
+        if (accumulatedTime == 1000) {
+            distanceTraveled += Math.floor(speed / 3.6);
             accumulatedTime = 0;
             timer--;
-        }
-
-        else accumulatedTime += TH_Game.GAME_SPEED;
+        } else accumulatedTime += TH_Game.GAME_SPEED;
     }
 
-    public int getTimer(){
+    /**
+     * Getter for the timer
+     *
+     * @return the timer
+     */
+    public int getTimer() {
         return timer;
     }
 
-    public void addTimer(){
-        timer += Gate.ADDED_TIME;
+    /**
+     * Tell if the time is out
+     *
+     * @return ture if timed out
+     */
+    public boolean timedOut() {
+        return timer <= 0;
+    }
+
+    /**
+     * Add a specified time to the timer
+     */
+    public void addTimer(int addedTime) {
+        timer += addedTime;
     }
 
     /**

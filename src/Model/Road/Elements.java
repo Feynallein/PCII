@@ -5,6 +5,9 @@ import View.Gfx;
 
 import java.awt.*;
 
+/**
+ * Abstract class : the elements that are compose the road
+ */
 public abstract class Elements {
     /**
      * Const : leading coefficient
@@ -46,6 +49,14 @@ public abstract class Elements {
      */
     protected final Color color;
 
+    /**
+     * Constructor
+     *
+     * @param y1    the first y (below)
+     * @param y2    the second y (above)
+     * @param color the color
+     * @param moto  the player
+     */
     public Elements(int y1, int y2, Color color, Moto moto) {
         this.y1 = y1;
         this.y2 = y2;
@@ -56,6 +67,9 @@ public abstract class Elements {
         scale();
     }
 
+    /**
+     * The scaling : calculate the widths
+     */
     abstract void scale();
 
     /**

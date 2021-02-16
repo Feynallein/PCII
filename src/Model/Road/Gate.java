@@ -5,9 +5,23 @@ import View.Gfx;
 
 import java.awt.*;
 
-public class Gate extends Elements{
+/**
+ * The gates
+ */
+public class Gate extends Elements {
+    /**
+     * Const : Time added when passing a gate
+     */
     public static final int ADDED_TIME = 60;
 
+    /**
+     * Constructor
+     *
+     * @param y1    the first y (below)
+     * @param y2    the second y (above)
+     * @param color the color
+     * @param moto  the player
+     */
     public Gate(int y1, int y2, Color color, Moto moto) {
         super(y1, y2, color, moto);
     }

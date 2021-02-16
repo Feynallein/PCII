@@ -22,7 +22,7 @@ public class TH_Scrolling extends Thread {
      */
     @Override
     public void run() {
-        while (true) {
+        while (!moto.timedOut()) {
             try {
                 // Updating time based on the player's speed
                 sleep(moto.calculateSleep());
@@ -31,7 +31,6 @@ public class TH_Scrolling extends Thread {
             }
             // Update the player's speed
             if (moto.getSpeed() > 0) road.update();
-            //System.out.println(moto.getSpeed());
         }
     }
 

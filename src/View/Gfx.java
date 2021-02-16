@@ -4,7 +4,6 @@ import Model.Moto;
 import Model.Road.Elements;
 import Model.Road.Road;
 import View.Utils.Assets;
-import View.Utils.FontLoader;
 
 import javax.swing.*;
 import java.awt.*;
@@ -77,7 +76,7 @@ public class Gfx extends JPanel {
         Text.drawString(g, Integer.toString((int) moto.getSpeed()), WIDTH - 50, HEIGHT - 50, true, Color.black, Assets.font40);
 
         // Timer
-        Text.drawString(g, Integer.toString(moto.getTimer()), WIDTH/2, 50, true, Color.WHITE, Assets.font40); //todo the timer
+        Text.drawString(g, Integer.toString(moto.getTimer()), WIDTH / 2, 50, true, Color.WHITE, Assets.font40); //todo the timer
     }
 
     /**
@@ -137,22 +136,23 @@ public class Gfx extends JPanel {
      */
     private void drawRoad(Graphics g) {
         // Draw every elements
-        for(String s : new String[]{Road.SEG, Road.GATES, Road.SM}) drawArray(road.get(s), g);
+        for (String s : new String[]{Road.SEG, Road.GATES, Road.SM}) drawArray(road.get(s), g);
     }
 
     /**
      * Draw an array of instanceof elements
+     *
      * @param a and array of instanceof elements
      * @param g graphics
      */
-    private void drawArray(ArrayList<Elements> a, Graphics g){
+    private void drawArray(ArrayList<Elements> a, Graphics g) {
         // For each elements of the array (not an actual for each because of concurrent modification exception)
-        for(int i = 0; i < a.size(); i++){
+        for (int i = 0; i < a.size(); i++) {
             // Get his color
             g.setColor(a.get(i).getColor());
 
             // Print it if below horizon
-            if(a.get(i).getY1() >= HORIZON) g.fillPolygon(a.get(i).getX(), a.get(i).getY(), 4);
+            if (a.get(i).getY1() >= HORIZON) g.fillPolygon(a.get(i).getX(), a.get(i).getY(), 4);
         }
 
     }

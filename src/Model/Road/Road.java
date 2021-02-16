@@ -19,7 +19,7 @@ public class Road {
     /**
      * Const : Height of a rumble (in pixels)
      */
-    public static final int CURBING_HEIGHT = CURBING_SIZE*10;
+    public static final int CURBING_HEIGHT = CURBING_SIZE * 10;
 
     /**
      * Const : Half of the road width
@@ -31,16 +31,34 @@ public class Road {
      */
     public static final int FINAL_WIDTH = INITIAL_WIDTH / 12;
 
+    /**
+     * Const : segments key for the hashmap
+     */
     public final static String SEG = "segments";
 
+    /**
+     * Const : obstacles key for the hashmap
+     */
     public final static String OBS = "obstacles";
 
+    /**
+     * Const : gates key for the hashmap
+     */
     public final static String GATES = "gates";
 
+    /**
+     * Const : surface marking key for the hashmap
+     */
     public final static String SM = "surface marking";
 
+    /**
+     * Last distance where there was a gate
+     */
     private int lastDistance = 0;
 
+    /**
+     * Hashmap of the differents objects that compose the road
+     */
     private final HashMap<String, ArrayList<Elements>> road = new HashMap<>();
 
     /**
@@ -88,24 +106,32 @@ public class Road {
         for (String s : new String[]{SEG, SM, GATES}) {
             if (!road.get(s).isEmpty() && road.get(s).get(0).getY2() >= Gfx.HEIGHT) {
                 int lastIndex = road.get(s).size() - 1;
-                if (s.equals(SEG))
-                    road.get(s).add(new Segment(road.get(s).get(lastIndex).getY2(), road.get(s).get(lastIndex).getY2() - Segment.HEIGHT, road.get(s).get(0).getColor(), moto));
-                else if (s.equals(SM))
-                    road.get(s).add(new SurfaceMarking(road.get(s).get(lastIndex).getY2(), road.get(s).get(lastIndex).getY2() - Segment.HEIGHT, road.get(s).get(0).getColor(), moto));
-                else if(s.equals(GATES)){
-                    moto.addTimer();
+                switch (s) {
+                    // Adding a new segment
+                    case SEG -> road.get(s).add(new Segment(road.get(s).get(lastIndex).getY2(), road.get(s).get(lastIndex).getY2() - Segment.HEIGHT, road.get(s).get(0).getColor(), moto));
+                    // Adding a new surface marking
+                    case SM -> road.get(s).add(new SurfaceMarking(road.get(s).get(lastIndex).getY2(), road.get(s).get(lastIndex).getY2() - Segment.HEIGHT, road.get(s).get(0).getColor(), moto));
+                    // Adding time to the timer
+                    case GATES -> moto.addTimer(Gate.ADDED_TIME);
                 }
+                // Removing the object
                 road.get(s).remove(0);
             }
         }
 
         // Adding gates for every 3 km (the distance is in meters)
-        if(moto.getDistanceTraveled() - lastDistance >= 3000){ //TODO: calculation instead of hard coding this + adjustable difficulty (w/ the menu & settings)
+        if (moto.getDistanceTraveled() - lastDistance >= 3000) { //TODO: calculation instead of hard coding this + adjustable difficulty (w/ the menu & settings)
             road.get(GATES).add(new Gate(CURBING_HEIGHT, 0, Color.RED, moto));
             lastDistance = moto.getDistanceTraveled();
         }
     }
 
+    /**
+     * Getter for the elements of the road
+     *
+     * @param s the element desired must be a key of the hashmap
+     * @return the arraylist of the specified element
+     */
     public ArrayList<Elements> get(String s) {
         return road.get(s);
     }

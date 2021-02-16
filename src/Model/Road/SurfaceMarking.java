@@ -5,7 +5,18 @@ import View.Gfx;
 
 import java.awt.*;
 
-public class SurfaceMarking extends Elements{
+/**
+ * The surface marking
+ */
+public class SurfaceMarking extends Elements {
+    /**
+     * Constructor
+     *
+     * @param y1    the first y (below)
+     * @param y2    the second y (above)
+     * @param color the color
+     * @param moto  the player
+     */
     public SurfaceMarking(int y1, int y2, Color color, Moto moto) {
         super(y1, y2, color, moto);
     }

@@ -47,6 +47,8 @@ public class TH_Game extends Thread {
      */
     private final Road road;
 
+    private final JFrame display;
+
     /**
      * Repaint the entire screen
      */
@@ -56,7 +58,7 @@ public class TH_Game extends Thread {
         turn.start();
         scroll.start();
 
-        while (true) {
+        while (!moto.timedOut()) {
             try {
                 sleep(GAME_SPEED);
             } catch (InterruptedException e) {
@@ -65,6 +67,18 @@ public class TH_Game extends Thread {
             gfx.repaint();
             moto.addDistanceTraveled();
         }
+
+        // temp
+        lose();
+    }
+
+    /**
+     * Waht to do when losing
+     */
+    private void lose() {
+        JOptionPane.showMessageDialog(display, "Perdu!\nScore : " + moto.getDistanceTraveled(), "Fin de jeu", JOptionPane.ERROR_MESSAGE);
+        // Quitter
+        System.exit(0);
     }
 
     /**
@@ -79,11 +93,11 @@ public class TH_Game extends Thread {
         this.road = new Road(moto);
         this.gfx = new Gfx(moto, road);
         this.keyManager = new KeyManager(moto);
-        this.turn = new TH_Turn(keyManager);
+        this.turn = new TH_Turn(keyManager, moto);
         this.scroll = new TH_Scrolling(road, moto);
 
         // Creating the game frame
-        JFrame display = new JFrame();
+        display = new JFrame();
         display.setTitle("nom du jeu");
         display.setResizable(false);
         display.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
