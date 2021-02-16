@@ -1,5 +1,6 @@
 package Model;
 
+import Model.Threads.TH_Game;
 import View.Gfx;
 
 /**
@@ -51,6 +52,8 @@ public class Moto {
      */
     private int clock = 0;
 
+    private int accumulatedTime = 0;
+
     /**
      * X offset of the player
      */
@@ -59,7 +62,7 @@ public class Moto {
     /**
      * The distance traveled, based on the speed
      */
-    private int position;
+    private int distanceTraveled;
 
     /**
      * The speed of the player
@@ -72,7 +75,7 @@ public class Moto {
     public Moto() {
         speed = 0;
         offset = 0;
-        position = 1;
+        distanceTraveled = 1;
     }
 
     /**
@@ -174,16 +177,24 @@ public class Moto {
      *
      * @return the distance traveled
      */
-    public int getPosition() {
-        return position;
+    public int getDistanceTraveled() {
+        return distanceTraveled;
     }
 
     /**
-     * Add a calculated distance traveled since last time based on speed
+     * Add a calculated distance IN CENTIMETERS traveled since last time based on speed
      */
-    public void addPosition() {
+    public void addDistanceTraveled() {
         // Distance traveled
-        position += speed;
+        // Divided by 3.6 to get m/s therefore the distance traveled is in meters
+        // Clock to update this only every seconds, not as every tick (1 tick = 10 milliseconds)
+
+        if(accumulatedTime == 1000) {
+            distanceTraveled += Math.floor(speed/3.6);
+            accumulatedTime = 0;
+        }
+
+        else accumulatedTime += TH_Game.GAME_SPEED;
     }
 
     /**

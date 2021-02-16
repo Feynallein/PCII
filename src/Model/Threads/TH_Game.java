@@ -3,7 +3,7 @@ package Model.Threads;
 import Controller.KeyManager;
 import Model.Moto;
 import Model.Road.Road;
-import View.Assets;
+import View.Utils.Assets;
 import View.Gfx;
 
 import javax.swing.*;
@@ -63,7 +63,7 @@ public class TH_Game extends Thread {
                 e.printStackTrace();
             }
             gfx.repaint();
-            moto.addPosition();
+            moto.addDistanceTraveled();
         }
     }
 
@@ -86,7 +86,7 @@ public class TH_Game extends Thread {
         // Creating the game frame
         JFrame display = new JFrame();
         display.setTitle("nom du jeu");
-        display.setResizable(true);
+        display.setResizable(false);
         display.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         display.add(gfx);
         display.pack();

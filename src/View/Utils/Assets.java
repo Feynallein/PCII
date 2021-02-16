@@ -1,5 +1,6 @@
-package View;
+package View.Utils;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 /**
@@ -26,12 +27,14 @@ public class Assets {
      */
     public static BufferedImage bg;
 
+    public static Font font40 = FontLoader.loadFont("Resources/Others/times.ttf",40);
+
     /**
      * Initialize all assets
      */
     public static void init() {
         // Load the player's sprite sheet
-        SpriteSheet playerSheet = new SpriteSheet(ImageLoader.loadImage("/player_sheets.png"));
+        SpriteSheet playerSheet = new SpriteSheet(ImageLoader.loadImage("/Textures/player_sheets.png"));
 
         player = new BufferedImage[4][4];
 
@@ -43,6 +46,6 @@ public class Assets {
         }
 
         // Load the background
-        bg = ImageLoader.loadImage("/background.jpg");
+        bg = ImageLoader.loadImage("/Textures/background.jpg");
     }
 }

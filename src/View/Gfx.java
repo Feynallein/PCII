@@ -3,6 +3,8 @@ package View;
 import Model.Moto;
 import Model.Road.Elements;
 import Model.Road.Road;
+import View.Utils.Assets;
+import View.Utils.FontLoader;
 
 import javax.swing.*;
 import java.awt.*;
@@ -65,6 +67,17 @@ public class Gfx extends JPanel {
 
         // Draw the player
         g.drawImage(Assets.player[moto.getState()][moto.getAnimation()], Moto.X, Moto.Y, Moto.WIDTH, Moto.HEIGHT, null);
+
+        /* TEMPORARY with those bad graphics : */
+
+        // Distance traveled
+        Text.drawString(g, Integer.toString(moto.getDistanceTraveled()), 50, HEIGHT - 50, true, Color.black, Assets.font40);
+
+        // Speed
+        Text.drawString(g, Integer.toString((int) moto.getSpeed()), WIDTH - 50, HEIGHT - 50, true, Color.black, Assets.font40);
+
+        // Timer
+        Text.drawString(g, Integer.toString(1), WIDTH/2, 50, true, Color.WHITE, Assets.font40); //todo the timer
     }
 
     /**

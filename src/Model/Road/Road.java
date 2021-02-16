@@ -6,21 +6,20 @@ import View.Gfx;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * The road
  */
 public class Road {
     /**
-     * Const : Height of a rumble
-     */
-    public static final int CURBING_HEIGHT = 100;
-
-    /**
      * Const : Number of segments per rumble
      */
     public static final int CURBING_SIZE = 10;
+
+    /**
+     * Const : Height of a rumble (in pixels)
+     */
+    public static final int CURBING_HEIGHT = CURBING_SIZE*10;
 
     /**
      * Const : Half of the road width
@@ -39,6 +38,8 @@ public class Road {
     public final static String GATES = "gates";
 
     public final static String SM = "surface marking";
+
+    private int lastDistance = 0;
 
     private final HashMap<String, ArrayList<Elements>> road = new HashMap<>();
 
@@ -63,8 +64,6 @@ public class Road {
 
         // Creating the road
         createRoad();
-
-        road.get(GATES).add(new Gate(CURBING_HEIGHT, 0, Color.RED, moto));
     }
 
     private void createRoad() {
@@ -86,22 +85,28 @@ public class Road {
         });
 
         // Removing if below the screen's height + adding a new one (not for gates)
-        for(String s : new String[]{SEG, SM, GATES}){
-            if(!road.get(s).isEmpty() && road.get(s).get(0).getY2() >= Gfx.HEIGHT){
+        for (String s : new String[]{SEG, SM, GATES}) {
+            if (!road.get(s).isEmpty() && road.get(s).get(0).getY2() >= Gfx.HEIGHT) {
                 int lastIndex = road.get(s).size() - 1;
-                if(s.equals(SEG))
+                if (s.equals(SEG))
                     road.get(s).add(new Segment(road.get(s).get(lastIndex).getY2(), road.get(s).get(lastIndex).getY2() - Segment.HEIGHT, road.get(s).get(0).getColor(), moto));
-                else if(s.equals(SM))
+                else if (s.equals(SM))
                     road.get(s).add(new SurfaceMarking(road.get(s).get(lastIndex).getY2(), road.get(s).get(lastIndex).getY2() - Segment.HEIGHT, road.get(s).get(0).getColor(), moto));
+                else if(s.equals(GATES)){
+                    //TODO : the timer
+                }
                 road.get(s).remove(0);
             }
         }
 
-        // Adding gates for a  certain distance
-        //if((moto.getPosition() / 1000) % 10 == 0) el.add(new Gate(0, CURBING_HEIGHT, Color.RED, moto));
+        // Adding gates for every 3 km (the distance is in meters)
+        if(moto.getDistanceTraveled() - lastDistance >= 3000){ //TODO: calculation instead of hard coding this + adjustable difficulty (w/ the menu & settings)
+            road.get(GATES).add(new Gate(CURBING_HEIGHT, 0, Color.RED, moto));
+            lastDistance = moto.getDistanceTraveled();
+        }
     }
 
-    public ArrayList<Elements> get(String s){
+    public ArrayList<Elements> get(String s) {
         return road.get(s);
     }
 }
