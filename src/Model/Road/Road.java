@@ -93,7 +93,7 @@ public class Road {
                 else if (s.equals(SM))
                     road.get(s).add(new SurfaceMarking(road.get(s).get(lastIndex).getY2(), road.get(s).get(lastIndex).getY2() - Segment.HEIGHT, road.get(s).get(0).getColor(), moto));
                 else if(s.equals(GATES)){
-                    //TODO : the timer
+                    moto.addTimer();
                 }
                 road.get(s).remove(0);
             }

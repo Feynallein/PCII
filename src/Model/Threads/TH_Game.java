@@ -82,7 +82,6 @@ public class TH_Game extends Thread {
         this.turn = new TH_Turn(keyManager);
         this.scroll = new TH_Scrolling(road, moto);
 
-
         // Creating the game frame
         JFrame display = new JFrame();
         display.setTitle("nom du jeu");

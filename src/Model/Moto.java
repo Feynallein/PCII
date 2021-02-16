@@ -1,5 +1,6 @@
 package Model;
 
+import Model.Road.Gate;
 import Model.Threads.TH_Game;
 import View.Gfx;
 
@@ -53,6 +54,8 @@ public class Moto {
     private int clock = 0;
 
     private int accumulatedTime = 0;
+
+    private int timer = 60;
 
     /**
      * X offset of the player
@@ -192,9 +195,18 @@ public class Moto {
         if(accumulatedTime == 1000) {
             distanceTraveled += Math.floor(speed/3.6);
             accumulatedTime = 0;
+            timer--;
         }
 
         else accumulatedTime += TH_Game.GAME_SPEED;
+    }
+
+    public int getTimer(){
+        return timer;
+    }
+
+    public void addTimer(){
+        timer += Gate.ADDED_TIME;
     }
 
     /**

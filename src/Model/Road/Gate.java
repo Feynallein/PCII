@@ -6,6 +6,8 @@ import View.Gfx;
 import java.awt.*;
 
 public class Gate extends Elements{
+    public static final int ADDED_TIME = 60;
+
     public Gate(int y1, int y2, Color color, Moto moto) {
         super(y1, y2, color, moto);
     }
