@@ -147,6 +147,7 @@ public class Gfx extends JPanel {
      */
     private void drawArray(ArrayList<Elements> a, Graphics g) {
         // For each elements of the array (not an actual for each because of concurrent modification exception)
+        //noinspection ForLoopReplaceableByForEach
         for (int i = 0; i < a.size(); i++) {
             // Get his color
             g.setColor(a.get(i).getColor());

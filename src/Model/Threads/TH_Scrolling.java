@@ -25,6 +25,7 @@ public class TH_Scrolling extends Thread {
         while (!moto.timedOut()) {
             try {
                 // Updating time based on the player's speed
+                //noinspection BusyWait
                 sleep(moto.calculateSleep());
             } catch (InterruptedException e) {
                 e.printStackTrace();

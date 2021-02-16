@@ -47,6 +47,9 @@ public class TH_Game extends Thread {
      */
     private final Road road;
 
+    /**
+     * The display
+     */
     private final JFrame display;
 
     /**
@@ -60,6 +63,7 @@ public class TH_Game extends Thread {
 
         while (!moto.timedOut()) {
             try {
+                //noinspection BusyWait
                 sleep(GAME_SPEED);
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -73,10 +77,10 @@ public class TH_Game extends Thread {
     }
 
     /**
-     * Waht to do when losing
+     * What to do when losing
      */
     private void lose() {
-        JOptionPane.showMessageDialog(display, "Perdu!\nScore : " + moto.getDistanceTraveled(), "Fin de jeu", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(display, "Timed Out!\nScore : " + moto.getDistanceTraveled(), "", JOptionPane.ERROR_MESSAGE);
         // Quitter
         System.exit(0);
     }

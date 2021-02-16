@@ -25,6 +25,7 @@ public class TH_Turn extends Thread {
         while (!moto.timedOut()) {
             try {
                 // Updating at game's speed
+                //noinspection BusyWait
                 sleep(TH_Game.GAME_SPEED);
             } catch (InterruptedException e) {
                 e.printStackTrace();

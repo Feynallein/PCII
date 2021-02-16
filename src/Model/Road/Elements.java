@@ -12,7 +12,7 @@ public abstract class Elements {
     /**
      * Const : leading coefficient
      */
-    public static final double coeff = -2d * (Gfx.HORIZON - Gfx.HEIGHT) / (Gfx.WIDTH - Road.FINAL_WIDTH);
+    public static final double coefficient = -2d * (Gfx.HORIZON - Gfx.HEIGHT) / (Gfx.WIDTH - Road.FINAL_WIDTH);
 
     /**
      * Const : middle of the screen

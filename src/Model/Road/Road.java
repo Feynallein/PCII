@@ -57,7 +57,7 @@ public class Road {
     private int lastDistance = 0;
 
     /**
-     * Hashmap of the differents objects that compose the road
+     * Hashmap of the different objects that compose the road
      */
     private final HashMap<String, ArrayList<Elements>> road = new HashMap<>();
 
