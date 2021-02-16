@@ -1,8 +1,8 @@
 package View;
 
 import Model.Moto;
+import Model.Road.Elements;
 import Model.Road.Road;
-import Model.Road.Segment;
 
 import javax.swing.*;
 import java.awt.*;
@@ -123,16 +123,27 @@ public class Gfx extends JPanel {
      * @param g the graphics
      */
     private void drawRoad(Graphics g) {
-        // To not have a concurrent modification exception
-        ArrayList<Segment> seg = road.getSegment();
+        /* Drawing the segments */
+        drawArray(road.getSegment(), g);
 
-        // For each segments of the road (not an actual for each because of concurrent modification exception)
-        for (int i = 0; i < seg.size(); i++) {
+        /* Drawing other elements */
+        drawArray(road.getElements(), g);
+    }
+
+    /**
+     * Draw an array of instanceof elements
+     * @param a and array of instanceof elements
+     * @param g graphics
+     */
+    private void drawArray(ArrayList<Elements> a, Graphics g){
+        // For each elements of the array (not an actual for each because of concurrent modification exception)
+        for(int i = 0; i < a.size(); i++){
             // Get his color
-            g.setColor(seg.get(i).getColor());
+            g.setColor(a.get(i).getColor());
 
             // Print it if below horizon
-            if (seg.get(i).getY1() >= HORIZON) g.fillPolygon(seg.get(i).getX(), seg.get(i).getY(), 4);
+            if(a.get(i).getY1() >= HORIZON) g.fillPolygon(a.get(i).getX(), a.get(i).getY(), 4);
         }
+
     }
 }

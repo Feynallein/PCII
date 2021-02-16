@@ -3,6 +3,8 @@ package Model.Road;
 import Model.Moto;
 import View.Gfx;
 
+import java.awt.*;
+
 public abstract class Elements {
     /**
      * Const : leading coefficient
@@ -39,9 +41,15 @@ public abstract class Elements {
      */
     protected final Moto moto;
 
-    public Elements(int y1, int y2, Moto moto) {
+    /**
+     * The color of this segment
+     */
+    protected final Color color;
+
+    public Elements(int y1, int y2, Color color, Moto moto) {
         this.y1 = y1;
         this.y2 = y2;
+        this.color = color;
         this.moto = moto;
 
         // Scaling to get the widths
@@ -102,5 +110,14 @@ public abstract class Elements {
      */
     public int getY2() {
         return y2;
+    }
+
+    /**
+     * Getter to color
+     *
+     * @return the color of this segment
+     */
+    public Color getColor() {
+        return color;
     }
 }

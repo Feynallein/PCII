@@ -71,7 +71,7 @@ public class TH_Game extends Thread {
      * Constructor of this thread, create the windows, set up every elements and start other threads
      */
     public TH_Game() {
-        // Init the sprites
+        // Initialize the sprites
         Assets.init();
 
         // Defines game objects and utils

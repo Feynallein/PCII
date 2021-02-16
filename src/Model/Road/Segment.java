@@ -15,11 +15,6 @@ public class Segment extends Elements {
     public static final int HEIGHT = Road.CURBING_HEIGHT / Road.CURBING_SIZE;
 
     /**
-     * The color of this segment
-     */
-    private final Color color;
-
-    /**
      * The constructor
      *
      * @param y1    the first y
@@ -28,16 +23,6 @@ public class Segment extends Elements {
      * @param moto  the player
      */
     public Segment(int y1, int y2, Color color, Moto moto) {
-        super(y1, y2, moto);
-        this.color = color;
-    }
-
-    /**
-     * Getter to color
-     *
-     * @return the color of this segment
-     */
-    public Color getColor() {
-        return color;
+        super(y1, y2, color, moto);
     }
 }
