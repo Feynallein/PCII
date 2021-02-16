@@ -32,6 +32,14 @@ public class Road {
      */
     public static final int FINAL_WIDTH = INITIAL_WIDTH / 12;
 
+    public final static String SEG = "segments";
+
+    public final static String OBS = "obstacles";
+
+    public final static String GATES = "gates";
+
+    public final static String SM = "surface marking";
+
     private final HashMap<String, ArrayList<Elements>> road = new HashMap<>();
 
     /**
@@ -46,22 +54,23 @@ public class Road {
      */
     public Road(Moto moto) {
         this.moto = moto;
-        road.put("segment", new ArrayList<>());
-        road.put("surface marking", new ArrayList<>());
-        road.put("gates", new ArrayList<>());
-        road.put("obstacles", new ArrayList<>());
+
+        // Creating the different sub-array lists
+        road.put(SEG, new ArrayList<>());
+        road.put(SM, new ArrayList<>());
+        road.put(GATES, new ArrayList<>());
+        road.put(OBS, new ArrayList<>());
+
+        // Creating the road
         createRoad();
 
-
-
-        road.get("surface marking").add(new SurfaceMarking(0, 0, Color.RED, moto));
-        road.get("gates").add(new Gate(0, 0, Color.GREEN, moto));
+        road.get(GATES).add(new Gate(CURBING_HEIGHT, 0, Color.RED, moto));
     }
 
     private void createRoad() {
         for (int i = (int) Math.ceil((float) Gfx.HEIGHT / CURBING_HEIGHT); i > 0; i--) {
             for (int idx = (i * Segment.HEIGHT) - 1; idx >= (i * Segment.HEIGHT) - CURBING_SIZE; idx--) {
-                road.get("segment").add(new Segment(idx * Segment.HEIGHT, (idx - 1) * Segment.HEIGHT, Math.abs((idx / CURBING_SIZE)) % 2 == 0 ? new Color(45, 45, 45) : new Color(40, 40, 40), this.moto));
+                road.get(SEG).add(new Segment(idx * Segment.HEIGHT, (idx - 1) * Segment.HEIGHT, Math.abs((idx / CURBING_SIZE)) % 2 == 0 ? new Color(45, 45, 45) : new Color(40, 40, 40), this.moto));
             }
         }
     }
@@ -77,12 +86,12 @@ public class Road {
         });
 
         // Removing if below the screen's height + adding a new one (not for gates)
-        for(String s : new String[]{"segment", "surface marking", "gates"}){
-            if(road.get(s).get(0).getY2() >= Gfx.HEIGHT){
+        for(String s : new String[]{SEG, SM, GATES}){
+            if(!road.get(s).isEmpty() && road.get(s).get(0).getY2() >= Gfx.HEIGHT){
                 int lastIndex = road.get(s).size() - 1;
-                if(s.equals("segment"))
+                if(s.equals(SEG))
                     road.get(s).add(new Segment(road.get(s).get(lastIndex).getY2(), road.get(s).get(lastIndex).getY2() - Segment.HEIGHT, road.get(s).get(0).getColor(), moto));
-                else if(s.equals("surface marking"))
+                else if(s.equals(SM))
                     road.get(s).add(new SurfaceMarking(road.get(s).get(lastIndex).getY2(), road.get(s).get(lastIndex).getY2() - Segment.HEIGHT, road.get(s).get(0).getColor(), moto));
                 road.get(s).remove(0);
             }
@@ -92,16 +101,7 @@ public class Road {
         //if((moto.getPosition() / 1000) % 10 == 0) el.add(new Gate(0, CURBING_HEIGHT, Color.RED, moto));
     }
 
-    /**
-     * Getter to the segments
-     *
-     * @return the array list of segments of the road
-     */
-    public ArrayList<Elements> getSegment() {
-        return road.get("segment");
-    }
-
-    public ArrayList<Elements> getElements() {
-        return road.get("gates");
+    public ArrayList<Elements> get(String s){
+        return road.get(s);
     }
 }

@@ -123,11 +123,8 @@ public class Gfx extends JPanel {
      * @param g the graphics
      */
     private void drawRoad(Graphics g) {
-        /* Drawing the segments */
-        drawArray(road.getSegment(), g);
-
-        /* Drawing other elements */
-        drawArray(road.getElements(), g);
+        // Draw every elements
+        for(String s : new String[]{Road.SEG, Road.GATES, Road.SM}) drawArray(road.get(s), g);
     }
 
     /**

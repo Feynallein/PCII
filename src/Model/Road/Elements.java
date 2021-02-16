@@ -56,13 +56,7 @@ public abstract class Elements {
         scale();
     }
 
-    /**
-     * Calculate the widths of this segment
-     */
-    protected void scale() {
-        width1 = (int) ((y1 - Gfx.HEIGHT) / coeff + Road.INITIAL_WIDTH);
-        width2 = (int) ((y2 - Gfx.HEIGHT) / coeff + Road.INITIAL_WIDTH);
-    }
+    abstract void scale();
 
     /**
      * Updating the position of this segment
