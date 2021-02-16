@@ -48,7 +48,7 @@ public class Gfx extends JPanel {
     }
 
     /**
-     * Paint method
+     * Paint the different elements
      * @param g the graphics
      */
     @Override
@@ -64,24 +64,47 @@ public class Gfx extends JPanel {
         g.drawImage(Assets.player[moto.getState()][moto.getAnimation()], Moto.X, Moto.Y, Moto.WIDTH, Moto.HEIGHT, null);
     }
 
+    /**
+     * Draw the background
+     * @param g the graphics
+     */
     private void drawBackground(Graphics g){
         // If it has to draw two images
         if (Math.abs(moto.getOffset()) % Assets.bg.getWidth() != 0) {
+
             // If the image is over on the left
             if (moto.getOffset() < 0) {
+                // Calculating the offset
                 int offset = Math.abs(moto.getOffset()) % Assets.bg.getWidth();
+
+                // Getting the sub-image
                 BufferedImage subImage = Assets.bg.getSubimage(0, 0, WIDTH, HORIZON);
+
+                // Printing the first image
                 g.drawImage(subImage, offset, 0, WIDTH, HORIZON, null);
+
+                // Getting the second sub-image
                 subImage = Assets.bg.getSubimage(Assets.bg.getWidth() - offset, 0, offset, HORIZON);
+
+                // Printing the second sub-image
                 g.drawImage(subImage, 0, 0, offset, HORIZON, null);
             }
 
             // If the image is over on the right
             else if (moto.getOffset() + WIDTH > Assets.bg.getWidth()) {
+                // Calculating the offset
                 int offset = (Math.abs(moto.getOffset() + WIDTH) - Assets.bg.getWidth()) % Assets.bg.getWidth();
+
+                // Getting the first sub-image
                 BufferedImage subImage = Assets.bg.getSubimage(Assets.bg.getWidth() - WIDTH + offset, 0, WIDTH - offset, HORIZON);
+
+                // Printing the first sub-image
                 g.drawImage(subImage, 0, 0, WIDTH - offset, HORIZON, null);
+
+                // Getting the second sub-image
                 subImage = Assets.bg.getSubimage(0, 0, offset, HORIZON);
+
+                // Printing the second sub-image
                 g.drawImage(subImage, WIDTH - offset, 0, offset, HORIZON, null);
             }
         }
@@ -92,7 +115,7 @@ public class Gfx extends JPanel {
 
     /**
      * Draw the road
-     * @param g graphics
+     * @param g the graphics
      */
     private void drawRoad(Graphics g){
         // To not have a concurrent modification exception
