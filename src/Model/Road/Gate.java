@@ -21,21 +21,27 @@ public class Gate extends Elements {
      * @param color the color
      * @param moto  the player
      */
-    public Gate(int y1, Color color, Moto moto) {
-        super(y1, color, moto, 0);
+    public Gate(int y1, Color color, Moto moto, int height) {
+        super(y1, color, moto, height);
+    }
+
+    @Override
+    public void update() {
+        y1++;
+        height = (int) (0.1639 * y1 - 58);
+        y2 = y1 - height;
+        scale();
     }
 
     /**
      * Calculate the widths of this segment
      */
     @Override
-    protected void scale() {
+    void scale() {
         width1 = (int) ((y1 - Gfx.HEIGHT) / coefficient + Road.INITIAL_WIDTH);
         width2 = (int) ((y2 - Gfx.HEIGHT) / coefficient + Road.INITIAL_WIDTH);
     }
 
     @Override
-    public void specialUpdate(Elements elements) {
-
-    }
+    public void specialUpdate(Elements e) { }
 }

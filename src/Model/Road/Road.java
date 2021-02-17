@@ -95,7 +95,9 @@ public class Road {
         //Todo: optimizations
         road.forEach((s, a) -> {
             for (Elements e : a) {
-                if (!(e instanceof Curbs)) e.update();
+                if (!(e instanceof Curbs)){
+                    e.update();
+                }
             }
         });
 
@@ -123,8 +125,8 @@ public class Road {
         }
 
         // Adding gates for every 3 km (the distance is in meters)
-        if (moto.getDistanceTraveled() - lastDistance >= 3000) { //TODO: calculation instead of hard coding this + adjustable difficulty (w/ the menu & settings)
-            //road.get(GATES).add(new Gate(Gate.HEIGHT, 0, Color.RED, moto));
+        if (moto.getDistanceTraveled() - lastDistance >= 100) { //TODO: calculation instead of hard coding this + adjustable difficulty (w/ the menu & settings)
+            road.get(GATES).add(new Gate(road.get(CURBS).get(road.get(CURBS).size() - 1).getY2(), Color.RED, moto, 1));
             lastDistance = moto.getDistanceTraveled();
         }
     }

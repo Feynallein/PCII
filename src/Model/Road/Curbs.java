@@ -30,8 +30,7 @@ public class Curbs extends Elements {
         }
 
         @Override
-        public void specialUpdate(Elements elements) {
-        }
+        public void specialUpdate(Elements elements) { }
     }
 
     public final static int SIZE = 10;

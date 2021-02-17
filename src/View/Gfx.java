@@ -168,8 +168,8 @@ public class Gfx extends JPanel {
             // Get his color
             g.setColor(a.get(i).getColor());
 
-            // Print it if below horizon
-            if (a.get(i).getY1() >= HORIZON) g.fillPolygon(a.get(i).getX(), a.get(i).getY(), 4);
+            // Print it
+            g.fillPolygon(a.get(i).getX(), a.get(i).getY(), 4);
         }
     }
 }
