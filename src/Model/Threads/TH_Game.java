@@ -101,13 +101,13 @@ public class TH_Game extends Thread {
         this.scroll = new TH_Scrolling(road, moto);
 
         // Creating the game frame
-        display = new JFrame();
-        display.setTitle("nom du jeu");
-        display.setResizable(false);
-        display.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        display.add(gfx);
-        display.pack();
-        display.setVisible(true);
-        display.addKeyListener(keyManager);
+        this.display = new JFrame();
+        this.display.setTitle("nom du jeu");
+        this.display.setResizable(false);
+        this.display.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.display.add(gfx);
+        this.display.pack();
+        this.display.setVisible(true);
+        this.display.addKeyListener(keyManager);
     }
 }

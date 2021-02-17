@@ -76,7 +76,7 @@ public class Gfx extends JPanel {
         Text.drawString(g, Integer.toString((int) moto.getSpeed()), WIDTH - 50, HEIGHT - 50, true, Color.black, Assets.font40);
 
         // Timer
-        Text.drawString(g, Integer.toString(moto.getTimer()), WIDTH / 2, 50, true, Color.WHITE, Assets.font40); //todo the timer
+        Text.drawString(g, Integer.toString(moto.getTimer()), WIDTH / 2, 50, true, Color.WHITE, Assets.font40);
     }
 
     /**
