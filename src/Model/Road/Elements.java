@@ -135,4 +135,19 @@ public abstract class Elements {
     public int getHeight() {
         return height;
     }
+
+    public int getLoneX2(){
+        return (center - width2) - moto.getOffset();
+    }
+
+    public int getLoneX1(){
+        return (center - width1) - moto.getOffset();
+    }
+
+    public int getFullWidth1(){
+        return 2*width1;
+    }
+    public int getFullWidth2(){
+        return 2*width2;
+    }
 }

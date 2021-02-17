@@ -84,7 +84,8 @@ public class Road {
             height = (int) (0.1639 * i - 58);
             if (height <= 0) height = 1;
             road.get(CURBS).add(new Curbs(i, b ? new Color(45, 45, 45) : new Color(40, 40, 40), moto, height));
-            if(b) road.get(SM).add(new SurfaceMarking(i,moto, height, (Curbs) road.get(CURBS).get(road.get(CURBS).size() - 1)));
+            if (b)
+                road.get(SM).add(new SurfaceMarking(i, moto, height, (Curbs) road.get(CURBS).get(road.get(CURBS).size() - 1)));
             b = !b;
         }
     }
@@ -96,7 +97,7 @@ public class Road {
         //Todo: optimizations
         road.forEach((s, a) -> {
             for (Elements e : a) {
-                if (!(e instanceof Curbs)){
+                if (!(e instanceof Curbs)) {
                     e.update();
                 }
             }
@@ -105,8 +106,7 @@ public class Road {
         for (int i = 0; i < road.get(CURBS).size(); i++) {
             if (i != 0) {
                 road.get(CURBS).get(i).specialUpdate(road.get(CURBS).get(i - 1));
-            }
-            else road.get(CURBS).get(i).update();
+            } else road.get(CURBS).get(i).update();
         }
 
         // Removing if below the screen's height + adding a new one (not for gates)
@@ -129,7 +129,7 @@ public class Road {
         }
 
         // Adding gates for every 3 km (the distance is in meters)
-        if (moto.getDistanceTraveled() - lastDistance >= 3000) { //TODO: calculation instead of hard coding this + adjustable difficulty (w/ the menu & settings)
+        if (moto.getDistanceTraveled() - lastDistance >= 100) { //TODO: calculation instead of hard coding this + adjustable difficulty (w/ the menu & settings)
             road.get(GATES).add(new Gate(road.get(CURBS).get(road.get(CURBS).size() - 1).getY2(), Color.RED, moto, 1, (Curbs) road.get(CURBS).get(road.get(CURBS).size() - 1)));
             lastDistance = moto.getDistanceTraveled();
         }

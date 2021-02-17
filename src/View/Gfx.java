@@ -3,6 +3,7 @@ package View;
 import Model.Moto;
 import Model.Road.Curbs;
 import Model.Road.Elements;
+import Model.Road.Gate;
 import Model.Road.Road;
 import View.Utils.Assets;
 
@@ -163,13 +164,17 @@ public class Gfx extends JPanel {
      */
     private void drawArray(ArrayList<Elements> a, Graphics g) {
         // For each elements of the array (not an actual for each because of concurrent modification exception)
-        //noinspection ForLoopReplaceableByForEach
         for (int i = 0; i < a.size(); i++) {
             // Get his color
             g.setColor(a.get(i).getColor());
 
             // Print it
-            g.fillPolygon(a.get(i).getX(), a.get(i).getY(), 4);
+            if(!a.isEmpty()) g.fillPolygon(a.get(i).getX(), a.get(i).getY(), 4);
+
+            // Draw the gate's sprite
+            if(!a.isEmpty() && a.get(i) instanceof Gate){
+                g.drawRect(a.get(i).getLoneX1(), a.get(i).getY1(), a.get(i).getFullWidth1(), -300);
+            }
         }
     }
 }
