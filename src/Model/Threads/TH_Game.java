@@ -80,7 +80,7 @@ public class TH_Game extends Thread {
      * What to do when losing
      */
     private void lose() {
-        JOptionPane.showMessageDialog(display, "Timed Out!\nScore : " + moto.getDistanceTraveled(), "", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(display, "Timed Out!\nDistance traveled : " + moto.getDistanceTraveled() + " meters", "", JOptionPane.ERROR_MESSAGE);
         // Quitter
         System.exit(0);
     }

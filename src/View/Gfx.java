@@ -59,13 +59,16 @@ public class Gfx extends JPanel {
     @Override
     public void paint(Graphics g) {
         super.paint(g);
+
+        // Drawing the grass
         g.setColor(new Color(69, 100, 56));
         g.fillRect(0, HORIZON, WIDTH,HORIZON);
+
         // Draw the road
         drawRoad(g);
 
         // Draw the background
-        //drawBackground(g);
+        drawBackground(g);
 
         // Draw the player
         g.drawImage(Assets.player[moto.getState()][moto.getAnimation()], Moto.X, Moto.Y, Moto.WIDTH, Moto.HEIGHT, null);
@@ -145,7 +148,7 @@ public class Gfx extends JPanel {
             Curbs c = (Curbs) road.get(Road.CURBS).get(i);
             g.setColor(new Color(86, 125, 70));
             g.drawRect(0, c.getY1(),WIDTH,-c.getHeight());
-            drawArray(c.getSeg(), g);
+            if(c.getSeg().size() != 0) drawArray(c.getSeg(), g);
         }
 
         /* Draw other elements */
@@ -166,8 +169,7 @@ public class Gfx extends JPanel {
             g.setColor(a.get(i).getColor());
 
             // Print it if below horizon
-            //if (a.get(i).getY1() >= HORIZON)
-                g.fillPolygon(a.get(i).getX(), a.get(i).getY(), 4);
+            if (a.get(i).getY1() >= HORIZON) g.fillPolygon(a.get(i).getX(), a.get(i).getY(), 4);
         }
     }
 }
