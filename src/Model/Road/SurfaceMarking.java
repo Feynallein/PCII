@@ -1,7 +1,6 @@
 package Model.Road;
 
 import Model.Moto;
-import View.Gfx;
 
 import java.awt.*;
 
@@ -9,6 +8,7 @@ import java.awt.*;
  * The surface marking
  */
 public class SurfaceMarking extends Elements {
+    //public static final int HEIGHT = Road.CURBING_HEIGHT;
     /**
      * Constructor
      *
@@ -18,14 +18,20 @@ public class SurfaceMarking extends Elements {
      * @param moto  the player
      */
     public SurfaceMarking(int y1, int y2, Color color, Moto moto) {
-        super(y1, y2, color, moto);
+        super(y1, color, moto, 0);
     }
 
     /**
      * Calculate the widths of this segment
      */
+    @Override
     protected void scale() {
-        width1 = (int) ((y1 - Gfx.HEIGHT) / coefficient + Road.INITIAL_WIDTH);
-        width2 = (int) ((y2 - Gfx.HEIGHT) / coefficient + Road.INITIAL_WIDTH);
+        width1 = 10;
+        width2 = 10;
+    }
+
+    @Override
+    public void specialUpdate(Elements elements) {
+
     }
 }

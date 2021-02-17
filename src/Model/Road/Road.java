@@ -12,16 +12,6 @@ import java.util.HashMap;
  */
 public class Road {
     /**
-     * Const : Number of segments per rumble
-     */
-    public static final int CURBING_SIZE = 10;
-
-    /**
-     * Const : Height of a rumble (in pixels)
-     */
-    public static final int CURBING_HEIGHT = CURBING_SIZE * 10;
-
-    /**
      * Const : Half of the road width
      */
     public static final int INITIAL_WIDTH = Gfx.WIDTH / 2;
@@ -34,7 +24,7 @@ public class Road {
     /**
      * Const : segments key for the hashmap
      */
-    public final static String SEG = "segments";
+    public final static String CURBS = "curbs";
 
     /**
      * Const : obstacles key for the hashmap
@@ -54,12 +44,13 @@ public class Road {
     /**
      * Last distance where there was a gate
      */
-    private int lastDistance = 0;
+    private int lastDistance;
 
     /**
      * Hashmap of the different objects that compose the road
      */
-    private final HashMap<String, ArrayList<Elements>> road = new HashMap<>();
+    private final HashMap<String, ArrayList<Elements>> road;
+
 
     /**
      * The player
@@ -73,9 +64,11 @@ public class Road {
      */
     public Road(Moto moto) {
         this.moto = moto;
+        this.lastDistance = 0;
+        this.road = new HashMap<>();
 
         // Creating the different sub-array lists
-        road.put(SEG, new ArrayList<>());
+        road.put(CURBS, new ArrayList<>());
         road.put(SM, new ArrayList<>());
         road.put(GATES, new ArrayList<>());
         road.put(OBS, new ArrayList<>());
@@ -85,10 +78,13 @@ public class Road {
     }
 
     private void createRoad() {
-        for (int i = (int) Math.ceil((float) Gfx.HEIGHT / CURBING_HEIGHT); i > 0; i--) {
-            for (int idx = (i * Segment.HEIGHT) - 1; idx >= (i * Segment.HEIGHT) - CURBING_SIZE; idx--) {
-                road.get(SEG).add(new Segment(idx * Segment.HEIGHT, (idx - 1) * Segment.HEIGHT, Math.abs((idx / CURBING_SIZE)) % 2 == 0 ? new Color(45, 45, 45) : new Color(40, 40, 40), this.moto));
-            }
+        int height;
+        boolean b = true;
+        for(int i = Gfx.HEIGHT; i > Gfx.HORIZON; i -= height){
+            height = (int) (0.1639 * i - 58);
+            if(height <= 0) height = 1;
+            road.get(CURBS).add(new Curbs(i, b ? new Color(45, 45, 45) : new Color(40, 40, 40), moto, height));
+            b = !b;
         }
     }
 
@@ -96,21 +92,28 @@ public class Road {
      * Update every segments
      */
     public void update() {
+        //Todo: optimizations
         road.forEach((s, a) -> {
             for (Elements e : a) {
-                e.update();
+                if(!(e instanceof Curbs)) e.update();
             }
         });
 
+        for(int i = 0; i < road.get(CURBS).size(); i++){
+            if(i != 0) road.get(CURBS).get(i).specialUpdate(road.get(CURBS).get(i - 1));
+            else road.get(CURBS).get(i).update();
+        }
+
         // Removing if below the screen's height + adding a new one (not for gates)
-        for (String s : new String[]{SEG, SM, GATES}) {
+        for (String s : new String[]{CURBS, SM, GATES}) {
             if (!road.get(s).isEmpty() && road.get(s).get(0).getY2() >= Gfx.HEIGHT) {
                 int lastIndex = road.get(s).size() - 1;
                 switch (s) {
-                    // Adding a new segment
-                    case SEG -> road.get(s).add(new Segment(road.get(s).get(lastIndex).getY2(), road.get(s).get(lastIndex).getY2() - Segment.HEIGHT, road.get(s).get(0).getColor(), moto));
+                    // Adding a new Curbs
+                    //case CURBS -> road.get(s).add(new Curbs(road.get(s).get(lastIndex).getY2(), road.get(s).get(0).getColor(), moto, 1));
+                    //case SEG -> road.get(s).add(new Segment(road.get(s).get(lastIndex).getY2(), road.get(s).get(lastIndex).getY2() - Segment.MAX_HEIGHT, road.get(s).get(0).getColor(), moto));
                     // Adding a new surface marking
-                    case SM -> road.get(s).add(new SurfaceMarking(road.get(s).get(lastIndex).getY2(), road.get(s).get(lastIndex).getY2() - Segment.HEIGHT, road.get(s).get(0).getColor(), moto));
+                    //case SM -> road.get(s).add(new SurfaceMarking(road.get(s).get(lastIndex).getY2(), road.get(s).get(lastIndex).getY2() - SurfaceMarking.HEIGHT, road.get(s).get(0).getColor(), moto));
                     // Adding time to the timer
                     case GATES -> moto.addTimer(Gate.ADDED_TIME);
                 }
@@ -121,7 +124,7 @@ public class Road {
 
         // Adding gates for every 3 km (the distance is in meters)
         if (moto.getDistanceTraveled() - lastDistance >= 3000) { //TODO: calculation instead of hard coding this + adjustable difficulty (w/ the menu & settings)
-            road.get(GATES).add(new Gate(CURBING_HEIGHT, 0, Color.RED, moto));
+            //road.get(GATES).add(new Gate(Gate.HEIGHT, 0, Color.RED, moto));
             lastDistance = moto.getDistanceTraveled();
         }
     }

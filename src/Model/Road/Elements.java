@@ -39,6 +39,8 @@ public abstract class Elements {
      */
     protected int width2;
 
+    protected int height;
+
     /**
      * The player
      */
@@ -52,23 +54,23 @@ public abstract class Elements {
     /**
      * Constructor
      *
-     * @param y1    the first y (below)
-     * @param y2    the second y (above)
-     * @param color the color
-     * @param moto  the player
+     * @param y1     the first y (below)
+     * @param color  the color
+     * @param moto   the player
      */
-    public Elements(int y1, int y2, Color color, Moto moto) {
+    public Elements(int y1, Color color, Moto moto, int height) {
         this.y1 = y1;
-        this.y2 = y2;
         this.color = color;
         this.moto = moto;
+        this.height = height;
+        this.y2 = this.y1 - this.height;
 
-        // Scaling to get the widths
+        // Scaling to get the widths and the height
         scale();
     }
 
     /**
-     * The scaling : calculate the widths
+     * The scaling
      */
     abstract void scale();
 
@@ -78,7 +80,6 @@ public abstract class Elements {
     public void update() {
         // Incrementing the y
         y1++;
-        y2++;
 
         // Re-scaling to the new y
         scale();
@@ -128,4 +129,10 @@ public abstract class Elements {
     public Color getColor() {
         return color;
     }
+
+    public int getHeight(){
+        return height;
+    }
+
+    public abstract void specialUpdate(Elements elements);
 }
