@@ -110,8 +110,7 @@ public class Road {
                 int lastIndex = road.get(s).size() - 1;
                 switch (s) {
                     // Adding a new Curbs
-                    //case CURBS -> road.get(s).add(new Curbs(road.get(s).get(lastIndex).getY2(), road.get(s).get(0).getColor(), moto, 1));
-                    //case SEG -> road.get(s).add(new Segment(road.get(s).get(lastIndex).getY2(), road.get(s).get(lastIndex).getY2() - Segment.MAX_HEIGHT, road.get(s).get(0).getColor(), moto));
+                    case CURBS -> road.get(s).add(new Curbs(road.get(s).get(lastIndex).getY2(), road.get(s).get(0).getColor(), moto, 1));
                     // Adding a new surface marking
                     //case SM -> road.get(s).add(new SurfaceMarking(road.get(s).get(lastIndex).getY2(), road.get(s).get(lastIndex).getY2() - SurfaceMarking.HEIGHT, road.get(s).get(0).getColor(), moto));
                     // Adding time to the timer
