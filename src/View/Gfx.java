@@ -155,6 +155,5 @@ public class Gfx extends JPanel {
             // Print it if below horizon
             if (a.get(i).getY1() >= HORIZON) g.fillPolygon(a.get(i).getX(), a.get(i).getY(), 4);
         }
-
     }
 }
