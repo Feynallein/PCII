@@ -62,7 +62,7 @@ public class Gfx extends JPanel {
 
         // Drawing the grass
         g.setColor(new Color(69, 100, 56));
-        g.fillRect(0, HORIZON, WIDTH,HORIZON);
+        g.fillRect(0, HORIZON, WIDTH, HORIZON);
 
         // Draw the road
         drawRoad(g);
@@ -144,11 +144,11 @@ public class Gfx extends JPanel {
         /* Draw the road */
 
         // Not a for each because of concurrent modification exception
-        for(int i = 0; i < road.get(Road.CURBS).size(); i++){
+        for (int i = 0; i < road.get(Road.CURBS).size(); i++) {
             Curbs c = (Curbs) road.get(Road.CURBS).get(i);
             g.setColor(new Color(86, 125, 70));
-            g.drawRect(0, c.getY1(),WIDTH,-c.getHeight());
-            if(c.getSeg().size() != 0) drawArray(c.getSeg(), g);
+            g.drawRect(0, c.getY1(), WIDTH, -c.getHeight());
+            drawArray(c.getSeg(), g);
         }
 
         /* Draw other elements */

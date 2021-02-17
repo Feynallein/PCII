@@ -9,7 +9,6 @@ import java.awt.*;
  * The gates
  */
 public class Gate extends Elements {
-    //public static final int HEIGHT = Road.CURBING_HEIGHT;
     /**
      * Const : Time added when passing a gate
      */
@@ -19,11 +18,10 @@ public class Gate extends Elements {
      * Constructor
      *
      * @param y1    the first y (below)
-     * @param y2    the second y (above)
      * @param color the color
      * @param moto  the player
      */
-    public Gate(int y1, int y2, Color color, Moto moto) {
+    public Gate(int y1, Color color, Moto moto) {
         super(y1, color, moto, 0);
     }
 

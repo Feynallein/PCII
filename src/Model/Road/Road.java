@@ -80,9 +80,9 @@ public class Road {
     private void createRoad() {
         int height;
         boolean b = true;
-        for(int i = Gfx.HEIGHT; i > Gfx.HORIZON; i -= height){
+        for (int i = Gfx.HEIGHT; i > Gfx.HORIZON; i -= height) {
             height = (int) (0.1639 * i - 58);
-            if(height <= 0) height = 1;
+            if (height <= 0) height = 1;
             road.get(CURBS).add(new Curbs(i, b ? new Color(45, 45, 45) : new Color(40, 40, 40), moto, height));
             b = !b;
         }
@@ -95,12 +95,12 @@ public class Road {
         //Todo: optimizations
         road.forEach((s, a) -> {
             for (Elements e : a) {
-                if(!(e instanceof Curbs)) e.update();
+                if (!(e instanceof Curbs)) e.update();
             }
         });
 
-        for(int i = 0; i < road.get(CURBS).size(); i++){
-            if(i != 0) road.get(CURBS).get(i).specialUpdate(road.get(CURBS).get(i - 1));
+        for (int i = 0; i < road.get(CURBS).size(); i++) {
+            if (i != 0) road.get(CURBS).get(i).specialUpdate(road.get(CURBS).get(i - 1));
             else road.get(CURBS).get(i).update();
         }
 
@@ -110,6 +110,7 @@ public class Road {
                 int lastIndex = road.get(s).size() - 1;
                 switch (s) {
                     // Adding a new Curbs
+                    //TODO: -> j'pense que la coulour qui merde c'est ici, ca prend la couleur du dernier qui est la même que le dernier du coup ca fait un doublon
                     case CURBS -> road.get(s).add(new Curbs(road.get(s).get(lastIndex).getY2(), road.get(s).get(0).getColor(), moto, 1));
                     // Adding a new surface marking
                     //case SM -> road.get(s).add(new SurfaceMarking(road.get(s).get(lastIndex).getY2(), road.get(s).get(lastIndex).getY2() - SurfaceMarking.HEIGHT, road.get(s).get(0).getColor(), moto));

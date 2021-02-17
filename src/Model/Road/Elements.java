@@ -54,9 +54,9 @@ public abstract class Elements {
     /**
      * Constructor
      *
-     * @param y1     the first y (below)
-     * @param color  the color
-     * @param moto   the player
+     * @param y1    the first y (below)
+     * @param color the color
+     * @param moto  the player
      */
     public Elements(int y1, Color color, Moto moto, int height) {
         this.y1 = y1;
@@ -73,6 +73,8 @@ public abstract class Elements {
      * The scaling
      */
     abstract void scale();
+
+    public abstract void specialUpdate(Elements elements);
 
     /**
      * Updating the position of this segment
@@ -130,9 +132,7 @@ public abstract class Elements {
         return color;
     }
 
-    public int getHeight(){
+    public int getHeight() {
         return height;
     }
-
-    public abstract void specialUpdate(Elements elements);
 }

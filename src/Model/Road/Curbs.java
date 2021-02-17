@@ -31,7 +31,6 @@ public class Curbs extends Elements {
 
         @Override
         public void specialUpdate(Elements elements) {
-
         }
     }
 
