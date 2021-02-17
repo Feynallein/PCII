@@ -84,6 +84,7 @@ public class Road {
             height = (int) (0.1639 * i - 58);
             if (height <= 0) height = 1;
             road.get(CURBS).add(new Curbs(i, b ? new Color(45, 45, 45) : new Color(40, 40, 40), moto, height));
+            if(b) road.get(SM).add(new SurfaceMarking(i,moto, height, (Curbs) road.get(CURBS).get(road.get(CURBS).size() - 1)));
             b = !b;
         }
     }
@@ -102,7 +103,9 @@ public class Road {
         });
 
         for (int i = 0; i < road.get(CURBS).size(); i++) {
-            if (i != 0) road.get(CURBS).get(i).specialUpdate(road.get(CURBS).get(i - 1));
+            if (i != 0) {
+                road.get(CURBS).get(i).specialUpdate(road.get(CURBS).get(i - 1));
+            }
             else road.get(CURBS).get(i).update();
         }
 
@@ -115,7 +118,8 @@ public class Road {
                     //TODO: -> j'pense que la coulour qui merde c'est ici, ca prend la couleur du dernier qui est la même que le dernier du coup ca fait un doublon
                     case CURBS -> road.get(s).add(new Curbs(road.get(s).get(lastIndex).getY2(), road.get(s).get(0).getColor(), moto, 1));
                     // Adding a new surface marking
-                    //case SM -> road.get(s).add(new SurfaceMarking(road.get(s).get(lastIndex).getY2(), road.get(s).get(lastIndex).getY2() - SurfaceMarking.HEIGHT, road.get(s).get(0).getColor(), moto));
+                    //TODO: -> une fois y'a un doublon, je pense c'est un peu la même chose au dessus, avec genre en rajouter un a la fin donc ca se colle
+                    case SM -> road.get(s).add(new SurfaceMarking(road.get(CURBS).get(road.get(CURBS).size() - 1).getY2(), moto, 1, (Curbs) road.get(CURBS).get(road.get(CURBS).size() - 1)));
                     // Adding time to the timer
                     case GATES -> moto.addTimer(Gate.ADDED_TIME);
                 }
@@ -125,8 +129,8 @@ public class Road {
         }
 
         // Adding gates for every 3 km (the distance is in meters)
-        if (moto.getDistanceTraveled() - lastDistance >= 100) { //TODO: calculation instead of hard coding this + adjustable difficulty (w/ the menu & settings)
-            road.get(GATES).add(new Gate(road.get(CURBS).get(road.get(CURBS).size() - 1).getY2(), Color.RED, moto, 1));
+        if (moto.getDistanceTraveled() - lastDistance >= 3000) { //TODO: calculation instead of hard coding this + adjustable difficulty (w/ the menu & settings)
+            road.get(GATES).add(new Gate(road.get(CURBS).get(road.get(CURBS).size() - 1).getY2(), Color.RED, moto, 1, (Curbs) road.get(CURBS).get(road.get(CURBS).size() - 1)));
             lastDistance = moto.getDistanceTraveled();
         }
     }

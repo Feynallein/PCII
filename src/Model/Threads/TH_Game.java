@@ -103,7 +103,7 @@ public class TH_Game extends Thread {
         // Creating the game frame
         this.display = new JFrame();
         this.display.setTitle("nom du jeu");
-        this.display.setResizable(true);
+        this.display.setResizable(false);
         this.display.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.display.add(gfx);
         this.display.pack();

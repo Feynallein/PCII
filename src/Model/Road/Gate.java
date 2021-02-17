@@ -14,6 +14,8 @@ public class Gate extends Elements {
      */
     public static final int ADDED_TIME = 60;
 
+    private final Curbs c;
+
     /**
      * Constructor
      *
@@ -21,13 +23,16 @@ public class Gate extends Elements {
      * @param color the color
      * @param moto  the player
      */
-    public Gate(int y1, Color color, Moto moto, int height) {
+    public Gate(int y1, Color color, Moto moto, int height, Curbs c) {
         super(y1, color, moto, height);
+        this.c = c;
     }
 
     @Override
     public void update() {
-        y1++;
+        if(y1 < Gfx.HEIGHT) y1 = c.getY2();
+        else y1++;
+
         height = (int) (0.1639 * y1 - 58);
         y2 = y1 - height;
         scale();
