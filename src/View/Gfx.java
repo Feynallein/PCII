@@ -68,7 +68,8 @@ public class Gfx extends JPanel {
         g.fillRect(0, HORIZON, WIDTH, HORIZON);
 
         // Draw the background
-        drawBackground(g);
+        //drawBackground(g);
+        g.drawImage(Assets.bg, 0, 0, WIDTH, HORIZON, null);
 
         // Draw the road
         drawRoad(g);
@@ -96,6 +97,8 @@ public class Gfx extends JPanel {
      * @param g the graphics
      */
     private void drawBackground(Graphics g) {
+        //TODO: changer, ca tourne quand la route tourne...
+
         // If it has to draw two images
         if (Math.abs(moto.getOffset()) % Assets.bg.getWidth() != 0) {
 
