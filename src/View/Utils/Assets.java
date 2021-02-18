@@ -51,7 +51,7 @@ public class Assets {
         }
 
         // Load the background
-        bg = ImageLoader.loadImage("/Textures/background.jpg");
+        bg = ImageLoader.loadImage("/Textures/background.png");
         gate = ImageLoader.loadImage("/Textures/gate.png");
     }
 }

@@ -163,6 +163,8 @@ public class Gfx extends JPanel {
      * @param g graphics
      */
     private void drawArray(ArrayList<Elements> a, Graphics g) {
+        //TODO: regarder les erreurs
+
         // For each elements of the array (not an actual for each because of concurrent modification exception)
         for (int i = 0; i < a.size(); i++) {
             // Get his color

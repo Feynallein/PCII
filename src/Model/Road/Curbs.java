@@ -68,6 +68,7 @@ public class Curbs extends Elements {
     public void specialUpdate(Elements e) {
         Curbs c = (Curbs) e;
         y1 = c.getY2();
+        //TODO: remplacer par des calcules
         height = (int) (0.1639 * y1 - 58);
         y2 = y1 - height;
 
