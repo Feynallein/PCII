@@ -111,6 +111,7 @@ public class Road {
 
         // Removing if below the screen's height + adding a new one (not for gates)
         for (String s : new String[]{CURBS, SM, GATES}) {
+            //TODO: Meilleur affichage des gates (supprimer plus tard)
             if (!road.get(s).isEmpty() && road.get(s).get(0).getY2() >= Gfx.HEIGHT) {
                 int lastIndex = road.get(s).size() - 1;
                 switch (s) {
@@ -121,6 +122,7 @@ public class Road {
                     //TODO: -> une fois y'a un doublon, je pense c'est un peu la même chose au dessus, avec genre en rajouter un a la fin donc ca se colle
                     case SM -> road.get(s).add(new SurfaceMarking(road.get(CURBS).get(road.get(CURBS).size() - 1).getY2(), moto, 1, (Curbs) road.get(CURBS).get(road.get(CURBS).size() - 1)));
                     // Adding time to the timer
+                    //TODO: faire une réelle détéction
                     case GATES -> moto.addTimer(Gate.ADDED_TIME);
                 }
                 // Removing the object

@@ -27,6 +27,8 @@ public class Assets {
      */
     public static BufferedImage bg;
 
+    public static BufferedImage gate;
+
     /**
      * The font at size 40
      */
@@ -50,5 +52,6 @@ public class Assets {
 
         // Load the background
         bg = ImageLoader.loadImage("/Textures/background.jpg");
+        gate = ImageLoader.loadImage("/Textures/gate.png");
     }
 }

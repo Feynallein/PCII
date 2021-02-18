@@ -65,11 +65,11 @@ public class Gfx extends JPanel {
         g.setColor(new Color(69, 100, 56));
         g.fillRect(0, HORIZON, WIDTH, HORIZON);
 
-        // Draw the road
-        drawRoad(g);
-
         // Draw the background
         drawBackground(g);
+
+        // Draw the road
+        drawRoad(g);
 
         // Draw the player
         g.drawImage(Assets.player[moto.getState()][moto.getAnimation()], Moto.X, Moto.Y, Moto.WIDTH, Moto.HEIGHT, null);
@@ -169,11 +169,11 @@ public class Gfx extends JPanel {
             g.setColor(a.get(i).getColor());
 
             // Print it
-            if(!a.isEmpty()) g.fillPolygon(a.get(i).getX(), a.get(i).getY(), 4);
+            if(!a.isEmpty() && a.get(i).getY1() >= HORIZON) g.fillPolygon(a.get(i).getX(), a.get(i).getY(), 4);
 
             // Draw the gate's sprite
             if(!a.isEmpty() && a.get(i) instanceof Gate){
-                g.drawRect(a.get(i).getLoneX1(), a.get(i).getY1(), a.get(i).getFullWidth1(), -300);
+                g.drawImage(Assets.gate, a.get(i).getMidLoneX(), a.get(i).getMidY() - a.get(i).getMidFullWidth()/2, a.get(i).getMidFullWidth(), a.get(i).getMidFullWidth()/2, null);
             }
         }
     }

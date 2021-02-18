@@ -150,4 +150,16 @@ public abstract class Elements {
     public int getFullWidth2(){
         return 2*width2;
     }
+
+    public int getMidFullWidth(){
+        return (getFullWidth1() + getFullWidth2())/2;
+    }
+
+    public int getMidLoneX(){
+        return (getLoneX1() + getLoneX2())/2;
+    }
+
+    public int getMidY(){
+        return (y1 + y2)/2;
+    }
 }
