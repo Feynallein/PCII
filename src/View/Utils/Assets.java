@@ -29,10 +29,16 @@ public class Assets {
 
     public static BufferedImage gate;
 
+    public static BufferedImage speed_counter;
+
+    public static BufferedImage needle;
+
+    public static final float[] needleAnchor = new float[]{154, 154};
+
     /**
      * The font at size 40
      */
-    public static Font font40 = FontLoader.loadFont("Resources/Others/times.ttf", 40);
+    public static final Font font40 = FontLoader.loadFont("Resources/Others/times.ttf", 40);
 
     /**
      * Initialize all assets
@@ -53,5 +59,7 @@ public class Assets {
         // Load the background
         bg = ImageLoader.loadImage("/Textures/background.png");
         gate = ImageLoader.loadImage("/Textures/gate.png");
+        speed_counter = ImageLoader.loadImage("/Textures/speed_counter.png");
+        needle = ImageLoader.loadImage("/Textures/needle.png");
     }
 }

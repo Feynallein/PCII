@@ -9,6 +9,8 @@ import View.Utils.Assets;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -74,13 +76,15 @@ public class Gfx extends JPanel {
         // Draw the player
         g.drawImage(Assets.player[moto.getState()][moto.getAnimation()], Moto.X, Moto.Y, Moto.WIDTH, Moto.HEIGHT, null);
 
+        // Speed Counter
+        drawSpeedCounter(g);
+
+
+
         /* TEMPORARY with those bad graphics : */
 
         // Distance traveled
         Text.drawString(g, Integer.toString(moto.getDistanceTraveled()), 50, HEIGHT - 50, true, Color.black, Assets.font40);
-
-        // Speed
-        Text.drawString(g, Integer.toString((int) moto.getSpeed()), WIDTH - 50, HEIGHT - 50, true, Color.black, Assets.font40);
 
         // Timer
         Text.drawString(g, Integer.toString(moto.getTimer()), WIDTH / 2, 50, true, Color.WHITE, Assets.font40);
@@ -178,5 +182,23 @@ public class Gfx extends JPanel {
                 g.drawImage(Assets.gate, a.get(i).getMidLoneX(), a.get(i).getMidY() - a.get(i).getMidFullWidth()/2, a.get(i).getMidFullWidth(), a.get(i).getMidFullWidth()/2, null);
             }
         }
+    }
+
+    private void drawSpeedCounter(Graphics g){
+        /* The Counter */
+        g.drawImage(Assets.speed_counter, WIDTH - Assets.speed_counter.getWidth(), HEIGHT - Assets.speed_counter.getHeight(), null);
+
+        /* The Needle */
+
+        // 180/225 -> if their is a 180 angle of the original needle, it correspond to 225 km/h
+        // Linear straight line, coefficient = 180/225, the angle is calculate by multiplying it to the player's speed
+        int theta = (int) (Math.ceil(moto.getSpeed())*(180f/225f));
+
+        // Rotation
+        AffineTransform tx = AffineTransform.getRotateInstance(Math.toRadians(theta), Assets.needleAnchor[0],Assets.needleAnchor[1]);
+        AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
+
+        // Drawing
+        g.drawImage(op.filter(Assets.needle, null), WIDTH - Assets.needle.getWidth(), HEIGHT - Assets.needle.getHeight(), null);
     }
 }
