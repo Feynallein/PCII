@@ -10,11 +10,6 @@ import java.awt.*;
  */
 public abstract class Elements {
     /**
-     * Const : leading coefficient
-     */
-    public static final double coefficient = -2d * (Gfx.HORIZON - Gfx.HEIGHT) / (Gfx.WIDTH - Road.FINAL_WIDTH);
-
-    /**
      * Const : middle of the screen
      */
     public final static int center = Gfx.WIDTH / 2;
@@ -51,6 +46,10 @@ public abstract class Elements {
      */
     protected final Color color;
 
+    protected double coefficient;
+
+    //    public double coefficient = -2d * (Gfx.HORIZON - Gfx.HEIGHT) / (Gfx.WIDTH - Road.FINAL_WIDTH);
+
     /**
      * Constructor
      *
@@ -64,6 +63,7 @@ public abstract class Elements {
         this.moto = moto;
         this.height = height;
         this.y2 = this.y1 - this.height;
+        coefficient = (moto.getOffset() * (-0.99083)) + 0.58688;
 
         // Scaling to get the widths and the height
         scale();
