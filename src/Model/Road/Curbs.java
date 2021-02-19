@@ -23,10 +23,16 @@ public class Curbs extends Elements {
         }
 
         @Override
-        void scale() {
+        protected void scale() {
+            //TODO: largeur fixe, mais on calcule les coordonnées x d'affichage en fct de la position y et de l'offset de la moto
             y2 = y1 - height;
-            width1 = (int) ((y1 - Gfx.HEIGHT) / coefficient + Road.INITIAL_WIDTH);
-            width2 = (int) ((y2 - Gfx.HEIGHT) / coefficient + Road.INITIAL_WIDTH);
+            coefficient = (moto.getOffset() * (-0.00091687)) + (-2d * (Gfx.HORIZON - Gfx.HEIGHT) / (Gfx.WIDTH - Road.FINAL_WIDTH));
+            width1 = calculateWidth(y1);
+            width2 = calculateWidth(y2);
+        }
+
+        private int calculateWidth(int y){
+            return (int) (((y - Gfx.HEIGHT) / coefficient) + Road.INITIAL_WIDTH);
         }
 
         @Override
