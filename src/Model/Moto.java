@@ -1,6 +1,7 @@
 package Model;
 
 import Model.Road.Gate;
+import Model.Road.Road;
 import Model.Threads.TH_Game;
 import View.Gfx;
 
@@ -91,14 +92,14 @@ public class Moto {
      * Move the player to the left
      */
     public void moveLeft() {
-        offset -= MOVE_SPEED;
+        if(offset > -Road.INITIAL_WIDTH) offset -= MOVE_SPEED;
     }
 
     /**
      * Move the player to the right
      */
     public void moveRight() {
-        offset += MOVE_SPEED;
+        if(offset < Road.INITIAL_WIDTH) offset += MOVE_SPEED;
     }
 
     /**

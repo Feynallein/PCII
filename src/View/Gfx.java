@@ -160,7 +160,7 @@ public class Gfx extends JPanel {
         }
 
         /* Draw other elements */
-        //for (String s : new String[]{Road.GATES, Road.SM}) drawArray(road.get(s), g);
+        for (String s : new String[]{Road.GATES, Road.SM}) drawArray(road.get(s), g);
     }
 
     /**
@@ -170,7 +170,7 @@ public class Gfx extends JPanel {
      * @param g graphics
      */
     private void drawArray(ArrayList<Elements> a, Graphics g) {
-        //TODO: regarder les erreurs
+        //TODO: fix the warnings
 
         // For each elements of the array (not an actual for each because of concurrent modification exception)
         for (int i = 0; i < a.size(); i++) {
@@ -181,9 +181,9 @@ public class Gfx extends JPanel {
             if(!a.isEmpty() && a.get(i).getY1() >= HORIZON) g.fillPolygon(a.get(i).getX(), a.get(i).getY(), 4);
 
             // Draw the gate's sprite
-            if(!a.isEmpty() && a.get(i) instanceof Gate){
+/*            if(!a.isEmpty() && a.get(i) instanceof Gate){
                 g.drawImage(Assets.gate, a.get(i).getMidLoneX(), a.get(i).getMidY() - a.get(i).getMidFullWidth()/2, a.get(i).getMidFullWidth(), a.get(i).getMidFullWidth()/2, null);
-            }
+            }*/
         }
     }
 

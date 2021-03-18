@@ -70,7 +70,7 @@ public class Curbs extends Elements {
     protected void scale() {
 
     }
-
+    //TODO: pour les courbes : changer la position en x max (comme le bug que y'a avec gate et SM)
     @Override
     public void specialUpdate(Elements e) {
         Curbs c = (Curbs) e;

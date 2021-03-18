@@ -122,7 +122,7 @@ public class Road {
                     //TODO: -> une fois y'a un doublon, je pense c'est un peu la même chose au dessus, avec genre en rajouter un a la fin donc ca se colle
                     case SM -> road.get(s).add(new SurfaceMarking(road.get(CURBS).get(road.get(CURBS).size() - 1).getY2(), moto, 1, (Curbs) road.get(CURBS).get(road.get(CURBS).size() - 1)));
                     // Adding time to the timer
-                    //TODO: faire une réelle détéction
+                    //TODO: faire une réelle detection
                     case GATES -> moto.addTimer(Gate.ADDED_TIME);
                 }
                 // Removing the object

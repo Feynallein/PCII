@@ -29,6 +29,9 @@ public abstract class Elements {
      */
     protected int[] widths;
 
+    /**
+     * Height of this element
+     */
     protected int height;
 
     /**
@@ -41,6 +44,9 @@ public abstract class Elements {
      */
     protected final Color color;
 
+    /**
+     * The array of the coefficients of the road's axes
+     */
     protected double[] coefficients = new double[2];
 
 
@@ -68,17 +74,32 @@ public abstract class Elements {
      */
     abstract void scale();
 
+    /**
+     * Special update for the curbs
+     * @param elements an element
+     */
     public abstract void specialUpdate(Elements elements);
 
+    /**
+     * Set the coefficients of the road axes
+     */
     public void setCoefficients(){
         coefficients[0] = -2d * (Gfx.HORIZON - getOriginIncreased()) / (Gfx.WIDTH - Road.FINAL_WIDTH);
         coefficients[1] = -2d * (Gfx.HORIZON - getOriginDecreased()) / (Gfx.WIDTH - Road.FINAL_WIDTH);
     }
 
+    /**
+     * Calculate the ordered at the origin with the player's offset
+     * @return the ordered at the origin
+     */
     protected int getOriginIncreased(){
         return (int) (((float) (Gfx.HORIZON/2 - Gfx.HORIZON)/Road.INITIAL_WIDTH) * moto.getOffset() + Gfx.HEIGHT);
     }
 
+    /**
+     * Calculate the ordered at the origin with the opposite of the player's offset
+     * @return the ordered at the origin
+     */
     protected int getOriginDecreased(){
         return (int) (((float) (Gfx.HORIZON/2 - Gfx.HORIZON)/Road.INITIAL_WIDTH) * -moto.getOffset() + Gfx.HEIGHT);
     }

@@ -33,8 +33,10 @@ public class Gate extends Elements {
         if(y1 < Gfx.HEIGHT) y1 = c.getY2();
         else y1++;
 
+        //TODO: replace by a calculation (same as in curbs)
         height = (int) (0.1639 * y1 - 58);
         y2 = y1 - height;
+
         scale();
     }
 
@@ -43,8 +45,15 @@ public class Gate extends Elements {
      */
     @Override
     void scale() {
-/*        width1 = (int) ((y1 - Gfx.HEIGHT) / coefficient + Road.INITIAL_WIDTH);
-        width2 = (int) ((y2 - Gfx.HEIGHT) / coefficient + Road.INITIAL_WIDTH);*/
+        widths = calculateWidth(y1, y2);
+    }
+
+    private int[] calculateWidth(int y1, int y2){
+        return new int[]{(int) (((y1 - getOriginDecreased()) / coefficients[1]) + Road.INITIAL_WIDTH),
+                (int) (((y1 - getOriginIncreased()) / coefficients[0]) + Road.INITIAL_WIDTH),
+                (int) (((y2 - getOriginIncreased()) / coefficients[0]) + Road.INITIAL_WIDTH),
+                (int) (((y2 - getOriginDecreased()) / coefficients[1]) + Road.INITIAL_WIDTH)
+        };
     }
 
     @Override

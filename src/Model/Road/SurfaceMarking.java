@@ -30,12 +30,15 @@ public class SurfaceMarking extends Elements {
         if(y1 < Gfx.HEIGHT) y1 = c.getY2();
         else y1++;
 
+        //TODO: remplacer w/ calculations (same as in curbs)
         height = (int) (0.1639 * y1 - 58);
         y2 = y1 - height;
+        scale();
     }
 
     @Override
-    protected void scale() { }
+    protected void scale() {
+    }
 
     @Override
     public void specialUpdate(Elements elements) {
