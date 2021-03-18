@@ -25,14 +25,9 @@ public abstract class Elements {
     protected int y2;
 
     /**
-     * The first width (below)
+     * The 4 widths
      */
-    protected int width1;
-
-    /**
-     * The second width (above)
-     */
-    protected int width2;
+    protected int[] widths;
 
     protected int height;
 
@@ -46,9 +41,8 @@ public abstract class Elements {
      */
     protected final Color color;
 
-    protected double coefficient;
+    protected double[] coefficients = new double[2];
 
-    //    public double coefficient = -2d * (Gfx.HORIZON - Gfx.HEIGHT) / (Gfx.WIDTH - Road.FINAL_WIDTH);
 
     /**
      * Constructor
@@ -63,7 +57,7 @@ public abstract class Elements {
         this.moto = moto;
         this.height = height;
         this.y2 = this.y1 - this.height;
-        coefficient = (moto.getOffset() * (-0.99083)) + 0.58688;
+        setCoefficients();
 
         // Scaling to get the widths and the height
         scale();
@@ -75,6 +69,19 @@ public abstract class Elements {
     abstract void scale();
 
     public abstract void specialUpdate(Elements elements);
+
+    public void setCoefficients(){
+        coefficients[0] = -2d * (Gfx.HORIZON - getOriginIncreased()) / (Gfx.WIDTH - Road.FINAL_WIDTH);
+        coefficients[1] = -2d * (Gfx.HORIZON - getOriginDecreased()) / (Gfx.WIDTH - Road.FINAL_WIDTH);
+    }
+
+    protected int getOriginIncreased(){
+        return (int) (((float) (Gfx.HORIZON/2 - Gfx.HORIZON)/Road.INITIAL_WIDTH) * moto.getOffset() + Gfx.HEIGHT);
+    }
+
+    protected int getOriginDecreased(){
+        return (int) (((float) (Gfx.HORIZON/2 - Gfx.HORIZON)/Road.INITIAL_WIDTH) * -moto.getOffset() + Gfx.HEIGHT);
+    }
 
     /**
      * Updating the position of this segment
@@ -93,7 +100,7 @@ public abstract class Elements {
      * @return array list of x to get the bounds of this segment
      */
     public int[] getX() {
-        return new int[]{(center - width1) - moto.getOffset(), (center + width1) - moto.getOffset(), (center + width2) - moto.getOffset(), (center - width2) - moto.getOffset()};
+        return new int[]{(center - widths[0]), (center + widths[1]), (center + widths[2]), (center - widths[3])};
     }
 
     /**
@@ -132,33 +139,66 @@ public abstract class Elements {
         return color;
     }
 
+    /**
+     * Getter to the height of the element
+     * @return the height of the element
+     */
     public int getHeight() {
         return height;
     }
 
+    /**
+     * Getter to the centered full first width
+     * @return the centered sum of the above width
+     */
     public int getLoneX2(){
-        return (center - width2) - moto.getOffset();
+        return (center - (widths[2] + widths[3]));
     }
 
+    /**
+     * Getter to the centered full second width
+     * @return the centered sum of the below width
+     */
     public int getLoneX1(){
-        return (center - width1) - moto.getOffset();
+        return (center - (widths[0] + widths[1]));
     }
 
+    /**
+     * Getter to the sum of the first width (above)
+     * @return the sum of the above width
+     */
     public int getFullWidth1(){
-        return 2*width1;
-    }
-    public int getFullWidth2(){
-        return 2*width2;
+        return widths[0] + widths[1];
     }
 
+    /**
+     * Getter to the sum of the second width (below)
+     * @return the sum of the below width
+     */
+    public int getFullWidth2(){
+        return widths[2] + widths[3];
+    }
+
+    /**
+     * Getter to the mean of the full widths
+     * @return the mean of the full widths
+     */
     public int getMidFullWidth(){
         return (getFullWidth1() + getFullWidth2())/2;
     }
 
+    /**
+     * Getter to the mean of the lone X
+     * @return the mean of the lone X
+     */
     public int getMidLoneX(){
         return (getLoneX1() + getLoneX2())/2;
     }
 
+    /**
+     * Getter to the mean of the y
+     * @return the mean of the y
+     */
     public int getMidY(){
         return (y1 + y2)/2;
     }

@@ -21,8 +21,7 @@ public class SurfaceMarking extends Elements {
      */
     public SurfaceMarking(int y1, Moto moto, int height, Curbs c) {
         super(y1, Color.WHITE, moto, height);
-        this.width1 = WIDTH;
-        this.width2 = WIDTH;
+        this.widths = new int[]{WIDTH, WIDTH, WIDTH, WIDTH};
         this.c = c;
     }
 

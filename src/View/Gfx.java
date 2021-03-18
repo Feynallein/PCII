@@ -160,7 +160,7 @@ public class Gfx extends JPanel {
         }
 
         /* Draw other elements */
-        for (String s : new String[]{Road.GATES, Road.SM}) drawArray(road.get(s), g);
+        //for (String s : new String[]{Road.GATES, Road.SM}) drawArray(road.get(s), g);
     }
 
     /**

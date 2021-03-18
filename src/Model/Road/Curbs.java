@@ -1,7 +1,6 @@
 package Model.Road;
 
 import Model.Moto;
-import View.Gfx;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -24,15 +23,16 @@ public class Curbs extends Elements {
 
         @Override
         protected void scale() {
-            //TODO: largeur fixe, mais on calcule les coordonnées x d'affichage en fct de la position y et de l'offset de la moto
             y2 = y1 - height;
-            coefficient = (moto.getOffset() * (-0.00091687)) + (-2d * (Gfx.HORIZON - Gfx.HEIGHT) / (Gfx.WIDTH - Road.FINAL_WIDTH));
-            width1 = calculateWidth(y1);
-            width2 = calculateWidth(y2);
+            widths = calculateWidth(y1, y2);
         }
 
-        private int calculateWidth(int y){
-            return (int) (((y - Gfx.HEIGHT) / coefficient) + Road.INITIAL_WIDTH);
+        private int[] calculateWidth(int y1, int y2){
+            return new int[]{(int) (((y1 - getOriginDecreased()) / coefficients[1]) + Road.INITIAL_WIDTH),
+                        (int) (((y1 - getOriginIncreased()) / coefficients[0]) + Road.INITIAL_WIDTH),
+                        (int) (((y2 - getOriginIncreased()) / coefficients[0]) + Road.INITIAL_WIDTH),
+                        (int) (((y2 - getOriginDecreased()) / coefficients[1]) + Road.INITIAL_WIDTH)
+            };
         }
 
         @Override
@@ -68,6 +68,7 @@ public class Curbs extends Elements {
 
     @Override
     protected void scale() {
+
     }
 
     @Override
@@ -78,7 +79,7 @@ public class Curbs extends Elements {
         height = (int) (0.1639 * y1 - 58);
         y2 = y1 - height;
 
-        //TODO: add instead of recreating all (optimization)
+        //Possible optimization : add instead of recreating all
         initialize();
     }
 
@@ -87,7 +88,7 @@ public class Curbs extends Elements {
         y1++;
         y2++;
 
-        //TODO: add instead of recreating all (optimization)
+        //Possible optimization : add instead of recreating all
         initialize();
     }
 
