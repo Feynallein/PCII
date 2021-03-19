@@ -223,4 +223,8 @@ public abstract class Elements {
     public int getMidY(){
         return (y1 + y2)/2;
     }
+
+    public int[]  getWidths(){
+        return widths;
+    }
 }
