@@ -153,9 +153,14 @@ public class Gfx extends JPanel {
 
         // Not a for each because of concurrent modification exception
         for (int i = 0; i < road.get(Road.CURBS).size(); i++) {
+            // Get the curbs
             Curbs c = (Curbs) road.get(Road.CURBS).get(i);
+
+            // Draw  the grass background
             g.setColor(new Color(86, 125, 70));
             g.drawRect(0, c.getY1(), WIDTH, -c.getHeight());
+
+            // Draw the segments of the curb
             drawArray(c.getSeg(), g);
         }
 

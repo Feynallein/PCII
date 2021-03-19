@@ -77,10 +77,14 @@ public class Road {
         createRoad();
     }
 
+    /**
+     * Create the road
+     */
     private void createRoad() {
         int height;
         boolean b = true;
         for (int i = Gfx.HEIGHT; i > Gfx.HORIZON; i -= height) {
+            //TODO: remplacer par des calculs, les meme que ds curbs
             height = (int) (0.1639 * i - 58);
             if (height <= 0) height = 1;
             road.get(CURBS).add(new Curbs(i, b ? new Color(45, 45, 45) : new Color(40, 40, 40), moto, height));
@@ -94,6 +98,7 @@ public class Road {
      * Update every segments
      */
     public void update() {
+        // Update every elements that aren't curbs
         //Todo: optimizations
         road.forEach((s, a) -> {
             for (Elements e : a) {
@@ -103,6 +108,7 @@ public class Road {
             }
         });
 
+        // Special update or basic update the curbs
         for (int i = 0; i < road.get(CURBS).size(); i++) {
             if (i != 0) {
                 road.get(CURBS).get(i).specialUpdate(road.get(CURBS).get(i - 1));
@@ -116,7 +122,7 @@ public class Road {
                 int lastIndex = road.get(s).size() - 1;
                 switch (s) {
                     // Adding a new Curbs
-                    //TODO: -> j'pense que la coulour qui merde c'est ici, ca prend la couleur du dernier qui est la même que le dernier du coup ca fait un doublon
+                    //TODO: -> j'pense que la color qui merde c'est ici, ca prend la couleur du dernier qui est la même que le dernier du coup ca fait un doublon
                     case CURBS -> road.get(s).add(new Curbs(road.get(s).get(lastIndex).getY2(), road.get(s).get(0).getColor(), moto, 1));
                     // Adding a new surface marking
                     //TODO: -> une fois y'a un doublon, je pense c'est un peu la même chose au dessus, avec genre en rajouter un a la fin donc ca se colle

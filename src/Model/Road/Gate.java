@@ -14,6 +14,9 @@ public class Gate extends Elements {
      */
     public static final int ADDED_TIME = 60;
 
+    /**
+     * The curbs this gate is attached to
+     */
     private final Curbs c;
 
     /**
@@ -28,6 +31,9 @@ public class Gate extends Elements {
         this.c = c;
     }
 
+    /**
+     * Update method
+     */
     @Override
     public void update() {
         if(y1 < Gfx.HEIGHT) y1 = c.getY2();
@@ -35,8 +41,6 @@ public class Gate extends Elements {
 
         //TODO: replace by a calculation (same as in curbs)
         height = (int) (0.1639 * y1 - 58);
-        y2 = y1 - height;
-
         scale();
     }
 
@@ -45,9 +49,16 @@ public class Gate extends Elements {
      */
     @Override
     void scale() {
+        y2 = y1 - height;
         widths = calculateWidth(y1, y2);
     }
 
+    /**
+     * Calculate the widths
+     * @param y1 the above height
+     * @param y2 the below height
+     * @return the widths of every sub segment
+     */
     private int[] calculateWidth(int y1, int y2){
         return new int[]{(int) (((y1 - getOriginDecreased()) / coefficients[1]) + Road.INITIAL_WIDTH),
                 (int) (((y1 - getOriginIncreased()) / coefficients[0]) + Road.INITIAL_WIDTH),
@@ -56,6 +67,10 @@ public class Gate extends Elements {
         };
     }
 
+    /**
+     * Not used here
+     * @param e an element
+     */
     @Override
     public void specialUpdate(Elements e) { }
 }

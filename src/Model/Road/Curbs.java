@@ -35,12 +35,27 @@ public class Curbs extends Elements {
             };
         }
 
+        /**
+         * Not used here
+         * @param elements an element
+         */
         @Override
         public void specialUpdate(Elements elements) { }
     }
 
+    /**
+     * The number of segments per curbs
+     */
     public final static int SIZE = 10;
+
+    /**
+     * The maximal height of a curb
+     */
     public final static int MAX_HEIGHT = 60;
+
+    /**
+     * The array of segments
+     */
     public final ArrayList<Elements> seg;
 
     /**
@@ -56,6 +71,9 @@ public class Curbs extends Elements {
         initialize();
     }
 
+    /**
+     * Initialize the array of segments
+     */
     private void initialize() {
         int segHeight;
         seg.clear();
@@ -66,11 +84,18 @@ public class Curbs extends Elements {
         }
     }
 
+    /**
+     * Not used here
+     */
     @Override
-    protected void scale() {
+    protected void scale() { }
 
-    }
     //TODO: pour les courbes : changer la position en x max (comme le bug que y'a avec gate et SM)
+
+    /**
+     * Special update, variation of update, only used here to update the curb and the segments
+     * @param e an element
+     */
     @Override
     public void specialUpdate(Elements e) {
         Curbs c = (Curbs) e;
@@ -83,6 +108,9 @@ public class Curbs extends Elements {
         initialize();
     }
 
+    /**
+     * Update the curb and the segments
+     */
     @Override
     public void update() {
         y1++;
@@ -92,6 +120,10 @@ public class Curbs extends Elements {
         initialize();
     }
 
+    /**
+     * Return the array of segments
+     * @return the segments
+     */
     public ArrayList<Elements> getSeg() {
         return seg;
     }
