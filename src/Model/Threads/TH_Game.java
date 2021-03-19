@@ -1,10 +1,6 @@
 package Model.Threads;
 
-import Controller.KeyManager;
-import Model.Moto;
-import Model.Road.Road;
-import View.Utils.Assets;
-import View.Gfx;
+import View.Utils.Handler;
 
 import javax.swing.*;
 
@@ -18,21 +14,6 @@ public class TH_Game extends Thread {
     public static final int GAME_SPEED = 10;
 
     /**
-     * The graphics
-     */
-    private final Gfx gfx;
-
-    /**
-     * The player
-     */
-    private final Moto moto;
-
-    /**
-     * The game's key manager
-     */
-    private final KeyManager keyManager;
-
-    /**
      * Player's movement
      */
     private final TH_Turn turn;
@@ -42,15 +23,7 @@ public class TH_Game extends Thread {
      */
     private final TH_Scrolling scroll;
 
-    /**
-     * The road
-     */
-    private final Road road;
-
-    /**
-     * The display
-     */
-    private final JFrame display;
+    private final Handler handler;
 
     /**
      * Repaint the entire screen
@@ -61,15 +34,15 @@ public class TH_Game extends Thread {
         turn.start();
         scroll.start();
 
-        while (!moto.timedOut()) {
+        while (!handler.getPlayer().timedOut()) {
             try {
                 //noinspection BusyWait
                 sleep(GAME_SPEED);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            gfx.repaint();
-            moto.addDistanceTraveled();
+            handler.getSceneManager().repaint();
+            handler.getPlayer().addDistanceTraveled();
         }
 
         // temp
@@ -80,7 +53,7 @@ public class TH_Game extends Thread {
      * What to do when losing
      */
     private void lose() {
-        JOptionPane.showMessageDialog(display, "Timed Out!\nDistance traveled : " + moto.getDistanceTraveled() + " meters", "", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(handler.getDisplay(), "Timed Out!\nDistance traveled : " + handler.getPlayer().getDistanceTraveled() + " meters", "", JOptionPane.ERROR_MESSAGE);
         // Quitter
         System.exit(0);
     }
@@ -88,26 +61,9 @@ public class TH_Game extends Thread {
     /**
      * Constructor of this thread, create the windows, set up every elements and start other threads
      */
-    public TH_Game() {
-        // Initialize the sprites
-        Assets.init();
-
-        // Defines game objects and utils
-        this.moto = new Moto();
-        this.road = new Road(moto);
-        this.gfx = new Gfx(moto, road);
-        this.keyManager = new KeyManager(moto);
-        this.turn = new TH_Turn(keyManager, moto);
-        this.scroll = new TH_Scrolling(road, moto);
-
-        // Creating the game frame
-        this.display = new JFrame();
-        this.display.setTitle("nom du jeu");
-        this.display.setResizable(true);
-        this.display.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.display.add(gfx);
-        this.display.pack();
-        this.display.setVisible(true);
-        this.display.addKeyListener(keyManager);
+    public TH_Game(Handler handler) {
+        this.handler = handler;
+        this.turn = new TH_Turn(handler.getKeyManager(), handler.getPlayer());
+        this.scroll = new TH_Scrolling(handler.getRoad(), handler.getPlayer());
     }
 }

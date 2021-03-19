@@ -1,7 +1,8 @@
 package Model.Road;
 
 import Model.Moto;
-import View.Gfx;
+import View.Scenes.GameScene;
+import View.Scenes.Scene;
 
 import java.awt.*;
 
@@ -12,7 +13,7 @@ public abstract class Elements {
     /**
      * Const : middle of the screen
      */
-    public final static int center = Gfx.WIDTH / 2;
+    public final static int center = Scene.WIDTH / 2;
 
     /**
      * The first y (below)
@@ -84,8 +85,8 @@ public abstract class Elements {
      * Set the coefficients of the road axes
      */
     public void setCoefficients(){
-        coefficients[0] = -2d * (Gfx.HORIZON - getOriginIncreased()) / (Gfx.WIDTH - Road.FINAL_WIDTH);
-        coefficients[1] = -2d * (Gfx.HORIZON - getOriginDecreased()) / (Gfx.WIDTH - Road.FINAL_WIDTH);
+        coefficients[0] = -2d * (GameScene.HORIZON - getOriginIncreased()) / (Scene.WIDTH - Road.FINAL_WIDTH);
+        coefficients[1] = -2d * (GameScene.HORIZON - getOriginDecreased()) / (Scene.WIDTH - Road.FINAL_WIDTH);
     }
 
     /**
@@ -93,7 +94,7 @@ public abstract class Elements {
      * @return the ordered at the origin
      */
     protected int getOriginIncreased(){
-        return (int) (((float) (Gfx.HORIZON/2 - Gfx.HORIZON)/Road.INITIAL_WIDTH) * moto.getOffset() + Gfx.HEIGHT);
+        return (int) (((float) (GameScene.HORIZON/2 - GameScene.HORIZON)/Road.INITIAL_WIDTH) * moto.getOffset() + Scene.HEIGHT);
     }
 
     /**
@@ -101,7 +102,7 @@ public abstract class Elements {
      * @return the ordered at the origin
      */
     protected int getOriginDecreased(){
-        return (int) (((float) (Gfx.HORIZON/2 - Gfx.HORIZON)/Road.INITIAL_WIDTH) * -moto.getOffset() + Gfx.HEIGHT);
+        return (int) (((float) (GameScene.HORIZON/2 - GameScene.HORIZON)/Road.INITIAL_WIDTH) * -moto.getOffset() + Scene.HEIGHT);
     }
 
     /**

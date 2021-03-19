@@ -1,7 +1,7 @@
 package Model.Road;
 
 import Model.Moto;
-import View.Gfx;
+import View.Scenes.Scene;
 
 import java.awt.*;
 
@@ -16,8 +16,8 @@ public class SurfaceMarking extends Elements {
     /**
      * Constructor
      *
-     * @param y1    the first y (below)
-     * @param moto  the player
+     * @param y1   the first y (below)
+     * @param moto the player
      */
     public SurfaceMarking(int y1, Moto moto, int height, Curbs c) {
         super(y1, Color.WHITE, moto, height);
@@ -26,8 +26,8 @@ public class SurfaceMarking extends Elements {
     }
 
     @Override
-    public void update(){
-        if(y1 < Gfx.HEIGHT) y1 = c.getY2();
+    public void update() {
+        if (y1 < Scene.HEIGHT) y1 = c.getY2();
         else y1++;
 
         //TODO: remplacer w/ calculations (same as in curbs)

@@ -1,9 +1,8 @@
 package Model;
 
-import Model.Road.Gate;
 import Model.Road.Road;
 import Model.Threads.TH_Game;
-import View.Gfx;
+import View.Scenes.Scene;
 
 /**
  * The player
@@ -27,12 +26,12 @@ public class Moto {
     /**
      * Const : The player's y position
      */
-    public final static int Y = Gfx.HEIGHT - HEIGHT;
+    public final static int Y = Scene.HEIGHT - HEIGHT;
 
     /**
      * Const : The player's x position
      */
-    public final static int X = (Gfx.WIDTH - WIDTH) / 2;
+    public final static int X = (Scene.WIDTH - WIDTH) / 2;
 
     /**
      * Const : The player's max speed
@@ -92,14 +91,14 @@ public class Moto {
      * Move the player to the left
      */
     public void moveLeft() {
-        if(offset > -Road.INITIAL_WIDTH) offset -= MOVE_SPEED;
+        if (offset > -Road.INITIAL_WIDTH) offset -= MOVE_SPEED;
     }
 
     /**
      * Move the player to the right
      */
     public void moveRight() {
-        if(offset < Road.INITIAL_WIDTH) offset += MOVE_SPEED;
+        if (offset < Road.INITIAL_WIDTH) offset += MOVE_SPEED;
     }
 
     /**

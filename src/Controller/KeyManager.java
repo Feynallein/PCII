@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.Moto;
+import View.Utils.Handler;
 
 import java.awt.event.KeyEvent;
 
@@ -36,16 +37,15 @@ public class KeyManager implements java.awt.event.KeyListener {
     /**
      * The player
      */
-    private final Moto moto;
+    private final Moto player;
 
     /**
      * Constructor
      *
-     * @param moto the player
      */
-    public KeyManager(Moto moto) {
+    public KeyManager(Handler handler) {
         keys = new boolean[256];
-        this.moto = moto;
+        this.player = handler.getPlayer();
     }
 
     /**
@@ -53,12 +53,12 @@ public class KeyManager implements java.awt.event.KeyListener {
      */
     public void update() {
         // Doing actions if correspondent key is pressed
-        if (up) moto.accelerate();
-        else if (down) moto.brake();
-        else moto.decelerate();
+        if (up) player.accelerate();
+        else if (down) player.brake();
+        else player.decelerate();
 
-        if (left && moto.getSpeed() > 0) moto.moveLeft();
-        if (right && moto.getSpeed() > 0) moto.moveRight();
+        if (left && player.getSpeed() > 0) player.moveLeft();
+        if (right && player.getSpeed() > 0) player.moveRight();
 
         // Updating if the keys are being pressed
         left = keys[KeyEvent.VK_LEFT];
