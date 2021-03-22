@@ -1,20 +1,20 @@
 package View.Scenes;
 
-import Model.UiObjects.ObjectManager;
+import Model.UiObjects.UiObjectManager;
 
 import java.awt.*;
 
 public class MenuScene extends Scene {
-    private final ObjectManager objectManager;
+    private final UiObjectManager uiObjectManager;
 
-    public MenuScene(ObjectManager manager, SceneManager sceneManager){
+    public MenuScene(UiObjectManager manager, SceneManager sceneManager){
         super(sceneManager);
-        this.objectManager = manager;
+        this.uiObjectManager = manager;
         initialize();
     }
 
     private void initialize(){
-        objectManager.addObject(new Model.UiObjects.Button(0f, 0f, 100, 100, () -> {
+        uiObjectManager.addObject(new Model.UiObjects.Button(0f, 0f, 100, 100, () -> {
             sceneManager.setNewGameScene();
             sceneManager.setCurrentScene(sceneManager.getGameScene());
         }));
@@ -24,6 +24,6 @@ public class MenuScene extends Scene {
     public void paint(Graphics g) {
         g.setColor(Color.GRAY);
         g.fillRect(0, 0, Scene.WIDTH, Scene.HEIGHT);
-        objectManager.paint(g);
+        uiObjectManager.paint(g);
     }
 }

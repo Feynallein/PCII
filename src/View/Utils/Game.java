@@ -5,7 +5,7 @@ import Controller.MouseManager;
 import Model.Moto;
 import Model.Road.Road;
 import Model.Threads.TH_Handler;
-import Model.UiObjects.ObjectManager;
+import Model.UiObjects.UiObjectManager;
 import View.Scenes.SceneManager;
 
 import javax.swing.*;
@@ -38,7 +38,7 @@ public class Game {
 
     private final MouseManager mouseManager;
 
-    private final ObjectManager objectManager;
+    private final UiObjectManager uiObjectManager;
 
     private final Handler handler;
 
@@ -52,10 +52,10 @@ public class Game {
         /* Declaration of games objects */
         this.moto = new Moto(); // The player
         this.road = new Road(handler); // The road
-        this.objectManager = new ObjectManager(); // The object manager
+        this.uiObjectManager = new UiObjectManager(); // The object manager
         this.sceneManager = new SceneManager(handler); // The scene manager
         this.keyManager = new KeyManager(handler); // The key manager
-        this.mouseManager = new MouseManager(objectManager); // The mouse manager
+        this.mouseManager = new MouseManager(uiObjectManager); // The mouse manager
 
         /* Creating the game's frame */
         this.display = new JFrame(); // Creating the display
@@ -96,7 +96,7 @@ public class Game {
         return mouseManager;
     }
 
-    public ObjectManager getObjectManager() {
-        return objectManager;
+    public UiObjectManager getObjectManager() {
+        return uiObjectManager;
     }
 }

@@ -1,15 +1,15 @@
 package Controller;
 
-import Model.UiObjects.ObjectManager;
+import Model.UiObjects.UiObjectManager;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
 public class MouseManager implements MouseListener, MouseMotionListener {
-    private ObjectManager manager;
+    private UiObjectManager manager;
 
-    public MouseManager(ObjectManager manager) {
+    public MouseManager(UiObjectManager manager) {
         this.manager = manager;
     }
 

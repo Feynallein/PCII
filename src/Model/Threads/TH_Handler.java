@@ -11,7 +11,7 @@ public class TH_Handler extends Thread {
         // Displaying the Menu
         while(handler.getSceneManager().getCurrentScene() instanceof MenuScene) {
             handler.getObjectManager().update();
-            handler.getSceneManager().repaint();
+            //handler.getSceneManager().repaint();
         }
 
         // Starting the game

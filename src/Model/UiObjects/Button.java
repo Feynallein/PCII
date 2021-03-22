@@ -1,9 +1,6 @@
 package Model.UiObjects;
 
-import java.awt.*;
-import java.awt.image.BufferedImage;
-
-public class Button extends Object {
+public class Button extends UiObject {
     //private final BufferedImage[] sprite;
     private final ClickListener clicker;
 

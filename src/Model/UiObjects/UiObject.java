@@ -3,13 +3,13 @@ package Model.UiObjects;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 
-public abstract class Object {
+public abstract class UiObject {
     private final float x, y;
     private final int width, height;
     private final Rectangle bounds;
     private boolean hovering = false, click = false;
 
-    public Object(float x, float y, int width, int height) {
+    public UiObject(float x, float y, int width, int height) {
         this.x = x;
         this.y = y;
         this.width = width;

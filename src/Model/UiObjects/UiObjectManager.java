@@ -4,30 +4,30 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
-public class ObjectManager {
-    private final ArrayList<Object> objects;
+public class UiObjectManager {
+    private final ArrayList<UiObject> uiObjects;
 
-    public ObjectManager() {
-        objects = new ArrayList<>();
+    public UiObjectManager() {
+        uiObjects = new ArrayList<>();
     }
 
-    public void addObject(Object o) {
-        objects.add(o);
+    public void addObject(UiObject o) {
+        uiObjects.add(o);
     }
 
     public void clear() {
-        objects.clear();
+        uiObjects.clear();
     }
 
     public void update(){
-        for(Object o : objects){
+        for(UiObject o : uiObjects){
             o.update();
         }
     }
 
     //Todo: ca a rien a faire la mais j'arrive pas a le mettre dans menu scene...
     public void paint(Graphics g){
-        for(Object o : objects){
+        for(UiObject o : uiObjects){
             g.setColor(Color.green);
             g.fillRect(o.getX(), o.getY(), o.getWidth(), o.getHeight());
         }
@@ -35,30 +35,30 @@ public class ObjectManager {
 
     /* Mouse Manager */
     public void onMouseMove(MouseEvent e) {
-        for (Object o : objects) {
+        for (UiObject o : uiObjects) {
             o.onMouseMove(e);
         }
     }
 
     public void onMousePressed() {
-        for (Object o : objects) {
+        for (UiObject o : uiObjects) {
             o.onMousePressed();
         }
     }
 
     public void onMouseReleased() {
-        for (Object o : objects) {
+        for (UiObject o : uiObjects) {
             o.onMouseReleased();
         }
     }
 
     public void onMouseClicked() {
-        for (Object o : objects) {
+        for (UiObject o : uiObjects) {
             o.onMouseClicked();
         }
     }
 
-    public ArrayList<Object> getObjects() {
-        return objects;
+    public ArrayList<UiObject> getObjects() {
+        return uiObjects;
     }
 }

@@ -1,8 +1,5 @@
 package View.Scenes;
 
-import Model.Moto;
-import Model.Road.Road;
-import Model.UiObjects.ObjectManager;
 import View.Utils.Handler;
 
 import javax.swing.*;
@@ -45,7 +42,6 @@ public class SceneManager extends JPanel {
     public void setNewGameScene(){
         gameScene = new GameScene(handler.getPlayer(), handler.getRoad(), this);
     }
-
 
     public GameScene getGameScene() {
         return gameScene;
