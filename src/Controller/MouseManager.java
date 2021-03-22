@@ -1,7 +1,6 @@
 package Controller;
 
 import Model.UiObjects.ObjectManager;
-import View.Utils.Handler;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -10,8 +9,8 @@ import java.awt.event.MouseMotionListener;
 public class MouseManager implements MouseListener, MouseMotionListener {
     private ObjectManager manager;
 
-    public void setObjectManager(Handler handler){
-        this.manager = handler.getObjectManager();
+    public MouseManager(ObjectManager manager) {
+        this.manager = manager;
     }
 
     @Override

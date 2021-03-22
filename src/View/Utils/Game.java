@@ -43,35 +43,33 @@ public class Game {
     private final Handler handler;
 
     public Game(){
-        // Initialize the sprites
+        /* Initializing sprites */
         Assets.init();
 
-        // Initialize the handler
+        /* Initializing the handler */
         this.handler = new Handler(this);
 
-        // Defines game objects and utils
+        /* Declaration of games objects */
+        this.moto = new Moto(); // The player
+        this.road = new Road(handler); // The road
+        this.objectManager = new ObjectManager(); // The object manager
+        this.sceneManager = new SceneManager(handler); // The scene manager
+        this.keyManager = new KeyManager(handler); // The key manager
+        this.mouseManager = new MouseManager(objectManager); // The mouse manager
 
-        this.moto = new Moto();
-        this.road = new Road(handler);
-        this.objectManager = new ObjectManager();
-        this.sceneManager = new SceneManager(handler);
-        this.keyManager = new KeyManager(handler);
-        this.mouseManager = new MouseManager();
-        this.mouseManager.setObjectManager(handler);
+        /* Creating the game's frame */
+        this.display = new JFrame(); // Creating the display
+        this.display.setTitle("Game's name"); // The name of the window
+        this.display.setResizable(false); // Not resizable
+        this.display.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // What to do on close
+        this.display.add(sceneManager); // Adding the scene
+        this.display.addKeyListener(keyManager); // Adding the key manager
+        this.display.addMouseListener(mouseManager); // Adding the mouse manager
+        this.display.addMouseMotionListener(mouseManager); // Adding the mouse motion manager
+        this.display.pack(); // Packing
+        this.display.setVisible(true); // Displaying
 
-        // Creating the game frame
-        this.display = new JFrame();
-        this.display.setTitle("nom du jeu");
-        this.display.setResizable(false);
-        this.display.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.display.add(sceneManager);
-        this.display.addKeyListener(keyManager);
-        this.display.addMouseListener(mouseManager);
-        this.display.addMouseMotionListener(mouseManager);
-        this.display.pack();
-        this.display.setVisible(true);
-
-        (new TH_Handler(handler)).start();
+        (new TH_Handler(handler)).start(); // Start the main thread
     }
 
     public SceneManager getSceneManager() {
