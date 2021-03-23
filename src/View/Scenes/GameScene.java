@@ -4,7 +4,6 @@ import Model.Moto;
 import Model.Road.Curbs;
 import Model.Road.Elements;
 import Model.Road.Road;
-import View.Utils.Handler;
 import View.Utils.Text;
 import View.Utils.Assets;
 

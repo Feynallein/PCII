@@ -3,7 +3,6 @@ package Model.Road;
 import Model.Moto;
 import View.Scenes.GameScene;
 import View.Scenes.Scene;
-import View.Utils.Handler;
 
 import java.awt.*;
 import java.util.ArrayList;

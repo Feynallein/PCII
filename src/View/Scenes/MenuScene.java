@@ -16,8 +16,6 @@ public class MenuScene extends Scene {
     }
 
     private void initialize(){
-        uiObjectManager.addObject(new Button(50, 50, 128, 64, Assets.play, null));
-
         uiObjectManager.addObject(new Button((Scene.WIDTH - Assets.play[0].getWidth())/2, Scene.HEIGHT*3/8,
                 Assets.play[0].getWidth(), Assets.play[0].getHeight(), Assets.play, () -> {
             sceneManager.setNewGameScene();
@@ -46,7 +44,5 @@ public class MenuScene extends Scene {
     public void paint(Graphics g) {
         g.drawImage(Assets.menuBg, 0, 0, Scene.WIDTH, Scene.HEIGHT, null);
         uiObjectManager.paint(g);
-        g.setColor(Color.orange);
-        g.drawRect((Scene.WIDTH - Assets.play[0].getWidth())/2, Scene.HEIGHT*3/8, Assets.play[0].getWidth(), Assets.play[0].getHeight());
     }
 }

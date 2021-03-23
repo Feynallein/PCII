@@ -5,7 +5,7 @@ import Controller.MouseManager;
 import Model.Moto;
 import Model.Road.Road;
 import View.UiObjects.UiObjectManager;
-import View.Utils.Handler;
+import View.Utils.Game;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,7 +20,7 @@ public class SceneManager extends JPanel {
 
     private final MenuScene menuScene;
 
-    private final Handler handler;
+    private final Game game;
 
     private final MouseManager mouseManager;
 
@@ -38,8 +38,8 @@ public class SceneManager extends JPanel {
     /**
      * Constructor
      */
-    public SceneManager(Handler handler) {
-        this.handler = handler;
+    public SceneManager(Game game) {
+        this.game = game;
         this.uiObjectManager = new UiObjectManager(); // The object manager
         this.keyManager = new KeyManager(player); // The key manager
         this.mouseManager = new MouseManager(uiObjectManager); // The mouse manager
@@ -62,7 +62,6 @@ public class SceneManager extends JPanel {
     public void paint(Graphics g) {
         super.paint(g);
         currentScene.paint(g);
-        System.out.println(getMousePosition());
     }
 
     public void setNewGameScene() {
@@ -100,6 +99,6 @@ public class SceneManager extends JPanel {
     }
 
     public JFrame getDisplay(){
-        return handler.getDisplay();
+        return game.getDisplay();
     }
 }

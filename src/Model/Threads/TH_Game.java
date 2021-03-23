@@ -1,7 +1,6 @@
 package Model.Threads;
 
 import View.Scenes.SceneManager;
-import View.Utils.Handler;
 
 import javax.swing.*;
 

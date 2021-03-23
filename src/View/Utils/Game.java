@@ -15,11 +15,8 @@ public class Game {
         /* Initialization of the sprites */
         Assets.init();
 
-        /* Creation of the handler */
-        Handler handler = new Handler( this);
-
         /* Creation of the scene manager */
-        SceneManager sceneManager = new SceneManager(handler); // The scene manager
+        SceneManager sceneManager = new SceneManager(this); // The scene manager
 
         /* Creating the game's frame */
         display = new JFrame(); // Creating the display
