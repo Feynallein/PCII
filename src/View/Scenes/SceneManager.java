@@ -5,7 +5,7 @@ import Controller.MouseManager;
 import Model.Moto;
 import Model.Road.Road;
 import View.UiObjects.UiObjectManager;
-import View.Utils.Display;
+import View.Gfx.Display;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,7 +18,7 @@ public class SceneManager extends JPanel {
 
     private GameScene gameScene;
 
-    private final MenuScene menuScene;
+    //private final MenuScene menuScene;
 
     private final Display display;
 
@@ -35,15 +35,20 @@ public class SceneManager extends JPanel {
      * Constructor
      */
     public SceneManager(Display display) {
+
         this.display = display;
         this.uiObjectManager = new UiObjectManager(); // The object manager
         this.mouseManager = new MouseManager(uiObjectManager); // The mouse manager
-        this.menuScene = new MenuScene(uiObjectManager, this);
-        this.currentScene = this.menuScene;
+        //this.menuScene = new MenuScene(uiObjectManager, this);
+        //setCurrentScene(menuScene);
 
         setPreferredSize(new Dimension(Scene.WIDTH, Scene.HEIGHT)); // Setting the size
         addMouseListener(mouseManager); // Adding the mouse manager
         addMouseMotionListener(mouseManager); // Adding the mouse motion manager
+
+        /* Temporary */
+        newGameScene();
+        setCurrentScene(gameScene);
     }
 
     /**
@@ -55,9 +60,12 @@ public class SceneManager extends JPanel {
     public void paint(Graphics g) {
         super.paint(g);
         currentScene.paint(g);
+
+        // Temporary
+        grabFocus();
     }
 
-    public void setNewGameScene() {
+    public void newGameScene() {
         gameScene = new GameScene(this);
         keyManager = new KeyManager(gameScene.getPlayer()); // The key manager
         grabFocus();
@@ -66,10 +74,6 @@ public class SceneManager extends JPanel {
 
     public GameScene getGameScene() {
         return gameScene;
-    }
-
-    public MenuScene getMenuScene() {
-        return menuScene;
     }
 
     public Scene getCurrentScene() {

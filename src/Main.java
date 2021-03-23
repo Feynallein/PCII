@@ -1,4 +1,4 @@
-import View.Utils.Display;
+import View.Gfx.Display;
 
 /**
  * Main class

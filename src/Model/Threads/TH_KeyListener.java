@@ -6,23 +6,23 @@ import Model.Moto;
 /**
  * Player's movement thread
  */
-public class TH_Turn extends Thread {
+public class TH_KeyListener extends Thread {
     /**
      * The key manager
      */
-    private final KeyManager kl;
+    private final KeyManager keyManager;
 
     /**
      * The player
      */
-    private final Moto moto;
+    private final Moto player;
 
     /**
      * Update the key manager
      */
     @Override
     public void run() {
-        while (!moto.timedOut()) {
+        while (!player.timedOut()) {
             try {
                 // Updating at game's speed
                 //noinspection BusyWait
@@ -31,18 +31,18 @@ public class TH_Turn extends Thread {
                 e.printStackTrace();
             }
             // Updating the key manager
-            kl.update();
+            keyManager.update();
         }
     }
 
     /**
      * Constructor
      *
-     * @param kl   the key manager
-     * @param moto the player
+     * @param keyManager the key manager
+     * @param player     the player
      */
-    public TH_Turn(KeyManager kl, Moto moto) {
-        this.kl = kl;
-        this.moto = moto;
+    public TH_KeyListener(KeyManager keyManager, Moto player) {
+        this.keyManager = keyManager;
+        this.player = player;
     }
 }

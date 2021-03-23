@@ -15,34 +15,34 @@ public class TH_Scrolling extends Thread {
     /**
      * The player
      */
-    private final Moto moto;
+    private final Moto player;
 
     /**
      * The thread itself
      */
     @Override
     public void run() {
-        while (!moto.timedOut()) {
+        while (!player.timedOut()) {
             try {
                 // Updating time based on the player's speed
                 //noinspection BusyWait
-                sleep(moto.calculateSleep());
+                sleep(player.calculateSleep());
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
             // Update the player's speed
-            if (moto.getSpeed() > 0) road.update();
+            if (player.getSpeed() > 0) road.update();
         }
     }
 
     /**
      * Constructor
      *
-     * @param road the road
-     * @param moto the player
+     * @param road   the road
+     * @param player the player
      */
-    public TH_Scrolling(Road road, Moto moto) {
+    public TH_Scrolling(Road road, Moto player) {
         this.road = road;
-        this.moto = moto;
+        this.player = player;
     }
 }

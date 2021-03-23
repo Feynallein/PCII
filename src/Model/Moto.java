@@ -82,9 +82,9 @@ public class Moto {
      * Constructor
      */
     public Moto() {
-        speed = 0;
-        offset = 0;
-        distanceTraveled = 0;
+        this.speed = 0;
+        this.offset = 0;
+        this.distanceTraveled = 0;
     }
 
     /**
@@ -150,6 +150,7 @@ public class Moto {
      * @return the sleep time
      */
     public long calculateSleep() {
+        //TODO: A ameliorer
         return (long) (MAX_SPEED / (speed + 1)) + 1;
     }
 
@@ -195,9 +196,10 @@ public class Moto {
     public void addDistanceTraveled() {
         // Distance traveled
         // Divided by 3.6 to get m/s therefore the distance traveled is in meters
-        // Clock to update this only every seconds, not as every tick (1 tick = 10 milliseconds)
+        // Clock to update this only every seconds, not as every tick (1 tick = 16 milliseconds)
 
-        if (accumulatedTime == 1000) {
+        // Superior at 1000 millis
+        if (accumulatedTime >= 1000) {
             distanceTraveled += Math.floor(speed / 3.6);
             accumulatedTime = 0;
             timer--;

@@ -1,18 +1,18 @@
 package View.Scenes;
 
 import Model.Moto;
-import Model.Road.Curbs;
-import Model.Road.Elements;
+import Model.Road.Curb;
 import Model.Road.Road;
+import Model.Road.Segment;
 import View.Utils.Text;
-import View.Utils.Assets;
+import View.Gfx.Assets;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+//TODO: idée changer le thème des couleurs : vert = hherbe mais faire plutot gris pour ville, jaune pour desert, ....
 public class GameScene extends Scene {
     /**
      * Const : horizon's line position
@@ -60,59 +60,6 @@ public class GameScene extends Scene {
     }
 
     /**
-     * Draw the background
-     *
-     * @param g the graphics
-     */
-    private void drawBackground(Graphics g) {
-        //TODO: changer, ca tourne quand la route tourne...
-
-        // If it has to draw two images
-        if (Math.abs(player.getOffset()) % Assets.bg.getWidth() != 0) {
-
-            // If the image is over on the left
-            if (player.getOffset() < 0) {
-                // Calculating the offset
-                int offset = Math.abs(player.getOffset()) % Assets.bg.getWidth();
-
-                // Getting the sub-image
-                BufferedImage subImage = Assets.bg.getSubimage(0, 0, Scene.WIDTH, HORIZON);
-
-                // Printing the first image
-                g.drawImage(subImage, offset, 0, Scene.WIDTH, HORIZON, null);
-
-                // Getting the second sub-image
-                subImage = Assets.bg.getSubimage(Assets.bg.getWidth() - offset, 0, offset, HORIZON);
-
-                // Printing the second sub-image
-                g.drawImage(subImage, 0, 0, offset, HORIZON, null);
-            }
-
-            // If the image is over on the right
-            else if (player.getOffset() + Scene.WIDTH > Assets.bg.getWidth()) {
-                // Calculating the offset
-                int offset = (Math.abs(player.getOffset() + Scene.WIDTH) - Assets.bg.getWidth()) % Assets.bg.getWidth();
-
-                // Getting the first sub-image
-                BufferedImage subImage = Assets.bg.getSubimage(Assets.bg.getWidth() - Scene.WIDTH + offset, 0, Scene.WIDTH - offset, HORIZON);
-
-                // Printing the first sub-image
-                g.drawImage(subImage, 0, 0, Scene.WIDTH - offset, HORIZON, null);
-
-                // Getting the second sub-image
-                subImage = Assets.bg.getSubimage(0, 0, offset, HORIZON);
-
-                // Printing the second sub-image
-                g.drawImage(subImage, Scene.WIDTH - offset, 0, offset, HORIZON, null);
-            }
-        }
-
-        // Default case (1 image)
-        else
-            g.drawImage(Assets.bg.getSubimage(player.getOffset(), 0, Scene.WIDTH, HORIZON), 0, 0, Scene.WIDTH, HORIZON, null);
-    }
-
-    /**
      * Draw the road
      *
      * @param g the graphics
@@ -121,9 +68,9 @@ public class GameScene extends Scene {
         /* Draw the road */
 
         // Not a for each because of concurrent modification exception
-        for (int i = 0; i < road.get(Road.CURBS).size(); i++) {
+        for (int i = 0; i < road.getRoad().size(); i++) {
             // Get the curbs
-            Curbs c = (Curbs) road.get(Road.CURBS).get(i);
+            Curb c = road.getRoad().get(i);
 
             // Draw  the grass background
             g.setColor(new Color(86, 125, 70));
@@ -132,9 +79,10 @@ public class GameScene extends Scene {
             // Draw the segments of the curb
             drawArray(c.getSeg(), g);
         }
+        for (Curb c : road.getSpecialCurbs()) {
+            g.drawImage(Assets.gate, c.getMiddleX(), c.getMeanY() - c.getMiddleFullWidth() / 2, c.getMiddleFullWidth(), c.getMiddleFullWidth() / 2, null);
+        }
 
-        /* Draw other elements */
-        for (String s : new String[]{Road.GATES, Road.SM}) drawArray(road.get(s), g);
     }
 
     /**
@@ -143,24 +91,24 @@ public class GameScene extends Scene {
      * @param a an array of instanceof elements
      * @param g graphics
      */
-    private void drawArray(ArrayList<Elements> a, Graphics g) {
+    private void drawArray(ArrayList<Segment> a, Graphics g) {
         //TODO: fix the warnings
 
-        // For each elements of the array (not an actual for each because of concurrent modification exception)
+        /* For each elements of the array (not an actual for each because of concurrent modification exception) */
         for (int i = 0; i < a.size(); i++) {
-            // Get his color
+            /* Get his color */
             g.setColor(a.get(i).getColor());
 
-            // Print it 
+            /* Print it */
             if (!a.isEmpty() && a.get(i).getY1() >= HORIZON) g.fillPolygon(a.get(i).getX(), a.get(i).getY(), 4);
-
-            // Draw the gate's sprite
-/*            if(!a.isEmpty() && a.get(i) instanceof Gate){
-                g.drawImage(Assets.gate, a.get(i).getMidLoneX(), a.get(i).getMidY() - a.get(i).getMidFullWidth()/2, a.get(i).getMidFullWidth(), a.get(i).getMidFullWidth()/2, null);
-            }*/
         }
     }
 
+    /**
+     * Draw the speed counter
+     *
+     * @param g the graphics
+     */
     private void drawSpeedCounter(Graphics g) {
         /* The Counter */
         g.drawImage(Assets.speed_counter, Scene.WIDTH - Assets.speed_counter.getWidth(), Scene.HEIGHT - Assets.speed_counter.getHeight(), null);
@@ -179,10 +127,20 @@ public class GameScene extends Scene {
         g.drawImage(op.filter(Assets.needle, null), Scene.WIDTH - Assets.needle.getWidth(), Scene.HEIGHT - Assets.needle.getHeight(), null);
     }
 
+    /**
+     * Getter to the player
+     *
+     * @return the player
+     */
     public Moto getPlayer() {
         return player;
     }
 
+    /**
+     * Getter to the road
+     *
+     * @return the road
+     */
     public Road getRoad() {
         return road;
     }

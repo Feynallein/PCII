@@ -1,11 +1,11 @@
-package View.Utils;
+package View.Gfx;
 
 import java.awt.image.BufferedImage;
 
 /**
  * Sprite sheet handler
  */
-class SpriteSheet {
+public class SpriteSheet {
     private final BufferedImage sheet;
 
     /**

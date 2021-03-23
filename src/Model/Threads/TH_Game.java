@@ -11,18 +11,21 @@ public class TH_Game extends Thread {
     /**
      * Const : Every threads' speed
      */
-    public static final int GAME_SPEED = 10;
+    public static final int GAME_SPEED = 16; // ~60 FPS
 
     /**
      * Player's movement
      */
-    private final TH_Turn turn;
+    private final TH_KeyListener turn;
 
     /**
      * The road and objects scrolling
      */
     private final TH_Scrolling scroll;
 
+    /**
+     * The scene manager
+     */
     private final SceneManager sceneManager;
 
     /**
@@ -30,9 +33,9 @@ public class TH_Game extends Thread {
      */
     @Override
     public void run() {
-        // Starting every threads
-        turn.start();
-        scroll.start();
+        /* Starting other threads */
+        turn.start(); // Key manager
+        scroll.start(); // Scrolling
 
         while (!sceneManager.getPlayer().timedOut()) {
             try {
@@ -63,7 +66,7 @@ public class TH_Game extends Thread {
      */
     public TH_Game(SceneManager sceneManager) {
         this.sceneManager = sceneManager;
-        this.turn = new TH_Turn(sceneManager.getKeyManager(), sceneManager.getPlayer());
+        this.turn = new TH_KeyListener(sceneManager.getKeyManager(), sceneManager.getPlayer());
         this.scroll = new TH_Scrolling(sceneManager.getRoad(), sceneManager.getPlayer());
     }
 }

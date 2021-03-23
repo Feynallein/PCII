@@ -7,7 +7,7 @@ import java.io.IOException;
 /**
  * Image handler
  */
-class ImageLoader {
+public class ImageLoader {
     /**
      * Load an image
      *

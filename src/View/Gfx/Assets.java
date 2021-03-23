@@ -1,4 +1,7 @@
-package View.Utils;
+package View.Gfx;
+
+import View.Utils.FontLoader;
+import View.Utils.ImageLoader;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

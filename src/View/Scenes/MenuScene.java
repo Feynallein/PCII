@@ -1,7 +1,7 @@
 package View.Scenes;
 
 import View.UiObjects.UiObjectManager;
-import View.Utils.Assets;
+import View.Gfx.Assets;
 import View.UiObjects.Button;
 
 import java.awt.*;
@@ -18,7 +18,7 @@ public class MenuScene extends Scene {
     private void initialize(){
         uiObjectManager.addObject(new Button((Scene.WIDTH - Assets.play[0].getWidth())/2, Scene.HEIGHT*3/8,
                 Assets.play[0].getWidth(), Assets.play[0].getHeight(), Assets.play, () -> {
-            sceneManager.setNewGameScene();
+            sceneManager.newGameScene();
             sceneManager.setCurrentScene(sceneManager.getGameScene());
         }));
         uiObjectManager.addObject(new Button((Scene.WIDTH - Assets.highScore[0].getWidth())/2, Scene.HEIGHT*4/8,

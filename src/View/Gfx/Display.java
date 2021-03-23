@@ -1,4 +1,4 @@
-package View.Utils;
+package View.Gfx;
 
 import Model.Threads.TH_Handler;
 import View.Scenes.SceneManager;
@@ -20,7 +20,6 @@ public class Display extends JFrame {
         add(sceneManager); // Adding the scene
         pack(); // Packing
         setVisible(true); // Displaying
-
         (new TH_Handler(sceneManager)).start(); // Start the main thread
     }
 
