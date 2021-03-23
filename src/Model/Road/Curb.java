@@ -5,6 +5,7 @@ import View.Scenes.Scene;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 public class Curb {
 
@@ -41,6 +42,7 @@ public class Curb {
     private final Moto player;
     private int height;
     private final boolean specialCurb;
+    private int xOffset;
 
     /**
      * Constructor
@@ -49,7 +51,7 @@ public class Curb {
      * @param color the color
      * @param moto  the player
      */
-    public Curb(int y1, Color color, Moto moto, int height, boolean b) {
+    public Curb(int y1, Color color, Moto moto, int height, boolean b, int xOffset) {
         this.y1 = y1;
         this.player = moto;
         this.height = height;
@@ -57,6 +59,7 @@ public class Curb {
         this.seg = new ArrayList<>();
         this.specialCurb = b;
         this.color = color;
+        this.xOffset = xOffset;
 
         initialize();
     }
@@ -67,11 +70,22 @@ public class Curb {
     private void initialize() {
         int segHeight;
 
+        /* Getting the old size and increasing it by 1 to approximately deduce how many segment there will be in this curb */
+        int old_size = seg.size();
+        old_size++;
+        if(old_size > 10) old_size = 10;
+
         /* Clearing previous segments of this curb */
         seg.clear();
 
+        /* The antialiasing */
+        int antialiasing = Road.TURNING_SPEED/old_size;
+
         /* Creating all the segments */
         for (int i = y1; i >= y2; i -= segHeight) {
+            /* Changing the sign if it's a negative offset (turning left) */
+            if(xOffset < 0) antialiasing *= -1;
+
             /* Calculating the segment's height */
             segHeight = height / SIZE;
 
@@ -79,7 +93,10 @@ public class Curb {
             if (segHeight <= 0) segHeight = 1;
 
             /* Creating the segment */
-            seg.add(new Segment(i, color, player, segHeight));
+            seg.add(new Segment(i, color, player, segHeight, xOffset + antialiasing));
+
+            /* Increasing the antialiasing */
+            if(xOffset != 0) antialiasing += Road.TURNING_SPEED/old_size;
         }
     }
 
@@ -175,5 +192,9 @@ public class Curb {
 
     public int getMiddleX(){
         return seg.get(seg.size()/2).getX()[0];
+    }
+
+    public int getxOffset() {
+        return xOffset;
     }
 }

@@ -18,6 +18,7 @@ public class Segment {
     private final int y2;
     private final Color color;
     private final Moto player;
+    private int xOffset;
 
     /**
      * The 4 widths
@@ -31,11 +32,12 @@ public class Segment {
      * @param color the color
      * @param moto  the player
      */
-    public Segment(int y1, Color color, Moto moto, int height) {
+    public Segment(int y1, Color color, Moto moto, int height, int xOffset) {
         this.y1 = y1;
         this.color = color;
         this.player = moto;
         this.y2 = this.y1 - height;
+        this.xOffset = xOffset;
 
         /* Calculating the widths of this segment */
         double[] coefficients = new double[]{-2d * (GameScene.HORIZON - getOriginIncreased()) / (Scene.WIDTH - Road.FINAL_WIDTH),
@@ -81,7 +83,7 @@ public class Segment {
      * @return array list of x to get the bounds of this segment
      */
     public int[] getX() {
-        return new int[]{(center - widths[0]), (center + widths[1]), (center + widths[2]), (center - widths[3])};
+        return new int[]{center - widths[0] + xOffset, center + widths[1] + xOffset, center + widths[2] + xOffset, center - widths[3] + xOffset};
     }
 
     public int[] getWidths() {
