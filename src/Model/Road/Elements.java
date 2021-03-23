@@ -1,7 +1,8 @@
 package Model.Road;
 
 import Model.Moto;
-import View.Gfx;
+import View.Scenes.GameScene;
+import View.Scenes.Scene;
 
 import java.awt.*;
 
@@ -10,14 +11,9 @@ import java.awt.*;
  */
 public abstract class Elements {
     /**
-     * Const : leading coefficient
-     */
-    public static final double coefficient = -2d * (Gfx.HORIZON - Gfx.HEIGHT) / (Gfx.WIDTH - Road.FINAL_WIDTH);
-
-    /**
      * Const : middle of the screen
      */
-    public final static int center = Gfx.WIDTH / 2;
+    public final static int center = Scene.WIDTH / 2;
 
     /**
      * The first y (below)
@@ -30,15 +26,13 @@ public abstract class Elements {
     protected int y2;
 
     /**
-     * The first width (below)
+     * The 4 widths
      */
-    protected int width1;
+    protected int[] widths;
 
     /**
-     * The second width (above)
+     * Height of this element
      */
-    protected int width2;
-
     protected int height;
 
     /**
@@ -50,6 +44,12 @@ public abstract class Elements {
      * The color of this segment
      */
     protected final Color color;
+
+    /**
+     * The array of the coefficients of the road's axes
+     */
+    protected double[] coefficients = new double[2];
+
 
     /**
      * Constructor
@@ -64,6 +64,7 @@ public abstract class Elements {
         this.moto = moto;
         this.height = height;
         this.y2 = this.y1 - this.height;
+        setCoefficients();
 
         // Scaling to get the widths and the height
         scale();
@@ -74,7 +75,35 @@ public abstract class Elements {
      */
     abstract void scale();
 
+    /**
+     * Special update for the curbs
+     * @param elements an element
+     */
     public abstract void specialUpdate(Elements elements);
+
+    /**
+     * Set the coefficients of the road axes
+     */
+    public void setCoefficients(){
+        coefficients[0] = -2d * (GameScene.HORIZON - getOriginIncreased()) / (Scene.WIDTH - Road.FINAL_WIDTH);
+        coefficients[1] = -2d * (GameScene.HORIZON - getOriginDecreased()) / (Scene.WIDTH - Road.FINAL_WIDTH);
+    }
+
+    /**
+     * Calculate the ordered at the origin with the player's offset
+     * @return the ordered at the origin
+     */
+    protected int getOriginIncreased(){
+        return (int) (((float) (GameScene.HORIZON/2 - GameScene.HORIZON)/Road.INITIAL_WIDTH) * moto.getOffset() + Scene.HEIGHT);
+    }
+
+    /**
+     * Calculate the ordered at the origin with the opposite of the player's offset
+     * @return the ordered at the origin
+     */
+    protected int getOriginDecreased(){
+        return (int) (((float) (GameScene.HORIZON/2 - GameScene.HORIZON)/Road.INITIAL_WIDTH) * -moto.getOffset() + Scene.HEIGHT);
+    }
 
     /**
      * Updating the position of this segment
@@ -93,7 +122,7 @@ public abstract class Elements {
      * @return array list of x to get the bounds of this segment
      */
     public int[] getX() {
-        return new int[]{(center - width1) - moto.getOffset(), (center + width1) - moto.getOffset(), (center + width2) - moto.getOffset(), (center - width2) - moto.getOffset()};
+        return new int[]{(center - widths[0]), (center + widths[1]), (center + widths[2]), (center - widths[3])};
     }
 
     /**
@@ -132,34 +161,71 @@ public abstract class Elements {
         return color;
     }
 
+    /**
+     * Getter to the height of the element
+     * @return the height of the element
+     */
     public int getHeight() {
         return height;
     }
 
+    /**
+     * Getter to the centered full first width
+     * @return the centered sum of the above width
+     */
     public int getLoneX2(){
-        return (center - width2) - moto.getOffset();
+        return (center - (widths[2] + widths[3]));
     }
 
+    /**
+     * Getter to the centered full second width
+     * @return the centered sum of the below width
+     */
     public int getLoneX1(){
-        return (center - width1) - moto.getOffset();
+        return (center - (widths[0] + widths[1]));
     }
 
+    /**
+     * Getter to the sum of the first width (above)
+     * @return the sum of the above width
+     */
     public int getFullWidth1(){
-        return 2*width1;
-    }
-    public int getFullWidth2(){
-        return 2*width2;
+        return widths[0] + widths[1];
     }
 
+    /**
+     * Getter to the sum of the second width (below)
+     * @return the sum of the below width
+     */
+    public int getFullWidth2(){
+        return widths[2] + widths[3];
+    }
+
+    /**
+     * Getter to the mean of the full widths
+     * @return the mean of the full widths
+     */
     public int getMidFullWidth(){
         return (getFullWidth1() + getFullWidth2())/2;
     }
 
+    /**
+     * Getter to the mean of the lone X
+     * @return the mean of the lone X
+     */
     public int getMidLoneX(){
         return (getLoneX1() + getLoneX2())/2;
     }
 
+    /**
+     * Getter to the mean of the y
+     * @return the mean of the y
+     */
     public int getMidY(){
         return (y1 + y2)/2;
+    }
+
+    public int[]  getWidths(){
+        return widths;
     }
 }

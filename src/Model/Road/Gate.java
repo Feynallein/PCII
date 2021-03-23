@@ -1,7 +1,7 @@
 package Model.Road;
 
 import Model.Moto;
-import View.Gfx;
+import View.Scenes.Scene;
 
 import java.awt.*;
 
@@ -14,6 +14,9 @@ public class Gate extends Elements {
      */
     public static final int ADDED_TIME = 60;
 
+    /**
+     * The curbs this gate is attached to
+     */
     private final Curbs c;
 
     /**
@@ -28,13 +31,16 @@ public class Gate extends Elements {
         this.c = c;
     }
 
+    /**
+     * Update method
+     */
     @Override
     public void update() {
-        if(y1 < Gfx.HEIGHT) y1 = c.getY2();
+        if (y1 < Scene.HEIGHT) y1 = c.getY2();
         else y1++;
 
+        //TODO: replace by a calculation (same as in curbs)
         height = (int) (0.1639 * y1 - 58);
-        y2 = y1 - height;
         scale();
     }
 
@@ -43,10 +49,31 @@ public class Gate extends Elements {
      */
     @Override
     void scale() {
-        width1 = (int) ((y1 - Gfx.HEIGHT) / coefficient + Road.INITIAL_WIDTH);
-        width2 = (int) ((y2 - Gfx.HEIGHT) / coefficient + Road.INITIAL_WIDTH);
+        y2 = y1 - height;
+        widths = calculateWidth(y1, y2);
     }
 
+    /**
+     * Calculate the widths
+     *
+     * @param y1 the above height
+     * @param y2 the below height
+     * @return the widths of every sub segment
+     */
+    private int[] calculateWidth(int y1, int y2) {
+        return new int[]{(int) (((y1 - getOriginDecreased()) / coefficients[1]) + Road.INITIAL_WIDTH),
+                (int) (((y1 - getOriginIncreased()) / coefficients[0]) + Road.INITIAL_WIDTH),
+                (int) (((y2 - getOriginIncreased()) / coefficients[0]) + Road.INITIAL_WIDTH),
+                (int) (((y2 - getOriginDecreased()) / coefficients[1]) + Road.INITIAL_WIDTH)
+        };
+    }
+
+    /**
+     * Not used here
+     *
+     * @param e an element
+     */
     @Override
-    public void specialUpdate(Elements e) { }
+    public void specialUpdate(Elements e) {
+    }
 }
