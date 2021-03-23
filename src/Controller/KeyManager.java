@@ -3,11 +3,12 @@ package Controller;
 import Model.Moto;
 
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 /**
  * The key manager
  */
-public class KeyManager implements java.awt.event.KeyListener {
+public class KeyManager implements KeyListener {
     /**
      * Boolean array
      */

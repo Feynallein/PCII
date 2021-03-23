@@ -26,14 +26,10 @@ public class SceneManager extends JPanel {
 
     private final UiObjectManager uiObjectManager;
 
-    private Moto player;
-
-    private Road road;
-
     /**
      * The game's key manager
      */
-    private final KeyManager keyManager;
+    private KeyManager keyManager;
 
     /**
      * Constructor
@@ -41,13 +37,11 @@ public class SceneManager extends JPanel {
     public SceneManager(Display display) {
         this.display = display;
         this.uiObjectManager = new UiObjectManager(); // The object manager
-        this.keyManager = new KeyManager(player); // The key manager
         this.mouseManager = new MouseManager(uiObjectManager); // The mouse manager
         this.menuScene = new MenuScene(uiObjectManager, this);
         this.currentScene = this.menuScene;
 
         setPreferredSize(new Dimension(Scene.WIDTH, Scene.HEIGHT)); // Setting the size
-        addKeyListener(keyManager); // Adding the key manager
         addMouseListener(mouseManager); // Adding the mouse manager
         addMouseMotionListener(mouseManager); // Adding the mouse motion manager
     }
@@ -64,9 +58,10 @@ public class SceneManager extends JPanel {
     }
 
     public void setNewGameScene() {
-        player = new Moto(); // The player
-        road = new Road(player); // The road
         gameScene = new GameScene(this);
+        keyManager = new KeyManager(gameScene.getPlayer()); // The key manager
+        grabFocus();
+        addKeyListener(keyManager); // Adding the key manager
     }
 
     public GameScene getGameScene() {
@@ -85,19 +80,19 @@ public class SceneManager extends JPanel {
         this.currentScene = s;
     }
 
-    public KeyManager getKeyManager(){
+    public KeyManager getKeyManager() {
         return keyManager;
     }
 
-    public Moto getPlayer(){
-        return player;
+    public Moto getPlayer() {
+        return gameScene.getPlayer();
     }
 
-    public Road getRoad(){
-        return road;
+    public Road getRoad() {
+        return gameScene.getRoad();
     }
 
-    public JFrame getDisplay(){
+    public JFrame getDisplay() {
         return display.getDisplay();
     }
 }

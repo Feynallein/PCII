@@ -25,8 +25,8 @@ public class GameScene extends Scene {
 
     public GameScene(SceneManager sceneManager) {
         super(sceneManager);
-        this.player = sceneManager.getPlayer(); // The player
-        this.road = sceneManager.getRoad(); // The road
+        this.player = new Moto(); // The player
+        this.road = new Road(player); // The road
     }
 
     @Override
@@ -177,5 +177,13 @@ public class GameScene extends Scene {
 
         // Drawing
         g.drawImage(op.filter(Assets.needle, null), Scene.WIDTH - Assets.needle.getWidth(), Scene.HEIGHT - Assets.needle.getHeight(), null);
+    }
+
+    public Moto getPlayer() {
+        return player;
+    }
+
+    public Road getRoad() {
+        return road;
     }
 }
