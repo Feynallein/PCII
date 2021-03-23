@@ -1,5 +1,10 @@
 package View.Scenes;
 
+import Controller.KeyManager;
+import Controller.MouseManager;
+import Model.Moto;
+import Model.Road.Road;
+import View.UiObjects.UiObjectManager;
 import View.Utils.Handler;
 
 import javax.swing.*;
@@ -17,14 +22,30 @@ public class SceneManager extends JPanel {
 
     private final Handler handler;
 
+    private final MouseManager mouseManager;
+
+    private final UiObjectManager uiObjectManager;
+
+    /**
+     * The game's key manager
+     */
+    private final KeyManager keyManager;
+
     /**
      * Constructor
-     *
      */
     public SceneManager(Handler handler) {
-        this.setPreferredSize(new Dimension(Scene.WIDTH, Scene.HEIGHT));
         this.handler = handler;
-        this.menuScene = new MenuScene(handler.getObjectManager(), this);
+        this.uiObjectManager = new UiObjectManager(); // The object manager
+        this.keyManager = new KeyManager(handler); // The key manager
+        this.mouseManager = new MouseManager(uiObjectManager); // The mouse manager
+
+        setPreferredSize(new Dimension(Scene.WIDTH, Scene.HEIGHT)); // Setting the size
+        addKeyListener(keyManager); // Adding the key manager
+        addMouseListener(mouseManager); // Adding the mouse manager
+        addMouseMotionListener(mouseManager); // Adding the mouse motion manager
+
+        this.menuScene = new MenuScene(uiObjectManager, this);
         this.currentScene = this.menuScene;
     }
 
@@ -37,10 +58,11 @@ public class SceneManager extends JPanel {
     public void paint(Graphics g) {
         super.paint(g);
         currentScene.paint(g);
+        System.out.println(getMousePosition());
     }
 
-    public void setNewGameScene(){
-        gameScene = new GameScene(handler.getPlayer(), handler.getRoad(), this);
+    public void setNewGameScene() {
+        gameScene = new GameScene(handler, this);
     }
 
     public GameScene getGameScene() {
@@ -55,7 +77,7 @@ public class SceneManager extends JPanel {
         return currentScene;
     }
 
-    public void setCurrentScene(Scene s){
+    public void setCurrentScene(Scene s) {
         this.currentScene = s;
     }
 }

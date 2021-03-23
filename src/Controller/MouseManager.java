@@ -15,6 +15,7 @@ public class MouseManager implements MouseListener, MouseMotionListener {
 
     @Override
     public void mouseMoved(MouseEvent e) {
+        System.out.println("ok");
         if (manager != null) manager.onMouseMove(e);
     }
 

@@ -4,6 +4,7 @@ import Model.Moto;
 import Model.Road.Curbs;
 import Model.Road.Elements;
 import Model.Road.Road;
+import View.Utils.Handler;
 import View.Utils.Text;
 import View.Utils.Assets;
 
@@ -23,10 +24,10 @@ public class GameScene extends Scene {
 
     private final Road road;
 
-    public GameScene(Moto moto, Road road, SceneManager sceneManager) {
+    public GameScene(Handler handler, SceneManager sceneManager) {
         super(sceneManager);
-        this.moto = moto;
-        this.road = road;
+        this.moto = new Moto(); // The player
+        this.road = new Road(handler); // The road
     }
 
     @Override

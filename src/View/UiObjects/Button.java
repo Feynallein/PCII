@@ -22,8 +22,6 @@ public class Button extends UiObject {
         else a = sprite[0];
 
         g.drawImage(a, x, y, width, height, null);
-        g.setColor(Color.green);
-        g.drawRect(x, y, width, height);
     }
 
     /* Clicker */

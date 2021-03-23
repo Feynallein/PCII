@@ -8,7 +8,6 @@ public class TH_Handler extends Thread {
     private final Handler handler;
 
     public void run() {
-        System.out.println("ok");
         // Displaying the Menu
         while(handler.getSceneManager().getCurrentScene() instanceof MenuScene) {
             try {

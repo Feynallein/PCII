@@ -1,6 +1,7 @@
 package View.Utils;
 
 import Controller.KeyManager;
+import Controller.MouseManager;
 import Model.Moto;
 import Model.Road.Road;
 import View.UiObjects.UiObjectManager;
@@ -29,13 +30,5 @@ public class Handler {
 
     public JFrame getDisplay(){
         return game.getDisplay();
-    }
-
-    public KeyManager getKeyManager(){
-        return game.getKeyManager();
-    }
-
-    public UiObjectManager getObjectManager(){
-        return game.getObjectManager();
     }
 }

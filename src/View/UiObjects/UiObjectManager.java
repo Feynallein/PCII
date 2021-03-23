@@ -28,6 +28,7 @@ public class UiObjectManager {
 
     /* Mouse Manager */
     public void onMouseMove(MouseEvent e) {
+        System.out.println( e.getX() + " " + e.getY());
         for (UiObject o : uiObjects) {
             o.onMouseMove(e);
         }
