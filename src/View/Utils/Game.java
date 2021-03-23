@@ -5,7 +5,7 @@ import Controller.MouseManager;
 import Model.Moto;
 import Model.Road.Road;
 import Model.Threads.TH_Handler;
-import Model.UiObjects.UiObjectManager;
+import View.UiObjects.UiObjectManager;
 import View.Scenes.SceneManager;
 
 import javax.swing.*;

@@ -1,23 +1,23 @@
-package Model.UiObjects;
+package View.UiObjects;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
 
 public abstract class UiObject {
-    private final float x, y;
-    private final int width, height;
+    protected final int x, y;
+    protected final int width, height;
     private final Rectangle bounds;
-    private boolean hovering = false, click = false;
+    public boolean hovering = false, click = false;
 
-    public UiObject(float x, float y, int width, int height) {
+    public UiObject(int x, int y, int width, int height) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
-        bounds = new Rectangle((int) x, (int) y, width, height);
+        this.bounds = new Rectangle(x, y, width, height);
     }
 
-    public abstract void update();
+    public abstract void paint(Graphics g);
 
     /* Clicker */
 
@@ -49,11 +49,11 @@ public abstract class UiObject {
     }
 
     public int getX() {
-        return (int) x;
+        return x;
     }
 
     public int getY() {
-        return (int) y;
+        return y;
     }
 
     public int getWidth() {

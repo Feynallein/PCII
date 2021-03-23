@@ -8,10 +8,16 @@ public class TH_Handler extends Thread {
     private final Handler handler;
 
     public void run() {
+        System.out.println("ok");
         // Displaying the Menu
         while(handler.getSceneManager().getCurrentScene() instanceof MenuScene) {
-            handler.getObjectManager().update();
-            //handler.getSceneManager().repaint();
+            try {
+                //noinspection BusyWait
+                sleep(0);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            handler.getSceneManager().repaint();
         }
 
         // Starting the game

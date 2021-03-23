@@ -1,13 +1,13 @@
 package Controller;
 
-import Model.UiObjects.UiObjectManager;
+import View.UiObjects.UiObjectManager;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
 public class MouseManager implements MouseListener, MouseMotionListener {
-    private UiObjectManager manager;
+    private final UiObjectManager manager;
 
     public MouseManager(UiObjectManager manager) {
         this.manager = manager;
@@ -35,16 +35,13 @@ public class MouseManager implements MouseListener, MouseMotionListener {
 
     @Override
     public void mouseEntered(MouseEvent e) {
-
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-
     }
 
     @Override
     public void mouseDragged(MouseEvent e) {
-
     }
 }

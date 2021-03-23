@@ -1,4 +1,4 @@
-package Model.UiObjects;
+package View.UiObjects;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -19,17 +19,10 @@ public class UiObjectManager {
         uiObjects.clear();
     }
 
-    public void update(){
-        for(UiObject o : uiObjects){
-            o.update();
-        }
-    }
-
     //Todo: ca a rien a faire la mais j'arrive pas a le mettre dans menu scene...
     public void paint(Graphics g){
         for(UiObject o : uiObjects){
-            g.setColor(Color.green);
-            g.fillRect(o.getX(), o.getY(), o.getWidth(), o.getHeight());
+            o.paint(g);
         }
     }
 

@@ -3,7 +3,7 @@ package View.Utils;
 import Controller.KeyManager;
 import Model.Moto;
 import Model.Road.Road;
-import Model.UiObjects.UiObjectManager;
+import View.UiObjects.UiObjectManager;
 import View.Scenes.SceneManager;
 
 import javax.swing.*;

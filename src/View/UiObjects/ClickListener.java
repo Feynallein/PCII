@@ -1,4 +1,4 @@
-package Model.UiObjects;
+package View.UiObjects;
 
 public interface ClickListener {
     /* Clicker */
