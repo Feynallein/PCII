@@ -1,7 +1,8 @@
 package Model.Road;
 
 import Model.Moto;
-import View.Gfx;
+import View.Scenes.GameScene;
+import View.Scenes.Scene;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ public class Road {
     /**
      * Const : Half of the road width
      */
-    public static final int INITIAL_WIDTH = Gfx.WIDTH / 2;
+    public static final int INITIAL_WIDTH = Scene.WIDTH / 2;
 
     /**
      * Const : Road's minimum width
@@ -55,18 +56,16 @@ public class Road {
     /**
      * The player
      */
-    private final Moto moto;
+    private final Moto player;
 
     /**
      * Constructor
      *
-     * @param moto the player
      */
-    public Road(Moto moto) {
-        this.moto = moto;
+    public Road(Moto player) {
         this.lastDistance = 0;
         this.road = new HashMap<>();
-
+        this.player = player;
         // Creating the different sub-array lists
         road.put(CURBS, new ArrayList<>());
         road.put(SM, new ArrayList<>());
@@ -83,13 +82,13 @@ public class Road {
     private void createRoad() {
         int height;
         boolean b = true;
-        for (int i = Gfx.HEIGHT; i > Gfx.HORIZON; i -= height) {
+        for (int i = Scene.HEIGHT; i > GameScene.HORIZON; i -= height) {
             //TODO: remplacer par des calculs, les meme que ds curbs
             height = (int) (0.1639 * i - 58);
             if (height <= 0) height = 1;
-            road.get(CURBS).add(new Curbs(i, b ? new Color(45, 45, 45) : new Color(40, 40, 40), moto, height));
+            road.get(CURBS).add(new Curbs(i, b ? new Color(45, 45, 45) : new Color(40, 40, 40), player, height));
             if (b)
-                road.get(SM).add(new SurfaceMarking(i, moto, height, (Curbs) road.get(CURBS).get(road.get(CURBS).size() - 1)));
+                road.get(SM).add(new SurfaceMarking(i, player, height, (Curbs) road.get(CURBS).get(road.get(CURBS).size() - 1)));
             b = !b;
         }
     }
@@ -118,18 +117,18 @@ public class Road {
         // Removing if below the screen's height + adding a new one (not for gates)
         for (String s : new String[]{CURBS, SM, GATES}) {
             //TODO: Meilleur affichage des gates (supprimer plus tard)
-            if (!road.get(s).isEmpty() && road.get(s).get(0).getY2() >= Gfx.HEIGHT) {
+            if (!road.get(s).isEmpty() && road.get(s).get(0).getY2() >= Scene.HEIGHT) {
                 int lastIndex = road.get(s).size() - 1;
                 switch (s) {
                     // Adding a new Curbs
                     //TODO: -> j'pense que la color qui merde c'est ici, ca prend la couleur du dernier qui est la même que le dernier du coup ca fait un doublon
-                    case CURBS -> road.get(s).add(new Curbs(road.get(s).get(lastIndex).getY2(), road.get(s).get(0).getColor(), moto, 1));
+                    case CURBS -> road.get(s).add(new Curbs(road.get(s).get(lastIndex).getY2(), road.get(s).get(0).getColor(), player, 1));
                     // Adding a new surface marking
                     //TODO: -> une fois y'a un doublon, je pense c'est un peu la même chose au dessus, avec genre en rajouter un a la fin donc ca se colle
-                    case SM -> road.get(s).add(new SurfaceMarking(road.get(CURBS).get(road.get(CURBS).size() - 1).getY2(), moto, 1, (Curbs) road.get(CURBS).get(road.get(CURBS).size() - 1)));
+                    case SM -> road.get(s).add(new SurfaceMarking(road.get(CURBS).get(road.get(CURBS).size() - 1).getY2(), player, 1, (Curbs) road.get(CURBS).get(road.get(CURBS).size() - 1)));
                     // Adding time to the timer
                     //TODO: faire une réelle detection
-                    case GATES -> moto.addTimer(Gate.ADDED_TIME);
+                    case GATES -> player.addTimer(Gate.ADDED_TIME);
                 }
                 // Removing the object
                 road.get(s).remove(0);
@@ -137,9 +136,9 @@ public class Road {
         }
 
         // Adding gates for every 3 km (the distance is in meters)
-        if (moto.getDistanceTraveled() - lastDistance >= 100) { //TODO: calculation instead of hard coding this + adjustable difficulty (w/ the menu & settings)
-            road.get(GATES).add(new Gate(road.get(CURBS).get(road.get(CURBS).size() - 1).getY2(), Color.RED, moto, 1, (Curbs) road.get(CURBS).get(road.get(CURBS).size() - 1)));
-            lastDistance = moto.getDistanceTraveled();
+        if (player.getDistanceTraveled() - lastDistance >= 100) { //TODO: calculation instead of hard coding this + adjustable difficulty (w/ the menu & settings)
+            road.get(GATES).add(new Gate(road.get(CURBS).get(road.get(CURBS).size() - 1).getY2(), Color.RED, player, 1, (Curbs) road.get(CURBS).get(road.get(CURBS).size() - 1)));
+            lastDistance = player.getDistanceTraveled();
         }
     }
 

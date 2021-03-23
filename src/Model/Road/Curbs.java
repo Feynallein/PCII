@@ -27,20 +27,22 @@ public class Curbs extends Elements {
             widths = calculateWidth(y1, y2);
         }
 
-        private int[] calculateWidth(int y1, int y2){
+        private int[] calculateWidth(int y1, int y2) {
             return new int[]{(int) (((y1 - getOriginDecreased()) / coefficients[1]) + Road.INITIAL_WIDTH),
-                        (int) (((y1 - getOriginIncreased()) / coefficients[0]) + Road.INITIAL_WIDTH),
-                        (int) (((y2 - getOriginIncreased()) / coefficients[0]) + Road.INITIAL_WIDTH),
-                        (int) (((y2 - getOriginDecreased()) / coefficients[1]) + Road.INITIAL_WIDTH)
+                    (int) (((y1 - getOriginIncreased()) / coefficients[0]) + Road.INITIAL_WIDTH),
+                    (int) (((y2 - getOriginIncreased()) / coefficients[0]) + Road.INITIAL_WIDTH),
+                    (int) (((y2 - getOriginDecreased()) / coefficients[1]) + Road.INITIAL_WIDTH)
             };
         }
 
         /**
          * Not used here
+         *
          * @param elements an element
          */
         @Override
-        public void specialUpdate(Elements elements) { }
+        public void specialUpdate(Elements elements) {
+        }
     }
 
     /**
@@ -88,12 +90,14 @@ public class Curbs extends Elements {
      * Not used here
      */
     @Override
-    protected void scale() { }
+    protected void scale() {
+    }
 
     //TODO: pour les courbes : changer la position en x max (comme le bug que y'a avec gate et SM)
 
     /**
      * Special update, variation of update, only used here to update the curb and the segments
+     *
      * @param e an element
      */
     @Override
@@ -122,6 +126,7 @@ public class Curbs extends Elements {
 
     /**
      * Return the array of segments
+     *
      * @return the segments
      */
     public ArrayList<Elements> getSeg() {

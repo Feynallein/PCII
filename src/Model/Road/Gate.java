@@ -1,10 +1,9 @@
 package Model.Road;
 
 import Model.Moto;
-import View.Gfx;
+import View.Scenes.Scene;
 
 import java.awt.*;
-import java.util.Arrays;
 
 /**
  * The gates
@@ -37,7 +36,7 @@ public class Gate extends Elements {
      */
     @Override
     public void update() {
-        if(y1 < Gfx.HEIGHT) y1 = c.getY2();
+        if (y1 < Scene.HEIGHT) y1 = c.getY2();
         else y1++;
 
         //TODO: replace by a calculation (same as in curbs)
@@ -56,11 +55,12 @@ public class Gate extends Elements {
 
     /**
      * Calculate the widths
+     *
      * @param y1 the above height
      * @param y2 the below height
      * @return the widths of every sub segment
      */
-    private int[] calculateWidth(int y1, int y2){
+    private int[] calculateWidth(int y1, int y2) {
         return new int[]{(int) (((y1 - getOriginDecreased()) / coefficients[1]) + Road.INITIAL_WIDTH),
                 (int) (((y1 - getOriginIncreased()) / coefficients[0]) + Road.INITIAL_WIDTH),
                 (int) (((y2 - getOriginIncreased()) / coefficients[0]) + Road.INITIAL_WIDTH),
@@ -70,8 +70,10 @@ public class Gate extends Elements {
 
     /**
      * Not used here
+     *
      * @param e an element
      */
     @Override
-    public void specialUpdate(Elements e) { }
+    public void specialUpdate(Elements e) {
+    }
 }

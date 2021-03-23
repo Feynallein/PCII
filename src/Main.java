@@ -1,4 +1,4 @@
-import Model.Threads.TH_Game;
+import View.Utils.Display;
 
 /**
  * Main class
@@ -11,6 +11,6 @@ public class Main {
      */
     public static void main(String[] args) {
         // Create and start a game
-        (new TH_Game()).start();
+        new Display();
     }
 }
