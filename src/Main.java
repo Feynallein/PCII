@@ -1,4 +1,4 @@
-import View.Utils.Game;
+import View.Utils.Display;
 
 /**
  * Main class
@@ -11,6 +11,6 @@ public class Main {
      */
     public static void main(String[] args) {
         // Create and start a game
-        new Game();
+        new Display();
     }
 }
