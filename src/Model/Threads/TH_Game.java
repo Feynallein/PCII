@@ -1,5 +1,6 @@
 package Model.Threads;
 
+import View.Scenes.SceneManager;
 import View.Utils.Handler;
 
 import javax.swing.*;
@@ -23,7 +24,7 @@ public class TH_Game extends Thread {
      */
     private final TH_Scrolling scroll;
 
-    private final Handler handler;
+    private final SceneManager sceneManager;
 
     /**
      * Repaint the entire screen
@@ -34,15 +35,15 @@ public class TH_Game extends Thread {
         turn.start();
         scroll.start();
 
-        while (!handler.getPlayer().timedOut()) {
+        while (!sceneManager.getPlayer().timedOut()) {
             try {
                 //noinspection BusyWait
                 sleep(GAME_SPEED);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            handler.getSceneManager().repaint();
-            handler.getPlayer().addDistanceTraveled();
+            sceneManager.repaint();
+            sceneManager.getPlayer().addDistanceTraveled();
         }
 
         // temp
@@ -53,7 +54,7 @@ public class TH_Game extends Thread {
      * What to do when losing
      */
     private void lose() {
-        JOptionPane.showMessageDialog(handler.getDisplay(), "Timed Out!\nDistance traveled : " + handler.getPlayer().getDistanceTraveled() + " meters", "", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(sceneManager.getDisplay(), "Timed Out!\nDistance traveled : " + sceneManager.getPlayer().getDistanceTraveled() + " meters", "", JOptionPane.ERROR_MESSAGE);
         // Quitter
         System.exit(0);
     }
@@ -61,9 +62,9 @@ public class TH_Game extends Thread {
     /**
      * Constructor of this thread, create the windows, set up every elements and start other threads
      */
-    public TH_Game(Handler handler) {
-        this.handler = handler;
-        this.turn = new TH_Turn(handler.getKeyManager(), handler.getPlayer());
-        this.scroll = new TH_Scrolling(handler.getRoad(), handler.getPlayer());
+    public TH_Game(SceneManager sceneManager) {
+        this.sceneManager = sceneManager;
+        this.turn = new TH_Turn(sceneManager.getKeyManager(), sceneManager.getPlayer());
+        this.scroll = new TH_Scrolling(sceneManager.getRoad(), sceneManager.getPlayer());
     }
 }

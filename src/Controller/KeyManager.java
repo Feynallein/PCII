@@ -43,9 +43,9 @@ public class KeyManager implements java.awt.event.KeyListener {
      * Constructor
      *
      */
-    public KeyManager(Handler handler) {
+    public KeyManager(Moto player) {
         keys = new boolean[256];
-        this.player = handler.getPlayer();
+        this.player = player;
     }
 
     /**

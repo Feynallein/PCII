@@ -26,6 +26,10 @@ public class SceneManager extends JPanel {
 
     private final UiObjectManager uiObjectManager;
 
+    private Moto player;
+
+    private Road road;
+
     /**
      * The game's key manager
      */
@@ -37,7 +41,7 @@ public class SceneManager extends JPanel {
     public SceneManager(Handler handler) {
         this.handler = handler;
         this.uiObjectManager = new UiObjectManager(); // The object manager
-        this.keyManager = new KeyManager(handler); // The key manager
+        this.keyManager = new KeyManager(player); // The key manager
         this.mouseManager = new MouseManager(uiObjectManager); // The mouse manager
 
         setPreferredSize(new Dimension(Scene.WIDTH, Scene.HEIGHT)); // Setting the size
@@ -62,7 +66,9 @@ public class SceneManager extends JPanel {
     }
 
     public void setNewGameScene() {
-        gameScene = new GameScene(handler, this);
+        player = new Moto(); // The player
+        road = new Road(player); // The road
+        gameScene = new GameScene(this);
     }
 
     public GameScene getGameScene() {
@@ -79,5 +85,21 @@ public class SceneManager extends JPanel {
 
     public void setCurrentScene(Scene s) {
         this.currentScene = s;
+    }
+
+    public KeyManager getKeyManager(){
+        return keyManager;
+    }
+
+    public Moto getPlayer(){
+        return player;
+    }
+
+    public Road getRoad(){
+        return road;
+    }
+
+    public JFrame getDisplay(){
+        return handler.getDisplay();
     }
 }

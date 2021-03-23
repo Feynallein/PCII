@@ -16,7 +16,7 @@ public class Game {
         Assets.init();
 
         /* Creation of the handler */
-        Handler handler = new Handler(this);
+        Handler handler = new Handler( this);
 
         /* Creation of the scene manager */
         SceneManager sceneManager = new SceneManager(handler); // The scene manager
@@ -30,7 +30,7 @@ public class Game {
         display.pack(); // Packing
         display.setVisible(true); // Displaying
 
-        (new TH_Handler(handler)).start(); // Start the main thread
+        (new TH_Handler(sceneManager)).start(); // Start the main thread
     }
 
     public JFrame getDisplay() {

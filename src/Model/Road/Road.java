@@ -59,17 +59,14 @@ public class Road {
      */
     private final Moto player;
 
-    private final Handler handler;
-
     /**
      * Constructor
      *
      */
-    public Road(Handler handler) {
-        this.handler = handler;
+    public Road(Moto player) {
         this.lastDistance = 0;
         this.road = new HashMap<>();
-        this.player = handler.getPlayer();
+        this.player = player;
         // Creating the different sub-array lists
         road.put(CURBS, new ArrayList<>());
         road.put(SM, new ArrayList<>());

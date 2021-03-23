@@ -20,14 +20,14 @@ public class GameScene extends Scene {
      */
     public final static int HORIZON = Scene.HEIGHT / 2;
 
-    private final Moto moto;
+    private final Moto player;
 
     private final Road road;
 
-    public GameScene(Handler handler, SceneManager sceneManager) {
+    public GameScene(SceneManager sceneManager) {
         super(sceneManager);
-        this.moto = new Moto(); // The player
-        this.road = new Road(handler); // The road
+        this.player = sceneManager.getPlayer(); // The player
+        this.road = sceneManager.getRoad(); // The road
     }
 
     @Override
@@ -44,7 +44,7 @@ public class GameScene extends Scene {
         drawRoad(g);
 
         // Draw the player
-        g.drawImage(Assets.player[moto.getState()][moto.getAnimation()], Moto.X, Moto.Y, Moto.WIDTH, Moto.HEIGHT, null);
+        g.drawImage(Assets.player[player.getState()][player.getAnimation()], Moto.X, Moto.Y, Moto.WIDTH, Moto.HEIGHT, null);
 
         // Speed Counter
         drawSpeedCounter(g);
@@ -54,10 +54,10 @@ public class GameScene extends Scene {
         /* TEMPORARY with those bad graphics : */
 
         // Distance traveled
-        Text.drawString(g, Integer.toString(moto.getDistanceTraveled()), 50, Scene.HEIGHT - 50, true, Color.black, Assets.font40);
+        Text.drawString(g, Integer.toString(player.getDistanceTraveled()), 50, Scene.HEIGHT - 50, true, Color.black, Assets.font40);
 
         // Timer
-        Text.drawString(g, Integer.toString(moto.getTimer()), Scene.WIDTH / 2, 50, true, Color.WHITE, Assets.font40);
+        Text.drawString(g, Integer.toString(player.getTimer()), Scene.WIDTH / 2, 50, true, Color.WHITE, Assets.font40);
     }
 
     /**
@@ -69,12 +69,12 @@ public class GameScene extends Scene {
         //TODO: changer, ca tourne quand la route tourne...
 
         // If it has to draw two images
-        if (Math.abs(moto.getOffset()) % Assets.bg.getWidth() != 0) {
+        if (Math.abs(player.getOffset()) % Assets.bg.getWidth() != 0) {
 
             // If the image is over on the left
-            if (moto.getOffset() < 0) {
+            if (player.getOffset() < 0) {
                 // Calculating the offset
-                int offset = Math.abs(moto.getOffset()) % Assets.bg.getWidth();
+                int offset = Math.abs(player.getOffset()) % Assets.bg.getWidth();
 
                 // Getting the sub-image
                 BufferedImage subImage = Assets.bg.getSubimage(0, 0, Scene.WIDTH, HORIZON);
@@ -90,9 +90,9 @@ public class GameScene extends Scene {
             }
 
             // If the image is over on the right
-            else if (moto.getOffset() + Scene.WIDTH > Assets.bg.getWidth()) {
+            else if (player.getOffset() + Scene.WIDTH > Assets.bg.getWidth()) {
                 // Calculating the offset
-                int offset = (Math.abs(moto.getOffset() + Scene.WIDTH) - Assets.bg.getWidth()) % Assets.bg.getWidth();
+                int offset = (Math.abs(player.getOffset() + Scene.WIDTH) - Assets.bg.getWidth()) % Assets.bg.getWidth();
 
                 // Getting the first sub-image
                 BufferedImage subImage = Assets.bg.getSubimage(Assets.bg.getWidth() - Scene.WIDTH + offset, 0, Scene.WIDTH - offset, HORIZON);
@@ -110,7 +110,7 @@ public class GameScene extends Scene {
 
         // Default case (1 image)
         else
-            g.drawImage(Assets.bg.getSubimage(moto.getOffset(), 0, Scene.WIDTH, HORIZON), 0, 0, Scene.WIDTH, HORIZON, null);
+            g.drawImage(Assets.bg.getSubimage(player.getOffset(), 0, Scene.WIDTH, HORIZON), 0, 0, Scene.WIDTH, HORIZON, null);
     }
 
     /**
@@ -170,7 +170,7 @@ public class GameScene extends Scene {
 
         // 180/225 -> if their is a 180 angle of the original needle, it correspond to 225 km/h
         // Linear straight line, coefficient = 180/225, the angle is calculate by multiplying it to the player's speed
-        int theta = (int) (Math.ceil(moto.getSpeed()) * (180f / 225f));
+        int theta = (int) (Math.ceil(player.getSpeed()) * (180f / 225f));
 
         // Rotation
         AffineTransform tx = AffineTransform.getRotateInstance(Math.toRadians(theta), Assets.needleAnchor[0], Assets.needleAnchor[1]);
