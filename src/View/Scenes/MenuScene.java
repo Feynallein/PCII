@@ -35,7 +35,7 @@ public class MenuScene extends Scene {
         }));
         uiObjectManager.addObject(new Button((Scene.WIDTH - Assets.quit[0].getWidth())/2, Scene.HEIGHT*7/8,
                 Assets.quit[0].getWidth(), Assets.quit[0].getHeight(), Assets.quit, () -> {
-            //TODO: a rendre plus propre
+            sceneManager.getDisplay().dispose();
             System.exit(0);
         }));
     }
