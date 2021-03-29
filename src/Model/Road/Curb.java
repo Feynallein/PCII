@@ -5,7 +5,6 @@ import View.Scenes.Scene;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 
 public class Curb {
 
@@ -42,7 +41,7 @@ public class Curb {
     private final Moto player;
     private int height;
     private final boolean specialCurb;
-    private int xOffset;
+    private final int xOffset;
 
     /**
      * Constructor
@@ -73,18 +72,19 @@ public class Curb {
         /* Getting the old size and increasing it by 1 to approximately deduce how many segment there will be in this curb */
         int old_size = seg.size();
         old_size++;
-        if(old_size > 10) old_size = 10;
+        if (old_size > 10) old_size = 10;
 
         /* Clearing previous segments of this curb */
         seg.clear();
 
         /* The antialiasing */
-        int antialiasing = Road.TURNING_SPEED/old_size;
+        int antialiasing = 0;
+        if (xOffset != 0) antialiasing = Road.TURNING_SPEED / old_size;
 
         /* Creating all the segments */
         for (int i = y1; i >= y2; i -= segHeight) {
             /* Changing the sign if it's a negative offset (turning left) */
-            if(xOffset < 0) antialiasing *= -1;
+            if (xOffset < 0) antialiasing *= -1;
 
             /* Calculating the segment's height */
             segHeight = height / SIZE;
@@ -96,7 +96,7 @@ public class Curb {
             seg.add(new Segment(i, color, player, segHeight, xOffset + antialiasing));
 
             /* Increasing the antialiasing */
-            if(xOffset != 0) antialiasing += Road.TURNING_SPEED/old_size;
+            if (xOffset != 0) antialiasing += Road.TURNING_SPEED / old_size;
         }
     }
 
@@ -182,19 +182,19 @@ public class Curb {
         return specialCurb;
     }
 
-    public int getMeanY(){
-        return y1 - height/2;
+    public int getMeanY() {
+        return y1 - height / 2;
     }
 
-    public int getMiddleFullWidth(){
-        return seg.get(seg.size()/2).getWidths()[0] + seg.get(seg.size()/2).getWidths()[1];
+    public int getMiddleFullWidth() {
+        return seg.get(seg.size() / 2).getWidths()[0] + seg.get(seg.size() / 2).getWidths()[1];
     }
 
-    public int getMiddleX(){
-        return seg.get(seg.size()/2).getX()[0];
+    public int getMiddleX() {
+        return seg.size() > 0 ? seg.get(seg.size() / 2).getX()[0] : 0;
     }
 
-    public int getxOffset() {
+    public int getXOffset() {
         return xOffset;
     }
 }

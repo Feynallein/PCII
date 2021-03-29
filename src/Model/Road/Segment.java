@@ -18,7 +18,7 @@ public class Segment {
     private final int y2;
     private final Color color;
     private final Moto player;
-    private int xOffset;
+    private final int xOffset;
 
     /**
      * The 4 widths

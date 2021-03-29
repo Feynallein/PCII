@@ -4,7 +4,6 @@ import Model.Moto;
 import View.Scenes.GameScene;
 import View.Scenes.Scene;
 
-import javax.swing.text.html.HTMLDocument;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -46,6 +45,8 @@ public class Road {
     private final Random random = new Random(101218);
     public final static int MAX_TURN = 300;
     public final static int TURNING_SPEED = 10;
+    //TODO: change 100 to a calculation (1 gate ~3km) -> adjustable w/ difficulty in the settings
+    public final static int DISTANCE_BW_GATES = 3000;
 
     /**
      * Constructor
@@ -64,20 +65,20 @@ public class Road {
         createRoad();
     }
 
-    private void rightInitialize(){
-        for(int i = 1; i <= MAX_TURN; i += TURNING_SPEED){
+    private void rightInitialize() {
+        for (int i = 1; i <= MAX_TURN; i += TURNING_SPEED) {
             turningRightValues.add(i);
         }
-        for(int i = MAX_TURN; i >= 1; i -= TURNING_SPEED){
+        for (int i = MAX_TURN - 1; i >= 1; i -= TURNING_SPEED) {
             turningRightValues.add(i);
         }
     }
 
-    private void leftInitialize(){
-        for(int i = -1; i >= -MAX_TURN; i -= TURNING_SPEED){
+    private void leftInitialize() {
+        for (int i = -1; i >= -MAX_TURN; i -= TURNING_SPEED) {
             turningLeftValues.add(i);
         }
-        for(int i = -MAX_TURN; i <= 1; i += TURNING_SPEED){
+        for (int i = -MAX_TURN + 1; i <= 1; i += TURNING_SPEED) {
             turningLeftValues.add(i);
         }
     }
@@ -98,7 +99,7 @@ public class Road {
             if (height <= 0) height = 1;
 
             /* Creating a new curb */
-            road.add(new Curb(i, b ? new Color(45, 45, 45) : new Color(40, 40, 40), player, height, false, iterator == null ? 0 : iterator.next()));
+            road.add(new Curb(i, b ? new Color(45, 45, 45) : new Color(40, 40, 40), player, height, false, 0));
 
             /* Changing the color */
             b = !b;
@@ -116,41 +117,54 @@ public class Road {
             } else road.get(i).update();
         }
 
-        if(turningRight && iterator == null && road.get(road.size() - 1).getxOffset() == 0) iterator = turningRightValues.iterator();
-        else if(turningLeft && iterator == null && road.get(road.size() - 1).getxOffset() == 0) iterator = turningLeftValues.iterator();
+        if (turningRight && iterator == null && road.get(road.size() - 1).getXOffset() == 0)
+            iterator = turningRightValues.iterator();
+        else if (turningLeft && iterator == null && road.get(road.size() - 1).getXOffset() == 0)
+            iterator = turningLeftValues.iterator();
         else if (!turningRight && !turningLeft || iterator != null && !iterator.hasNext()) iterator = null;
 
         /* Removing under the screen's curb and adding new ones */
         if (!road.isEmpty() && road.get(0).getY2() >= Scene.HEIGHT) {
             /* Adding a new curb */
-            road.add(new Curb(road.get(road.size() - 1).getY2(), road.get(0).getColor(), player, 1, player.getDistanceTraveled() - lastDistance >= 100, calculateOffset()));
+            road.add(new Curb(road.get(road.size() - 1).getY2(), road.get(0).getColor(), player, 1, player.getDistanceTraveled() - lastDistance >= DISTANCE_BW_GATES, calculateOffset()));
 
-            //TODO: change 100 to a calculation (1 gate ~3km) -> adjustable w/ difficulty in the settings
-            if (player.getDistanceTraveled() - lastDistance >= 100) lastDistance = player.getDistanceTraveled();
+            if (player.getDistanceTraveled() - lastDistance >= DISTANCE_BW_GATES) lastDistance = player.getDistanceTraveled();
 
             if (road.get(0).isSpecialCurb()) player.addTimer(GATE_ADDING_TIME);
+
             /* Removing the first curb */
             road.remove(0);
         }
 
         /* Deciding if there is a turn */
-
-        if(!turningLeft && !turningRight && iterator == null){
-            int randomInteger = random.nextInt(1000);
-            if(randomInteger < 1) turningRight = true;
-            else if(randomInteger < 60) turningLeft = false;
+        if (!turningLeft && !turningRight && iterator == null) {
+            int randomInteger = random.nextInt(1000); //todo: 1000 a changer (bcp incr)
+            if (randomInteger < 1) turningRight = true;
+            else if (randomInteger < 2) turningLeft = true;
+            //todo: val a changer
         }
 
         /* If there is a turn, checking if it is finished */
-        if(iterator != null) {
+        if (iterator != null) {
             if (turningRight && !iterator.hasNext()) turningRight = false;
             if (turningLeft && !iterator.hasNext()) turningLeft = false;
         }
     }
 
-    private int calculateOffset(){
-        //return iterator == null || !iterator.hasNext() ? (road.get(road.size() - 1).getxOffset() != 0 ? road.get(road.size() - 1).getxOffset() - 5 : 0) : iterator.next();
-        return  iterator == null || !iterator.hasNext() ? 0 : iterator.next();
+    private int calculateOffset() {
+        //return iterator == null || !iterator.hasNext() ? (road.get(road.size() - 1).getXOffset() > 0 ? road.get(road.size() - 1).getXOffset() - TURNING_SPEED : 0) : iterator.next();
+/*        if(iterator == null || !iterator.hasNext()){
+            if(road.get(road.size() - 1).getXOffset() > 0){
+                return road.get(road.size() - 1).getXOffset() - TURNING_SPEED;
+            }
+            else return 0;
+        }
+        else {
+            if(iterator.next() == 100) return road.get(road.size() - 1).getXOffset() - TURNING_SPEED;
+            else return iterator.next();
+        }*/
+        //(road.get(road.size() - 1).getXOffset() > 0 ? road.get(road.size() - 1).getXOffset() - TURNING_SPEED : 0)
+        return iterator == null || !iterator.hasNext() ? 0 : iterator.next();
     }
 
     /**
@@ -162,9 +176,13 @@ public class Road {
         return road;
     }
 
-    public ArrayList<Curb> getSpecialCurbs(){
+    /**
+     * Get the array of special curbs
+     * @return the special curbs
+     */
+    public ArrayList<Curb> getSpecialCurbs() {
         ArrayList<Curb> res = new ArrayList<>();
-        for(Curb c : road) if(c.isSpecialCurb()) res.add(c);
+        for (Curb c : road) if (c.isSpecialCurb()) res.add(c);
         return res;
     }
 }

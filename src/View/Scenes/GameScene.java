@@ -12,7 +12,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.util.ArrayList;
 
-//TODO: idée changer le thème des couleurs : vert = hherbe mais faire plutot gris pour ville, jaune pour desert, ....
+//TODO: idée changer le thème des couleurs : vert = herbe mais faire plutot gris pour ville, jaune pour desert, ....
 public class GameScene extends Scene {
     /**
      * Const : horizon's line position
@@ -36,7 +36,6 @@ public class GameScene extends Scene {
         g.fillRect(0, HORIZON, Scene.WIDTH, HORIZON);
 
         // Draw the background
-        //drawBackground(g);
         g.drawImage(Assets.bg, 0, 0, Scene.WIDTH, HORIZON, null);
 
         // Draw the road
@@ -79,10 +78,11 @@ public class GameScene extends Scene {
             // Draw the segments of the curb
             drawArray(c.getSeg(), g);
         }
+
+        /* Draw the gates */
         for (Curb c : road.getSpecialCurbs()) {
             g.drawImage(Assets.gate, c.getMiddleX(), c.getMeanY() - c.getMiddleFullWidth() / 2, c.getMiddleFullWidth(), c.getMiddleFullWidth() / 2, null);
         }
-
     }
 
     /**
