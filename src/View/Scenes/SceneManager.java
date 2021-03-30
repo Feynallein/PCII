@@ -18,7 +18,7 @@ public class SceneManager extends JPanel {
 
     private GameScene gameScene;
 
-    //private final MenuScene menuScene;
+    private final MenuScene menuScene;
 
     private final Display display;
 
@@ -39,16 +39,16 @@ public class SceneManager extends JPanel {
         this.display = display;
         this.uiObjectManager = new UiObjectManager(); // The object manager
         this.mouseManager = new MouseManager(uiObjectManager); // The mouse manager
-        //this.menuScene = new MenuScene(uiObjectManager, this);
-        //setCurrentScene(menuScene);
+        this.menuScene = new MenuScene(uiObjectManager, this);
+        setCurrentScene(menuScene);
 
         setPreferredSize(new Dimension(Scene.WIDTH, Scene.HEIGHT)); // Setting the size
         addMouseListener(mouseManager); // Adding the mouse manager
         addMouseMotionListener(mouseManager); // Adding the mouse motion manager
 
         /* Temporary */
-        newGameScene();
-        setCurrentScene(gameScene);
+/*        newGameScene();
+        setCurrentScene(gameScene);*/
     }
 
     /**

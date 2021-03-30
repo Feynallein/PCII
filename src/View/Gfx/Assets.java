@@ -4,6 +4,8 @@ import View.Utils.FontLoader;
 import View.Utils.ImageLoader;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 
 /**
@@ -45,7 +47,12 @@ public class Assets {
     public static BufferedImage[] quit;
     public static BufferedImage menuBg;
 
-    public static int size = 64;
+    public static final int BUTTON_HEIGHT = 250;
+    public static final double SCALING = 0.2;
+
+
+    //temp
+    public static final int size = 64;
 
     /**
      * The font at size 40
@@ -56,15 +63,6 @@ public class Assets {
      * Initialize all assets
      */
     public static void init() {
-        // Load the player's sprite sheet
-        SpriteSheet playerSheet = new SpriteSheet(ImageLoader.loadImage("/Textures/player_sheets.png"));
-        SpriteSheet playSheet = new SpriteSheet(ImageLoader.loadImage("/Buttons/Play.png"));
-        SpriteSheet highScoreSheet = new SpriteSheet(ImageLoader.loadImage("/Buttons/Restart.png"));
-        SpriteSheet creditsSheet = new SpriteSheet(ImageLoader.loadImage("/Buttons/Credits.png"));
-        SpriteSheet settingSheet = new SpriteSheet(ImageLoader.loadImage("/Buttons/Settings.png"));
-        SpriteSheet quitSheet = new SpriteSheet(ImageLoader.loadImage("/Buttons/Quit.png"));
-
-
         player = new BufferedImage[4][4];
         play = new BufferedImage[3];
         highScore = new BufferedImage[3];
@@ -72,26 +70,55 @@ public class Assets {
         setting = new BufferedImage[3];
         quit = new BufferedImage[3];
 
-        // Crop each different sprites of the player
+        /* Loading sprites sheets */
+        SpriteSheet playerSheet = new SpriteSheet(ImageLoader.loadImage("/Textures/player_sheets.png"));
+        SpriteSheet playSheet = new SpriteSheet(ImageLoader.loadImage("/Buttons/Play.png"));
+        SpriteSheet highScoreSheet = new SpriteSheet(ImageLoader.loadImage("/Buttons/Restart.png"));
+        SpriteSheet creditsSheet = new SpriteSheet(ImageLoader.loadImage("/Buttons/Credits.png"));
+        SpriteSheet settingSheet = new SpriteSheet(ImageLoader.loadImage("/Buttons/Settings.png"));
+        SpriteSheet quitSheet = new SpriteSheet(ImageLoader.loadImage("/Buttons/Quit.png"));
+
+        /* Crop each different sprites of the player */
         for (int i = 0; i < player.length; i++) {
             for (int y = 0; y < player[0].length; y++) {
                 player[i][y] = playerSheet.crop(i * player_img_width, y * player_img_height, player_img_width, player_img_height);
             }
         }
 
+        /* Cropping the buttons' sprites */
         for (int i = 0; i < 3; i++) {
-            play[i] = playSheet.crop(i * size * 2, 0, 2 * size, size);
+            play[i] = playSheet.crop(i * 950, 0, 950, BUTTON_HEIGHT);
             highScore[i] = highScoreSheet.crop(i * (size / 2) * 7, 0, 7 * (size / 2), size);
-            credits[i] = creditsSheet.crop(i * size * 3, 0, 3 * size, size);
-            setting[i] = settingSheet.crop(i * size * 4, 0, 4 * size, size);
-            quit[i] = quitSheet.crop(i * size * 2, 0, 2 * size, size);
+            credits[i] = creditsSheet.crop(i * 1550, 0, 1550, BUTTON_HEIGHT);
+            setting[i] = settingSheet.crop(i * 1790, 0, 1790, BUTTON_HEIGHT);
+            quit[i] = quitSheet.crop(i * 910, 0, 910, BUTTON_HEIGHT);
         }
 
-        // Load the background
+        /* Rescaling the buttons */
+        rescale(play);
+        rescale(credits);
+        rescale(setting);
+        rescale(quit);
+
+        /* Loading other things */
         bg = ImageLoader.loadImage("/Textures/background.png");
         gate = ImageLoader.loadImage("/Textures/gate.png");
         speed_counter = ImageLoader.loadImage("/Textures/speed_counter.png");
         needle = ImageLoader.loadImage("/Textures/needle.png");
         menuBg = ImageLoader.loadImage("/Textures/menu_bg.jpg");
+    }
+
+    /* Rescaling method */
+    private static void rescale(BufferedImage[] b){
+        BufferedImage temp;
+        AffineTransform at = new AffineTransform();
+        at.scale(SCALING, SCALING);
+        AffineTransformOp op;
+
+        for(int i = 0; i < 3; i++){
+            temp = new BufferedImage(b[i].getWidth(), b[i].getHeight(), BufferedImage.TYPE_INT_ARGB);
+            op = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
+            b[i] = op.filter(b[i], temp);
+        }
     }
 }
