@@ -96,17 +96,15 @@ public class Moto {
      * Move the player to the left
      */
     public void moveLeft() {
-        if (offset > -Road.INITIAL_WIDTH) {
-            offset += MOVE_SPEED;
-            if(turningPosition > -MAX_TURNING_POSITION) turningPosition--;
-        }
+        if (offset < Road.INITIAL_WIDTH) offset += MOVE_SPEED;
+        if(turningPosition > -MAX_TURNING_POSITION) turningPosition--;
     }
 
     /**
      * Move the player to the right
      */
     public void moveRight() {
-        if (offset < Road.INITIAL_WIDTH) offset -= MOVE_SPEED;
+        if (offset > -Road.INITIAL_WIDTH) offset -= MOVE_SPEED;
         if(turningPosition < MAX_TURNING_POSITION) turningPosition++;
     }
 

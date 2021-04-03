@@ -2,6 +2,7 @@ package View.Scenes;
 
 import Model.Moto;
 import Model.Road.Curb;
+import Model.Road.Obstacle;
 import Model.Road.Road;
 import Model.Road.Segment;
 import View.Utils.Text;
@@ -145,6 +146,10 @@ public class GameScene extends Scene {
 
             // Draw the segments of the curb
             drawArray(c.getSeg(), g);
+        }
+
+        for(Obstacle o : road.getObstacles()){
+            g.drawImage(o.getSprite(), o.getX(), o.getY(), o.getWidth(), o.getHeight(), null);
         }
 
         /* Draw the gates */

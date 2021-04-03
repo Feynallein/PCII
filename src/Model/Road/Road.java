@@ -1,6 +1,7 @@
 package Model.Road;
 
 import Model.Moto;
+import View.Gfx.Assets;
 import View.Scenes.GameScene;
 import View.Scenes.Scene;
 
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.ListIterator;
 import java.util.Random;
+import java.util.logging.XMLFormatter;
 
 /**
  * The road
@@ -45,8 +47,10 @@ public class Road {
     private final Random random = new Random(101218);
     public final static int MAX_TURN = 300;
     public final static int TURNING_SPEED = 10;
-    //TODO: change 100 to a calculation (1 gate ~3km) -> adjustable w/ difficulty in the settings
+    //1 gate ~3km
     public final static int DISTANCE_BW_GATES = 3000;
+    public final ArrayList<Obstacle> obstacles = new ArrayList<>();
+
 
     /**
      * Constructor
@@ -119,11 +123,16 @@ public class Road {
             } else road.get(i).update();
         }
 
+        /* Updating obstacles */
+        for(Obstacle o : obstacles){
+            o.update();
+        }
+
         /* Deciding if there is a turn (random) */
         if (!turningLeft && !turningRight && iterator == null && road.get(road.size() - 1).getXOffset() == 0) {
             int randomInteger = random.nextInt(1000); //todo: 1000 a changer (bcp incr)
             if (randomInteger < 1) turningRight = false;
-            else if (randomInteger < 2) turningLeft = false;//temp, remettre a true!!
+            else if (randomInteger < 2) turningLeft = false;//todo: temp, remettre a true!!
             //todo: val a changer
         }
 
@@ -141,8 +150,12 @@ public class Road {
         /* Removing under the screen's curb and adding new ones */
         if (!road.isEmpty() && road.get(0).getY2() >= Scene.HEIGHT) {
             /* Adding a new curb */
-            road.add(new Curb(road.get(road.size() - 1).getY2(), road.get(0).getColor(), player, 1,
-                    player.getDistanceTraveled() - lastDistance >= DISTANCE_BW_GATES, getXOffset()));
+            Curb c = new Curb(road.get(road.size() - 1).getY2(), road.get(0).getColor(), player, 1,
+                    player.getDistanceTraveled() - lastDistance >= DISTANCE_BW_GATES, getXOffset());
+            road.add(c);
+            if(random.nextInt(5000) < 1000){//todo: tweak values
+                obstacles.add(new Obstacle(Assets.obstacles[0], c));
+            }
 
             /* Changing the distance traveled when crossing a gate */
             if (player.getDistanceTraveled() - lastDistance >= DISTANCE_BW_GATES)
@@ -154,6 +167,9 @@ public class Road {
             /* Removing the first curb */
             road.remove(0);
         }
+
+        /* removing out of screen obstacles */
+        obstacles.removeIf(o -> o.getY() > Scene.HEIGHT);
     }
 
     private int getXOffset(){
@@ -178,5 +194,9 @@ public class Road {
         ArrayList<Curb> res = new ArrayList<>();
         for (Curb c : road) if (c.isSpecialCurb()) res.add(c);
         return res;
+    }
+
+    public ArrayList<Obstacle> getObstacles() {
+        return obstacles;
     }
 }
