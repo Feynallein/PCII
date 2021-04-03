@@ -7,6 +7,7 @@ import View.Scenes.Scene;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.ListIterator;
 import java.util.Random;
 
 /**
@@ -36,7 +37,6 @@ public class Road {
     private final Moto player;
 
     private int lastDistance;
-
     private boolean turningRight;
     private boolean turningLeft;
     private final ArrayList<Integer> turningRightValues = new ArrayList<>();
@@ -65,6 +65,7 @@ public class Road {
         createRoad();
     }
 
+    /* Initialize the offset for a right turn */
     private void rightInitialize() {
         for (int i = 1; i <= MAX_TURN; i += TURNING_SPEED) {
             turningRightValues.add(i);
@@ -74,6 +75,7 @@ public class Road {
         }
     }
 
+    /* Initialize the offset for a left turn */
     private void leftInitialize() {
         for (int i = -1; i >= -MAX_TURN; i -= TURNING_SPEED) {
             turningLeftValues.add(i);
@@ -117,53 +119,44 @@ public class Road {
             } else road.get(i).update();
         }
 
-        if (turningRight && iterator == null && road.get(road.size() - 1).getXOffset() == 0)
-            iterator = turningRightValues.iterator();
-        else if (turningLeft && iterator == null && road.get(road.size() - 1).getXOffset() == 0)
-            iterator = turningLeftValues.iterator();
-        else if (!turningRight && !turningLeft || iterator != null && !iterator.hasNext()) iterator = null;
+        /* Deciding if there is a turn (random) */
+        if (!turningLeft && !turningRight && iterator == null && road.get(road.size() - 1).getXOffset() == 0) {
+            int randomInteger = random.nextInt(1000); //todo: 1000 a changer (bcp incr)
+            if (randomInteger < 1) turningRight = false;
+            else if (randomInteger < 2) turningLeft = false;//temp, remettre a true!!
+            //todo: val a changer
+        }
+
+        /* Updating the iterators and the booleans */
+        if (turningRight && iterator == null) iterator = turningRightValues.iterator();
+        else if (turningLeft && iterator == null) iterator = turningLeftValues.iterator();
+        else if (!turningRight && !turningLeft) iterator = null;
+
+        /* If there is a turn, checking if it is finished */
+        if (iterator != null && !iterator.hasNext()) {
+                if (turningRight) turningRight = false;
+                else if (turningLeft) turningLeft = false;
+        }
 
         /* Removing under the screen's curb and adding new ones */
         if (!road.isEmpty() && road.get(0).getY2() >= Scene.HEIGHT) {
             /* Adding a new curb */
-            road.add(new Curb(road.get(road.size() - 1).getY2(), road.get(0).getColor(), player, 1, player.getDistanceTraveled() - lastDistance >= DISTANCE_BW_GATES, calculateOffset()));
+            road.add(new Curb(road.get(road.size() - 1).getY2(), road.get(0).getColor(), player, 1,
+                    player.getDistanceTraveled() - lastDistance >= DISTANCE_BW_GATES, getXOffset()));
 
-            if (player.getDistanceTraveled() - lastDistance >= DISTANCE_BW_GATES) lastDistance = player.getDistanceTraveled();
+            /* Changing the distance traveled when crossing a gate */
+            if (player.getDistanceTraveled() - lastDistance >= DISTANCE_BW_GATES)
+                lastDistance = player.getDistanceTraveled();
 
+            /* Adding time to timer if a gate is crossed */
             if (road.get(0).isSpecialCurb()) player.addTimer(GATE_ADDING_TIME);
 
             /* Removing the first curb */
             road.remove(0);
         }
-
-        /* Deciding if there is a turn */
-        if (!turningLeft && !turningRight && iterator == null) {
-            int randomInteger = random.nextInt(1000); //todo: 1000 a changer (bcp incr)
-            if (randomInteger < 1) turningRight = true;
-            else if (randomInteger < 2) turningLeft = true;
-            //todo: val a changer
-        }
-
-        /* If there is a turn, checking if it is finished */
-        if (iterator != null) {
-            if (turningRight && !iterator.hasNext()) turningRight = false;
-            if (turningLeft && !iterator.hasNext()) turningLeft = false;
-        }
     }
 
-    private int calculateOffset() {
-        //return iterator == null || !iterator.hasNext() ? (road.get(road.size() - 1).getXOffset() > 0 ? road.get(road.size() - 1).getXOffset() - TURNING_SPEED : 0) : iterator.next();
-/*        if(iterator == null || !iterator.hasNext()){
-            if(road.get(road.size() - 1).getXOffset() > 0){
-                return road.get(road.size() - 1).getXOffset() - TURNING_SPEED;
-            }
-            else return 0;
-        }
-        else {
-            if(iterator.next() == 100) return road.get(road.size() - 1).getXOffset() - TURNING_SPEED;
-            else return iterator.next();
-        }*/
-        //(road.get(road.size() - 1).getXOffset() > 0 ? road.get(road.size() - 1).getXOffset() - TURNING_SPEED : 0)
+    private int getXOffset(){
         return iterator == null || !iterator.hasNext() ? 0 : iterator.next();
     }
 
@@ -178,6 +171,7 @@ public class Road {
 
     /**
      * Get the array of special curbs
+     *
      * @return the special curbs
      */
     public ArrayList<Curb> getSpecialCurbs() {

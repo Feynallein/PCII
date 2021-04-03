@@ -60,6 +60,8 @@ public class KeyManager implements KeyListener {
         if (left && player.getSpeed() > 0) player.moveLeft();
         if (right && player.getSpeed() > 0) player.moveRight();
 
+        if(!left && !right) player.notTurning();
+
         // Updating if the keys are being pressed
         left = keys[KeyEvent.VK_LEFT];
         right = keys[KeyEvent.VK_RIGHT];
@@ -98,5 +100,9 @@ public class KeyManager implements KeyListener {
         if (e.getKeyCode() < 0 || e.getKeyCode() >= keys.length)
             return;
         keys[e.getKeyCode()] = false;
+    }
+
+    public boolean isTurning(){
+        return left || right;
     }
 }

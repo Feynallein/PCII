@@ -10,6 +10,7 @@ import View.Gfx.Assets;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 //TODO: idée changer le thème des couleurs : vert = herbe mais faire plutot gris pour ville, jaune pour desert, ....
@@ -42,7 +43,7 @@ public class GameScene extends Scene {
         drawRoad(g);
 
         // Draw the player
-        g.drawImage(Assets.player[player.getState()][player.getAnimation()], Moto.X, Moto.Y, Moto.WIDTH, Moto.HEIGHT, null);
+        drawPlayer(g);
 
         // Speed Counter
         drawSpeedCounter(g);
@@ -57,6 +58,73 @@ public class GameScene extends Scene {
         // Timer
         Text.drawString(g, Integer.toString(player.getTimer()), Scene.WIDTH / 2, 50, true, Color.WHITE, Assets.font40);
     }
+
+    private void drawPlayer(Graphics g){
+        if(player.getTurningPosition() > 1508){
+            int theta = player.getTurningPosition();
+
+            // Rotation
+            AffineTransform tx = AffineTransform.getRotateInstance(Math.toRadians(theta), 214f, 575f);
+            AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
+
+            // Drawing
+            g.drawImage(op.filter(Assets.player[player.getState()][player.getAnimation()], null), Moto.X, Moto.Y, Moto.WIDTH, Moto.HEIGHT, null);
+        }
+        else g.drawImage(Assets.player[player.getState()][player.getAnimation()], Moto.X, Moto.Y, Moto.WIDTH, Moto.HEIGHT, null);
+    }
+
+    /**
+     * Draw the background
+     *
+     * @param g the graphics
+     *//*
+    private void drawBackground(Graphics g) {
+        //TODO: changer, ca tourne quand la route tourne...
+
+        // If it has to draw two images
+        if (Math.abs(road.getLastXOffset()) % Assets.bg.getWidth() != 0) {
+
+            // If the image is over on the left
+            if (road.getLastXOffset() < 0) {
+                // Calculating the offset
+                int offset = Math.abs(road.getLastXOffset()) % Assets.bg.getWidth();
+
+                // Getting the sub-image
+                BufferedImage subImage = Assets.bg.getSubimage(0, 0, Scene.WIDTH, HORIZON);
+
+                // Printing the first image
+                g.drawImage(subImage, offset, 0, Scene.WIDTH, HORIZON, null);
+
+                // Getting the second sub-image
+                subImage = Assets.bg.getSubimage(Assets.bg.getWidth() - offset, 0, offset, HORIZON);
+
+                // Printing the second sub-image
+                g.drawImage(subImage, 0, 0, offset, HORIZON, null);
+            }
+
+            // If the image is over on the right
+            else if (road.getLastXOffset() + Scene.WIDTH > Assets.bg.getWidth()) {
+                // Calculating the offset
+                int offset = (Math.abs(road.getLastXOffset() + Scene.WIDTH) - Assets.bg.getWidth()) % Assets.bg.getWidth();
+
+                // Getting the first sub-image
+                BufferedImage subImage = Assets.bg.getSubimage(Assets.bg.getWidth() - Scene.WIDTH + offset, 0, Scene.WIDTH - offset, HORIZON);
+
+                // Printing the first sub-image
+                g.drawImage(subImage, 0, 0, Scene.WIDTH - offset, HORIZON, null);
+
+                // Getting the second sub-image
+                subImage = Assets.bg.getSubimage(0, 0, offset, HORIZON);
+
+                // Printing the second sub-image
+                g.drawImage(subImage, Scene.WIDTH - offset, 0, offset, HORIZON, null);
+            }
+        }
+
+        // Default case (1 image)
+        else
+            g.drawImage(Assets.bg.getSubimage(road.getLastXOffset(), 0, Scene.WIDTH, HORIZON), 0, 0, Scene.WIDTH, HORIZON, null);
+    }*/
 
     /**
      * Draw the road
