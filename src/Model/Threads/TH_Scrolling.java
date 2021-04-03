@@ -1,6 +1,6 @@
 package Model.Threads;
 
-import Model.Moto;
+import Model.Player;
 import Model.Road.Road;
 
 /**
@@ -15,7 +15,7 @@ public class TH_Scrolling extends Thread {
     /**
      * The player
      */
-    private final Moto player;
+    private final Player player;
 
     /**
      * The thread itself
@@ -41,7 +41,7 @@ public class TH_Scrolling extends Thread {
      * @param road   the road
      * @param player the player
      */
-    public TH_Scrolling(Road road, Moto player) {
+    public TH_Scrolling(Road road, Player player) {
         this.road = road;
         this.player = player;
     }

@@ -1,6 +1,6 @@
 package Model.Road;
 
-import Model.Moto;
+import Model.Player;
 import View.Scenes.GameScene;
 import View.Scenes.Scene;
 
@@ -17,7 +17,7 @@ public class Segment {
     private final int y1;
     private final int y2;
     private final Color color;
-    private final Moto player;
+    private final Player player;
     private final int xOffset;
 
     /**
@@ -30,12 +30,12 @@ public class Segment {
      *
      * @param y1    the first y (below)
      * @param color the color
-     * @param moto  the player
+     * @param player  the player
      */
-    public Segment(int y1, Color color, Moto moto, int height, int xOffset) {
+    public Segment(int y1, Color color, Player player, int height, int xOffset) {
         this.y1 = y1;
         this.color = color;
-        this.player = moto;
+        this.player = player;
         this.y2 = this.y1 - height;
         this.xOffset = xOffset;
 

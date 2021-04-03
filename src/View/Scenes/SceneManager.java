@@ -2,7 +2,7 @@ package View.Scenes;
 
 import Controller.KeyManager;
 import Controller.MouseManager;
-import Model.Moto;
+import Model.Player;
 import Model.Road.Road;
 import View.UiObjects.UiObjectManager;
 import View.Gfx.Display;
@@ -88,7 +88,7 @@ public class SceneManager extends JPanel {
         return keyManager;
     }
 
-    public Moto getPlayer() {
+    public Player getPlayer() {
         return gameScene.getPlayer();
     }
 

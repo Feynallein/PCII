@@ -1,7 +1,7 @@
 package Model.Threads;
 
 import Controller.KeyManager;
-import Model.Moto;
+import Model.Player;
 
 /**
  * Player's movement thread
@@ -15,7 +15,7 @@ public class TH_KeyListener extends Thread {
     /**
      * The player
      */
-    private final Moto player;
+    private final Player player;
 
     /**
      * Update the key manager
@@ -41,7 +41,7 @@ public class TH_KeyListener extends Thread {
      * @param keyManager the key manager
      * @param player     the player
      */
-    public TH_KeyListener(KeyManager keyManager, Moto player) {
+    public TH_KeyListener(KeyManager keyManager, Player player) {
         this.keyManager = keyManager;
         this.player = player;
     }

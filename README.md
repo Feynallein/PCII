@@ -9,4 +9,4 @@ Université Paris-Saclay
 
 ------------------------------------
 
-Le but de ce projet est de créer un jeu de course de moto
+Le but de ce projet est de créer un jeu de course de player

@@ -19,15 +19,14 @@ public class Obstacle {
         this.width = c.getMiddleFullWidth()/2;
         this.height = this.width/2;
         this.x = (new Random()).nextInt((Scene.WIDTH/2 + c.getMiddleFullWidth()/2 - this.width) - (Scene.WIDTH/2 - c.getMiddleFullWidth()/2)) + Scene.WIDTH/2 - c.getMiddleFullWidth()/2;
+        this.x += curb.getXOffset();
         this.y = c.getMeanY();
-
     }
 
     public void update(){
         y = curb.getMeanY();
-        x += curb.getXOffset();
         width = curb.getMiddleFullWidth()/2;
-        height = width/2;
+        height = (int) (width * 0.6);
         //todo x update
     }
 

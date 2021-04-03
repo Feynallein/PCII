@@ -1,6 +1,6 @@
 package Model.Road;
 
-import Model.Moto;
+import Model.Player;
 import View.Scenes.Scene;
 
 import java.awt.*;
@@ -38,7 +38,7 @@ public class Curb {
     private int y1;
     private int y2;
     private final Color color;
-    private final Moto player;
+    private final Player player;
     private int height;
     private final boolean specialCurb;
     private final int xOffset;
@@ -48,11 +48,11 @@ public class Curb {
      *
      * @param y1    the first y (below)
      * @param color the color
-     * @param moto  the player
+     * @param player  the player
      */
-    public Curb(int y1, Color color, Moto moto, int height, boolean b, int xOffset) {
+    public Curb(int y1, Color color, Player player, int height, boolean b, int xOffset) {
         this.y1 = y1;
-        this.player = moto;
+        this.player = player;
         this.height = height;
         this.y2 = this.y1 - this.height;
         this.seg = new ArrayList<>();

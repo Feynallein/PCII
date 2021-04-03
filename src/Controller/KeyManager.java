@@ -1,6 +1,6 @@
 package Controller;
 
-import Model.Moto;
+import Model.Player;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -37,13 +37,13 @@ public class KeyManager implements KeyListener {
     /**
      * The player
      */
-    private final Moto player;
+    private final Player player;
 
     /**
      * Constructor
      *
      */
-    public KeyManager(Moto player) {
+    public KeyManager(Player player) {
         keys = new boolean[256];
         this.player = player;
     }

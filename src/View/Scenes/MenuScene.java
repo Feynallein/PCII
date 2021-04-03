@@ -25,10 +25,6 @@ public class MenuScene extends Scene {
                 Assets.highScore[0].getWidth(), Assets.highScore[0].getHeight(), Assets.highScore, () -> {
             //TODO: high score
         }));
-        uiObjectManager.addObject(new Button((Scene.WIDTH - (int) (Assets.setting[0].getWidth()*Assets.SCALING))/2, Scene.HEIGHT*5/8,
-                Assets.setting[0].getWidth(), Assets.setting[0].getHeight(), Assets.setting, () -> {
-            //TODO: settings
-        }));
         uiObjectManager.addObject(new Button((Scene.WIDTH - (int) (Assets.credits[0].getWidth()*Assets.SCALING))/2, Scene.HEIGHT*6/8,
                 Assets.credits[0].getWidth(), Assets.credits[0].getHeight(), Assets.credits, () -> {
             //TODO: credits

@@ -1,6 +1,6 @@
 package View.Scenes;
 
-import Model.Moto;
+import Model.Player;
 import Model.Road.Curb;
 import Model.Road.Obstacle;
 import Model.Road.Road;
@@ -11,7 +11,6 @@ import View.Gfx.Assets;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 //TODO: idée changer le thème des couleurs : vert = herbe mais faire plutot gris pour ville, jaune pour desert, ....
@@ -21,13 +20,13 @@ public class GameScene extends Scene {
      */
     public final static int HORIZON = Scene.HEIGHT / 2;
 
-    private final Moto player;
+    private final Player player;
 
     private final Road road;
 
     public GameScene(SceneManager sceneManager) {
         super(sceneManager);
-        this.player = new Moto(); // The player
+        this.player = new Player(); // The player
         this.road = new Road(player); // The road
     }
 
@@ -54,10 +53,13 @@ public class GameScene extends Scene {
         /* TEMPORARY with those bad graphics : */
 
         // Distance traveled
-        Text.drawString(g, Integer.toString(player.getDistanceTraveled()), 50, Scene.HEIGHT - 50, true, Color.black, Assets.font40);
+        Text.drawString(g, Integer.toString(player.getDistanceTraveled()), 50, Scene.HEIGHT - 50, true, Color.black, Assets.charybdis25);
 
         // Timer
-        Text.drawString(g, Integer.toString(player.getTimer()), Scene.WIDTH / 2, 50, true, Color.WHITE, Assets.font40);
+        Text.drawString(g, Integer.toString(player.getTimer()), Scene.WIDTH / 2, 50, true, Color.WHITE, Assets.charybdis25);
+
+        //Lives
+        Text.drawString(g, Integer.toString(player.getLives()), 20, 20, true, Color.WHITE, Assets.charybdis25);
     }
 
     private void drawPlayer(Graphics g){
@@ -69,9 +71,9 @@ public class GameScene extends Scene {
             AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
 
             // Drawing
-            g.drawImage(op.filter(Assets.player[player.getState()][player.getAnimation()], null), Moto.X, Moto.Y, Moto.WIDTH, Moto.HEIGHT, null);
+            g.drawImage(op.filter(Assets.player[player.getState()][player.getAnimation()], null), Player.X, Player.Y, Player.WIDTH, Player.HEIGHT, null);
         }
-        else g.drawImage(Assets.player[player.getState()][player.getAnimation()], Moto.X, Moto.Y, Moto.WIDTH, Moto.HEIGHT, null);
+        else g.drawImage(Assets.player[player.getState()][player.getAnimation()], Player.X, Player.Y, Player.WIDTH, Player.HEIGHT, null);
     }
 
     /**
@@ -205,7 +207,7 @@ public class GameScene extends Scene {
      *
      * @return the player
      */
-    public Moto getPlayer() {
+    public Player getPlayer() {
         return player;
     }
 

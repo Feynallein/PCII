@@ -31,35 +31,24 @@ public class Assets {
      * Background's assets
      */
     public static BufferedImage bg;
-
     public static BufferedImage gate;
-
     public static BufferedImage speed_counter;
-
     public static BufferedImage needle;
-
     public static final float[] needleAnchor = new float[]{154, 154};
     public static final float[] playerAnchor = new float[]{player_img_width/2f, player_img_height};
-
     public static BufferedImage[] play;
     public static BufferedImage[] highScore;
     public static BufferedImage[] credits;
-    public static BufferedImage[] setting;
     public static BufferedImage[] quit;
     public static BufferedImage menuBg;
     public static BufferedImage[] obstacles;
-
     public static final int BUTTON_HEIGHT = 250;
     public static final double SCALING = 0.2;
 
-
-    //temp
-    public static final int size = 64;
-
     /**
-     * The font at size 40
+     * The charybdis font at size 40
      */
-    public static final Font font40 = FontLoader.loadFont("Resources/Others/times.ttf", 40);
+    public static final Font charybdis25 = FontLoader.loadFont("Resources/Others/charybdis.ttf", 40);
 
     /**
      * Initialize all assets
@@ -69,7 +58,6 @@ public class Assets {
         play = new BufferedImage[3];
         highScore = new BufferedImage[3];
         credits = new BufferedImage[3];
-        setting = new BufferedImage[3];
         quit = new BufferedImage[3];
         obstacles = new BufferedImage[1];
 
@@ -78,9 +66,8 @@ public class Assets {
         SpriteSheet playSheet = new SpriteSheet(ImageLoader.loadImage("/Buttons/Play.png"));
         SpriteSheet highScoreSheet = new SpriteSheet(ImageLoader.loadImage("/Buttons/Highscore.png"));
         SpriteSheet creditsSheet = new SpriteSheet(ImageLoader.loadImage("/Buttons/Credits.png"));
-        SpriteSheet settingSheet = new SpriteSheet(ImageLoader.loadImage("/Buttons/Settings.png"));
         SpriteSheet quitSheet = new SpriteSheet(ImageLoader.loadImage("/Buttons/Quit.png"));
-        SpriteSheet obstacleSheet = new SpriteSheet(ImageLoader.loadImage("/Textures/Rock.png"));
+        SpriteSheet obstacleSheet = new SpriteSheet(ImageLoader.loadImage("/Textures/Obstacles_Sheet.png"));
 
         /* Crop each different sprites of the player */
         for (int i = 0; i < player.length; i++) {
@@ -92,9 +79,8 @@ public class Assets {
         /* Cropping the buttons' sprites */
         for (int i = 0; i < 3; i++) {
             play[i] = playSheet.crop(i * 950, 0, 950, BUTTON_HEIGHT);
-            highScore[i] = highScoreSheet.crop(i * 1920, 0, 1920, size);
+            highScore[i] = highScoreSheet.crop(i * 1920, 0, 1920, BUTTON_HEIGHT);
             credits[i] = creditsSheet.crop(i * 1550, 0, 1550, BUTTON_HEIGHT);
-            setting[i] = settingSheet.crop(i * 1790, 0, 1790, BUTTON_HEIGHT);
             quit[i] = quitSheet.crop(i * 910, 0, 910, BUTTON_HEIGHT);
         }
 
@@ -102,10 +88,12 @@ public class Assets {
         rescale(play);
         rescale(highScore);
         rescale(credits);
-        rescale(setting);
         rescale(quit);
 
-        obstacles[0] = obstacleSheet.crop(0, 0, 920, 500);
+        int obstacleWidth = obstacleSheet.getWidth();
+        for(int i = 0; i < obstacles.length; i++) {
+            obstacles[i] = obstacleSheet.crop(i * obstacleWidth, 0, obstacleWidth, (int) (obstacleWidth * 0.58));
+        }
 
         /* Loading other things */
         bg = ImageLoader.loadImage("/Textures/background.png");

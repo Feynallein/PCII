@@ -1,6 +1,6 @@
 package Model.Road;
 
-import Model.Moto;
+import Model.Player;
 import View.Gfx.Assets;
 import View.Scenes.GameScene;
 import View.Scenes.Scene;
@@ -8,9 +8,7 @@ import View.Scenes.Scene;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.ListIterator;
 import java.util.Random;
-import java.util.logging.XMLFormatter;
 
 /**
  * The road
@@ -36,7 +34,7 @@ public class Road {
     /**
      * The player
      */
-    private final Moto player;
+    private final Player player;
 
     private int lastDistance;
     private boolean turningRight;
@@ -50,12 +48,13 @@ public class Road {
     //1 gate ~3km
     public final static int DISTANCE_BW_GATES = 3000;
     public final ArrayList<Obstacle> obstacles = new ArrayList<>();
+    public final static int MAX_OBSTACLES = 4;
 
 
     /**
      * Constructor
      */
-    public Road(Moto player) {
+    public Road(Player player) {
         this.road = new ArrayList<>();
         this.player = player;
         this.turningRight = false;
@@ -105,7 +104,7 @@ public class Road {
             if (height <= 0) height = 1;
 
             /* Creating a new curb */
-            road.add(new Curb(i, b ? new Color(45, 45, 45) : new Color(40, 40, 40), player, height, false, 0));
+            road.add(new Curb(i, b ? new Color(45, 45, 45) : new Color(40, 40, 40), player, height, i == Scene.HEIGHT, 0));
 
             /* Changing the color */
             b = !b;
@@ -124,15 +123,23 @@ public class Road {
         }
 
         /* Updating obstacles */
-        for(Obstacle o : obstacles){
-            o.update();
+        for(int i = 0; i < obstacles.size(); i++){
+            obstacles.get(i).update();
+            if(obstacles.get(i).getY() + obstacles.get(i).getHeight() >= Scene.HEIGHT - Player.HEIGHT/2 &&
+                              ((Player.X < obstacles.get(i).getX() && Player.X + 30 + Player.WIDTH - 60 > obstacles.get(i).getX())
+                            || (Player.X + 30 > obstacles.get(i).getX() && Player.X + 30 + Player.WIDTH - 60 < obstacles.get(i).getX() + obstacles.get(i).getWidth())
+                            || (Player.X + 30 < obstacles.get(i).getX() + obstacles.get(i).getWidth() && Player.X + 30 + Player.WIDTH - 60 > obstacles.get(i).getWidth() + obstacles.get(i).getX()))){
+                obstacles.remove(i);
+                player.loseLife();
+                break;
+            }
         }
 
         /* Deciding if there is a turn (random) */
         if (!turningLeft && !turningRight && iterator == null && road.get(road.size() - 1).getXOffset() == 0) {
             int randomInteger = random.nextInt(1000); //todo: 1000 a changer (bcp incr)
-            if (randomInteger < 1) turningRight = false;
-            else if (randomInteger < 2) turningLeft = false;//todo: temp, remettre a true!!
+            if (randomInteger < 1) turningRight = true;
+            else if (randomInteger < 2) turningLeft = true;//todo: temp, remettre a true!!
             //todo: val a changer
         }
 
@@ -153,8 +160,8 @@ public class Road {
             Curb c = new Curb(road.get(road.size() - 1).getY2(), road.get(0).getColor(), player, 1,
                     player.getDistanceTraveled() - lastDistance >= DISTANCE_BW_GATES, getXOffset());
             road.add(c);
-            if(random.nextInt(5000) < 1000){//todo: tweak values
-                obstacles.add(new Obstacle(Assets.obstacles[0], c));
+            if(random.nextInt(100) < 15 && obstacles.size() < MAX_OBSTACLES){//todo: tweak values
+                obstacles.add(new Obstacle(Assets.obstacles[random.nextInt(Assets.obstacles.length)], c));
             }
 
             /* Changing the distance traveled when crossing a gate */

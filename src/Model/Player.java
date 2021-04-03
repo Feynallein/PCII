@@ -7,7 +7,7 @@ import View.Scenes.Scene;
 /**
  * The player
  */
-public class Moto {
+public class Player {
     /**
      * Const : The player's horizontal speed
      */
@@ -82,14 +82,17 @@ public class Moto {
 
     private static final int MAX_TURNING_POSITION = 50;
 
+    private int lives;
+
     /**
      * Constructor
      */
-    public Moto() {
+    public Player() {
         this.speed = 0;
         this.offset = 0;
         this.distanceTraveled = 0;
         this.turningPosition = 0;
+        this.lives = 5;
     }
 
     /**
@@ -141,6 +144,10 @@ public class Moto {
         state = 1;
         if (speed == 0) state = 0;
         anim();
+    }
+
+    public void loseLife(){
+        lives--;
     }
 
     /**
@@ -254,5 +261,9 @@ public class Moto {
 
     public int getTurningPosition() {
         return turningPosition;
+    }
+
+    public int getLives() {
+        return lives;
     }
 }
