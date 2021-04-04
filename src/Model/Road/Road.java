@@ -49,6 +49,7 @@ public class Road {
     public final static int DISTANCE_BW_GATES = 3000;
     public final ArrayList<Obstacle> obstacles = new ArrayList<>();
     public final static int MAX_OBSTACLES = 4;
+    private boolean hasObstacle;
 
 
     /**
@@ -59,6 +60,7 @@ public class Road {
         this.player = player;
         this.turningRight = false;
         this.turningLeft = false;
+        this.hasObstacle = false;
 
         /* Initialize the turns*/
         rightInitialize();
@@ -73,6 +75,7 @@ public class Road {
         for (int i = 1; i <= MAX_TURN; i += TURNING_SPEED) {
             turningRightValues.add(i);
         }
+
         for (int i = MAX_TURN - 1; i >= 1; i -= TURNING_SPEED) {
             turningRightValues.add(i);
         }
@@ -160,9 +163,11 @@ public class Road {
             Curb c = new Curb(road.get(road.size() - 1).getY2(), road.get(0).getColor(), player, 1,
                     player.getDistanceTraveled() - lastDistance >= DISTANCE_BW_GATES, getXOffset());
             road.add(c);
-            if(random.nextInt(100) < 15 && obstacles.size() < MAX_OBSTACLES){//todo: tweak values
+            if(random.nextInt(100) < 15 && obstacles.size() < MAX_OBSTACLES && !hasObstacle){//todo: tweak values
                 obstacles.add(new Obstacle(Assets.obstacles[random.nextInt(Assets.obstacles.length)], c));
+                hasObstacle = true;
             }
+            else hasObstacle = false;
 
             /* Changing the distance traveled when crossing a gate */
             if (player.getDistanceTraveled() - lastDistance >= DISTANCE_BW_GATES)

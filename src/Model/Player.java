@@ -115,7 +115,12 @@ public class Player {
      * Accelerating
      */
     public void accelerate() {
-        if (speed < MAX_SPEED) speed += 0.5;
+        if (speed < MAX_SPEED) {
+            if(speed < 75) speed += 0.7;
+            else if(speed < 200) speed += 0.5;
+            else if(speed < 275) speed += 0.3;
+            else speed += 0.1;
+        }
         state = 2;
         anim();
     }
@@ -170,7 +175,9 @@ public class Player {
      */
     public long calculateSleep() {
         //TODO: A ameliorer
-        return (long) (MAX_SPEED / (speed + 1)) + 1;
+        //return (long) (MAX_SPEED / (speed + 1)) + 1;
+        //return (long) (MAX_SPEED - Math.sqrt(speed));
+        return 1000000+50000;
     }
 
     /**

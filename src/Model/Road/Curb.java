@@ -21,7 +21,7 @@ public class Curb {
     /**
      * The array of segments
      */
-    public final ArrayList<Segment> seg;
+    public final ArrayList<Segment> seg = new ArrayList<>();
 
     /**
      * Coefficient of the function that calculate one curb's height based on his location
@@ -55,7 +55,6 @@ public class Curb {
         this.player = player;
         this.height = height;
         this.y2 = this.y1 - this.height;
-        this.seg = new ArrayList<>();
         this.specialCurb = b;
         this.color = color;
         this.xOffset = xOffset;

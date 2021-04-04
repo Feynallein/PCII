@@ -63,7 +63,7 @@ public class GameScene extends Scene {
     }
 
     private void drawPlayer(Graphics g){
-        if(player.getTurningPosition() > 1508){
+        if(player.getTurningPosition() > 27452){
             int theta = player.getTurningPosition();
 
             // Rotation
@@ -150,6 +150,7 @@ public class GameScene extends Scene {
             drawArray(c.getSeg(), g);
         }
 
+        //todo: faire dans l'autre sens
         for(Obstacle o : road.getObstacles()){
             g.drawImage(o.getSprite(), o.getX(), o.getY(), o.getWidth(), o.getHeight(), null);
         }
@@ -170,12 +171,17 @@ public class GameScene extends Scene {
         //TODO: fix the warnings
 
         /* For each elements of the array (not an actual for each because of concurrent modification exception) */
-        for (int i = 0; i < a.size(); i++) {
-            /* Get his color */
-            g.setColor(a.get(i).getColor());
+        if(!a.isEmpty()) {
+            for (int i = 0; i < a.size(); i++) {
+                System.out.println(i);
+                if(a.get(i) != null) {
+                    /* Get his color */
+                    g.setColor(a.get(i).getColor());
 
-            /* Print it */
-            if (!a.isEmpty() && a.get(i).getY1() >= HORIZON) g.fillPolygon(a.get(i).getX(), a.get(i).getY(), 4);
+                    /* Print it */
+                    if (!a.isEmpty() && a.get(i).getY() != null && a.get(i).getY1() >= HORIZON && a.get(i).getX() != null) g.fillPolygon(a.get(i).getX(), a.get(i).getY(), 4);
+                }
+            }
         }
     }
 

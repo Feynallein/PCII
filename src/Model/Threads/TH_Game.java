@@ -56,7 +56,9 @@ public class TH_Game extends Thread {
      * What to do when losing
      */
     private void lose() {
+        //todo: changer le msg et la conditoin d'arrête des threards
         JOptionPane.showMessageDialog(sceneManager.getDisplay(), "Timed Out!\nDistance traveled : " + sceneManager.getPlayer().getDistanceTraveled() + " meters", "", JOptionPane.ERROR_MESSAGE);
+
         // Quitter
         System.exit(0);
     }
