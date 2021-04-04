@@ -12,7 +12,7 @@ public class KeyManager implements KeyListener {
     /**
      * Boolean array
      */
-    private final boolean[] keys;
+    private final boolean[] keys = new boolean[256];
 
     /**
      * Boolean that correspond to left arrow's key
@@ -41,10 +41,8 @@ public class KeyManager implements KeyListener {
 
     /**
      * Constructor
-     *
      */
     public KeyManager(Player player) {
-        keys = new boolean[256];
         this.player = player;
     }
 
@@ -52,7 +50,7 @@ public class KeyManager implements KeyListener {
      * Update which keys are pressed based on the key listener
      */
     public void update() {
-        // Doing actions if correspondent key is pressed
+        /* Doing actions if correspondent key is pressed */
         if (up) player.accelerate();
         else if (down) player.brake();
         else player.decelerate();
@@ -60,9 +58,9 @@ public class KeyManager implements KeyListener {
         if (left && player.getSpeed() > 0) player.moveLeft();
         if (right && player.getSpeed() > 0) player.moveRight();
 
-        if(!left && !right) player.notTurning();
+        if (!left && !right) player.notTurning();
 
-        // Updating if the keys are being pressed
+        /* Updating if the keys are being pressed */
         left = keys[KeyEvent.VK_LEFT];
         right = keys[KeyEvent.VK_RIGHT];
         up = keys[KeyEvent.VK_UP];
@@ -102,7 +100,14 @@ public class KeyManager implements KeyListener {
         keys[e.getKeyCode()] = false;
     }
 
-    public boolean isTurning(){
+    /* GETTER */
+
+    /**
+     * Return true if the player is turning either left or right
+     *
+     * @return if turning left or right
+     */
+    public boolean isTurning() {
         return left || right;
     }
 }

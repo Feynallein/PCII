@@ -2,6 +2,9 @@ package View.Scenes;
 
 import java.awt.*;
 
+/**
+ * Abstract class scene
+ */
 public abstract class Scene {
     /**
      * Const : JPanel's height
@@ -12,11 +15,24 @@ public abstract class Scene {
      */
     public final static int WIDTH = 1280;
 
+    /**
+     * The scene manager
+     */
     protected final SceneManager sceneManager;
 
-    public Scene(SceneManager sceneManager){
+    /**
+     * Constructor
+     *
+     * @param sceneManager the scene manager
+     */
+    public Scene(SceneManager sceneManager) {
         this.sceneManager = sceneManager;
     }
 
+    /**
+     * Paint method
+     *
+     * @param g the graphics
+     */
     public abstract void paint(Graphics g);
 }

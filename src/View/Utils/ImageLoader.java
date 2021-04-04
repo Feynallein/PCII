@@ -16,8 +16,10 @@ public class ImageLoader {
      */
     public static BufferedImage loadImage(String path) {
         try {
+            /* Load an image */
             return ImageIO.read(ImageLoader.class.getResource(path));
         } catch (IOException e) {
+            /* Print the error on the error output and exit the program with the status 1 */
             e.printStackTrace();
             System.exit(1);
         }

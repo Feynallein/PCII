@@ -4,18 +4,21 @@ import View.Scenes.GameScene;
 import View.Scenes.MenuScene;
 import View.Scenes.SceneManager;
 
+/**
+ * Class Th_Handler
+ */
 public class TH_Handler extends Thread {
+    /**
+     * The scene manager
+     */
     private final SceneManager sceneManager;
 
+    /**
+     * What the thread do
+     */
     public void run() {
         // Displaying the Menu
-        while(sceneManager.getCurrentScene() instanceof MenuScene) {
-            try {
-                //noinspection BusyWait
-                sleep(0);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+        while (sceneManager.getCurrentScene() instanceof MenuScene) {
             sceneManager.repaint();
         }
 
@@ -25,6 +28,11 @@ public class TH_Handler extends Thread {
         }
     }
 
+    /**
+     * Constructor
+     *
+     * @param sceneManager the scene manager
+     */
     public TH_Handler(SceneManager sceneManager) {
         this.sceneManager = sceneManager;
     }

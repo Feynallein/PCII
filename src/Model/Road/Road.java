@@ -19,6 +19,9 @@ public class Road {
      */
     public static final int INITIAL_WIDTH = Scene.WIDTH / 2;
 
+    /**
+     * Const : the time added when crossing a gate
+     */
     public static final int GATE_ADDING_TIME = 60;
 
     /**
@@ -27,36 +30,84 @@ public class Road {
     public static final int FINAL_WIDTH = INITIAL_WIDTH / 12;
 
     /**
+     * Const : the maximum turning offset
+     */
+    public final static int MAX_TURN = 300;
+
+    /**
+     * Const : the turning speed
+     */
+    public final static int TURNING_SPEED = 10;
+
+    /**
+     * Const : Distance between two gates
+     */
+    public final static int DISTANCE_BW_GATES = 3000;
+
+    /**
+     * Const : the max number of obstacles at the same time
+     */
+    public final static int MAX_OBSTACLES = 4;
+
+    /**
      * Hashmap of the different objects that compose the road
      */
-    private final ArrayList<Curb> road;
+    private final ArrayList<Curb> road = new ArrayList<>();
 
     /**
      * The player
      */
     private final Player player;
 
-    private int lastDistance;
-    private boolean turningRight;
-    private boolean turningLeft;
+    /**
+     * Array list for the right curves
+     */
     private final ArrayList<Integer> turningRightValues = new ArrayList<>();
+
+    /**
+     * Array list for the left curves
+     */
     private final ArrayList<Integer> turningLeftValues = new ArrayList<>();
-    private Iterator<Integer> iterator;
+
+    /**
+     * Array list of obstacles
+     */
+    private final ArrayList<Obstacle> obstacles = new ArrayList<>();
+
+    /**
+     * Random number
+     */
     private final Random random = new Random(101218);
-    public final static int MAX_TURN = 300;
-    public final static int TURNING_SPEED = 10;
-    //1 gate ~3km
-    public final static int DISTANCE_BW_GATES = 3000;
-    public final ArrayList<Obstacle> obstacles = new ArrayList<>();
-    public final static int MAX_OBSTACLES = 4;
+
+    /**
+     * Last gate's distance
+     */
+    private int lastDistance;
+
+    /**
+     * Turning right?
+     */
+    private boolean turningRight;
+
+    /**
+     * Turning left?
+     */
+    private boolean turningLeft;
+
+    /**
+     * Last curb has an obstacle?
+     */
     private boolean hasObstacle;
 
+    /**
+     * An iterator
+     */
+    private Iterator<Integer> iterator;
 
     /**
      * Constructor
      */
     public Road(Player player) {
-        this.road = new ArrayList<>();
         this.player = player;
         this.turningRight = false;
         this.turningLeft = false;
@@ -126,14 +177,19 @@ public class Road {
         }
 
         /* Updating obstacles */
-        for(int i = 0; i < obstacles.size(); i++){
+        for (int i = 0; i < obstacles.size(); i++) {
             obstacles.get(i).update();
-            if(obstacles.get(i).getY() + obstacles.get(i).getHeight() >= Scene.HEIGHT - Player.HEIGHT/2 &&
-                              ((Player.X < obstacles.get(i).getX() && Player.X + 30 + Player.WIDTH - 60 > obstacles.get(i).getX())
+            if (obstacles.get(i).getY() + obstacles.get(i).getHeight() >= Scene.HEIGHT - Player.HEIGHT / 2 &&
+                    ((Player.X < obstacles.get(i).getX() && Player.X + 30 + Player.WIDTH - 60 > obstacles.get(i).getX())
                             || (Player.X + 30 > obstacles.get(i).getX() && Player.X + 30 + Player.WIDTH - 60 < obstacles.get(i).getX() + obstacles.get(i).getWidth())
-                            || (Player.X + 30 < obstacles.get(i).getX() + obstacles.get(i).getWidth() && Player.X + 30 + Player.WIDTH - 60 > obstacles.get(i).getWidth() + obstacles.get(i).getX()))){
+                            || (Player.X + 30 < obstacles.get(i).getX() + obstacles.get(i).getWidth() && Player.X + 30 + Player.WIDTH - 60 > obstacles.get(i).getWidth() + obstacles.get(i).getX()))) {
+
+                /* Removing the obstacle */
                 obstacles.remove(i);
+
+                /* Losing a life */
                 player.loseLife();
+                //Todo: half speed
                 break;
             }
         }
@@ -153,8 +209,8 @@ public class Road {
 
         /* If there is a turn, checking if it is finished */
         if (iterator != null && !iterator.hasNext()) {
-                if (turningRight) turningRight = false;
-                else if (turningLeft) turningLeft = false;
+            if (turningRight) turningRight = false;
+            else if (turningLeft) turningLeft = false;
         }
 
         /* Removing under the screen's curb and adding new ones */
@@ -163,18 +219,19 @@ public class Road {
             Curb c = new Curb(road.get(road.size() - 1).getY2(), road.get(0).getColor(), player, 1,
                     player.getDistanceTraveled() - lastDistance >= DISTANCE_BW_GATES, getXOffset());
             road.add(c);
-            if(random.nextInt(100) < 15 && obstacles.size() < MAX_OBSTACLES && !hasObstacle){//todo: tweak values
+
+            /* Adding a new obstacle (random) if the last curb doesn't have one*/
+            if (random.nextInt(100) < 15 && obstacles.size() < MAX_OBSTACLES && !hasObstacle) {//todo: tweak values
                 obstacles.add(new Obstacle(Assets.obstacles[random.nextInt(Assets.obstacles.length)], c));
                 hasObstacle = true;
-            }
-            else hasObstacle = false;
+            } else hasObstacle = false;
 
             /* Changing the distance traveled when crossing a gate */
             if (player.getDistanceTraveled() - lastDistance >= DISTANCE_BW_GATES)
                 lastDistance = player.getDistanceTraveled();
 
             /* Adding time to timer if a gate is crossed */
-            if (road.get(0).isSpecialCurb()) player.addTimer(GATE_ADDING_TIME);
+            if (road.get(0).isSpecialCurb()) player.setTimer(GATE_ADDING_TIME);
 
             /* Removing the first curb */
             road.remove(0);
@@ -184,7 +241,14 @@ public class Road {
         obstacles.removeIf(o -> o.getY() > Scene.HEIGHT);
     }
 
-    private int getXOffset(){
+    /* GETTER */
+
+    /**
+     * Getter to the x offset
+     *
+     * @return the x offset
+     */
+    private int getXOffset() {
         return iterator == null || !iterator.hasNext() ? 0 : iterator.next();
     }
 
@@ -208,6 +272,11 @@ public class Road {
         return res;
     }
 
+    /**
+     * Getter to the obstacles
+     *
+     * @return the obstacles
+     */
     public ArrayList<Obstacle> getObstacles() {
         return obstacles;
     }

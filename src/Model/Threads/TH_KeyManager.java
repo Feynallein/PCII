@@ -6,7 +6,7 @@ import Model.Player;
 /**
  * Player's movement thread
  */
-public class TH_KeyListener extends Thread {
+public class TH_KeyManager extends Thread {
     /**
      * The key manager
      */
@@ -30,7 +30,7 @@ public class TH_KeyListener extends Thread {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            // Updating the key manager
+            /* Updating the key manager */
             keyManager.update();
         }
     }
@@ -41,7 +41,7 @@ public class TH_KeyListener extends Thread {
      * @param keyManager the key manager
      * @param player     the player
      */
-    public TH_KeyListener(KeyManager keyManager, Player player) {
+    public TH_KeyManager(KeyManager keyManager, Player player) {
         this.keyManager = keyManager;
         this.player = player;
     }

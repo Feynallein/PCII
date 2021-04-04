@@ -11,19 +11,37 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * Class graphics
+ * Class scene manager
  */
 public class SceneManager extends JPanel {
+    /**
+     * The current scene
+     */
     private Scene currentScene;
 
+    /**
+     * The game scene
+     */
     private GameScene gameScene;
 
+    /**
+     * The menu scene
+     */
     //private final MenuScene menuScene;
 
+    /**
+     * The display (aka the window)
+     */
     private final Display display;
 
+    /**
+     * The mouse manager
+     */
     private final MouseManager mouseManager;
 
+    /**
+     * The UiObject manager
+     */
     private final UiObjectManager uiObjectManager;
 
     /**
@@ -35,7 +53,6 @@ public class SceneManager extends JPanel {
      * Constructor
      */
     public SceneManager(Display display) {
-
         this.display = display;
         this.uiObjectManager = new UiObjectManager(); // The object manager
         this.mouseManager = new MouseManager(uiObjectManager); // The mouse manager
@@ -65,37 +82,76 @@ public class SceneManager extends JPanel {
         grabFocus();
     }
 
+    /**
+     * Creating a new game scene
+     */
     public void newGameScene() {
         gameScene = new GameScene(this);
         keyManager = new KeyManager(gameScene.getPlayer()); // The key manager
         grabFocus();
         addKeyListener(keyManager); // Adding the key manager
     }
+    /* GETTER & SETTER */
 
-    public GameScene getGameScene() {
-        return gameScene;
-    }
-
-    public Scene getCurrentScene() {
-        return currentScene;
-    }
-
+    /**
+     * Change the current scene
+     *
+     * @param s a scene
+     */
     public void setCurrentScene(Scene s) {
         this.currentScene = s;
     }
 
+    /**
+     * Getter to the game scene
+     *
+     * @return the game scene
+     */
+    public GameScene getGameScene() {
+        return gameScene;
+    }
+
+    /**
+     * Getter to the current scene
+     *
+     * @return the current scene
+     */
+    public Scene getCurrentScene() {
+        return currentScene;
+    }
+
+    /**
+     * Getter to the key manager
+     *
+     * @return the key manager
+     */
     public KeyManager getKeyManager() {
         return keyManager;
     }
 
+    /**
+     * Getter to the player
+     *
+     * @return the player
+     */
     public Player getPlayer() {
         return gameScene.getPlayer();
     }
 
+    /**
+     * Getter to the road
+     *
+     * @return the road
+     */
     public Road getRoad() {
         return gameScene.getRoad();
     }
 
+    /**
+     * Getter to the display
+     *
+     * @return th display
+     */
     public JFrame getDisplay() {
         return display.getDisplay();
     }

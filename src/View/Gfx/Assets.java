@@ -23,32 +23,84 @@ public class Assets {
     public static final int player_img_height = 580;
 
     /**
-     * Player's assets
+     * Const : the height of a button
      */
-    public static BufferedImage[][] player;
+    public static final int BUTTON_HEIGHT = 250;
 
     /**
-     * Background's assets
+     * Const : the scaling factor
      */
-    public static BufferedImage bg;
-    public static BufferedImage gate;
-    public static BufferedImage speed_counter;
-    public static BufferedImage needle;
-    public static final float[] needleAnchor = new float[]{154, 154};
-    public static final float[] playerAnchor = new float[]{player_img_width/2f, player_img_height};
-    public static BufferedImage[] play;
-    public static BufferedImage[] highScore;
-    public static BufferedImage[] credits;
-    public static BufferedImage[] quit;
-    public static BufferedImage menuBg;
-    public static BufferedImage[] obstacles;
-    public static final int BUTTON_HEIGHT = 250;
     public static final double SCALING = 0.2;
 
     /**
      * The charybdis font at size 40
      */
     public static final Font charybdis25 = FontLoader.loadFont("Resources/Others/charybdis.ttf", 40);
+
+    /**
+     * Anchor of the needle's sprite
+     */
+    public static final float[] needleAnchor = new float[]{154, 154};
+
+    /**
+     * Anchor of the player's sprite
+     */
+    public static final float[] playerAnchor = new float[]{player_img_width / 2f, player_img_height};
+
+    /**
+     * Player's array of sprite
+     */
+    public static BufferedImage[][] player;
+
+    /**
+     * Background's sprite
+     */
+    public static BufferedImage bg;
+
+    /**
+     * Gate's sprite
+     */
+    public static BufferedImage gate;
+
+    /**
+     * Speed counter's sprite
+     */
+    public static BufferedImage speed_counter;
+
+    /**
+     * Needle's sprite
+     */
+    public static BufferedImage needle;
+
+    /**
+     * Menu background's sprite
+     */
+    public static BufferedImage menuBg;
+
+    /**
+     * Play button's array of sprites
+     */
+    public static BufferedImage[] play;
+
+    /**
+     * High score button's array of sprites
+     */
+    public static BufferedImage[] highScore;
+
+    /**
+     * Credits button's array of sprites
+     */
+    public static BufferedImage[] credits;
+
+    /**
+     * Quit button's array of sprites
+     */
+    public static BufferedImage[] quit;
+
+    /**
+     * Obstacles' array of sprites
+     */
+    public static BufferedImage[] obstacles;
 
     /**
      * Initialize all assets
@@ -90,12 +142,13 @@ public class Assets {
         rescale(credits);
         rescale(quit);
 
+        /* Cropping the different obstacles' sprites*/
         int obstacleWidth = obstacleSheet.getWidth();
-        for(int i = 0; i < obstacles.length; i++) {
+        for (int i = 0; i < obstacles.length; i++) {
             obstacles[i] = obstacleSheet.crop(i * obstacleWidth, 0, obstacleWidth, (int) (obstacleWidth * 0.58));
         }
 
-        /* Loading other things */
+        /* Loading other sprites */
         bg = ImageLoader.loadImage("/Textures/background.png");
         gate = ImageLoader.loadImage("/Textures/gate.png");
         speed_counter = ImageLoader.loadImage("/Textures/speed_counter.png");
@@ -103,17 +156,21 @@ public class Assets {
         menuBg = ImageLoader.loadImage("/Textures/menu_bg.jpg");
     }
 
-    /* Rescaling method */
-    private static void rescale(BufferedImage[] b){
+    /**
+     * Rescale an array of buffered image
+     *
+     * @param b the array of buffered image to rescale
+     */
+    private static void rescale(BufferedImage[] b) {
         BufferedImage temp;
         AffineTransform at = new AffineTransform();
-        at.scale(SCALING, SCALING);
+        at.scale(SCALING, SCALING); // Scaling
         AffineTransformOp op;
 
-        for(int i = 0; i < 3; i++){
+        for (int i = 0; i < 3; i++) {
             temp = new BufferedImage(b[i].getWidth(), b[i].getHeight(), BufferedImage.TYPE_INT_ARGB);
             op = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
-            b[i] = op.filter(b[i], temp);
+            b[i] = op.filter(b[i], temp); // Applying the scaling on each sprite of the array
         }
     }
 }

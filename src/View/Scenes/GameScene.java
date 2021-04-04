@@ -13,39 +13,58 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.util.ArrayList;
 
-//TODO: idée changer le thème des couleurs : vert = herbe mais faire plutot gris pour ville, jaune pour desert, ....
+/**
+ * Class game scene
+ */
 public class GameScene extends Scene {
     /**
      * Const : horizon's line position
      */
     public final static int HORIZON = Scene.HEIGHT / 2;
 
+    /**
+     * The player
+     */
     private final Player player;
 
+    /**
+     * The road
+     */
     private final Road road;
 
+    /**
+     * Constructor
+     *
+     * @param sceneManager the scene manager
+     */
     public GameScene(SceneManager sceneManager) {
         super(sceneManager);
         this.player = new Player(); // The player
         this.road = new Road(player); // The road
     }
 
+    /**
+     * Paint method
+     *
+     * @param g the graphics
+     */
     @Override
     public void paint(Graphics g) {
-        // Drawing the grass
+        /* Draw the grass */
         g.setColor(new Color(69, 100, 56));
         g.fillRect(0, HORIZON, Scene.WIDTH, HORIZON);
 
-        // Draw the background
+        /* Draw the background */
         g.drawImage(Assets.bg, 0, 0, Scene.WIDTH, HORIZON, null);
+        //drawBackground(g);
 
-        // Draw the road
+        /* Draw the road */
         drawRoad(g);
 
-        // Draw the player
+        /* Draw the player */
         drawPlayer(g);
 
-        // Speed Counter
+        /* Draw the speed Counter */
         drawSpeedCounter(g);
 
 
@@ -62,8 +81,13 @@ public class GameScene extends Scene {
         Text.drawString(g, Integer.toString(player.getLives()), 20, 20, true, Color.WHITE, Assets.charybdis25);
     }
 
-    private void drawPlayer(Graphics g){
-        if(player.getTurningPosition() > 27452){
+    /**
+     * Draw the player
+     *
+     * @param g the graphics
+     */
+    private void drawPlayer(Graphics g) {
+        if (player.getTurningPosition() > 27452) {
             int theta = player.getTurningPosition();
 
             // Rotation
@@ -72,15 +96,11 @@ public class GameScene extends Scene {
 
             // Drawing
             g.drawImage(op.filter(Assets.player[player.getState()][player.getAnimation()], null), Player.X, Player.Y, Player.WIDTH, Player.HEIGHT, null);
-        }
-        else g.drawImage(Assets.player[player.getState()][player.getAnimation()], Player.X, Player.Y, Player.WIDTH, Player.HEIGHT, null);
+        } else
+            g.drawImage(Assets.player[player.getState()][player.getAnimation()], Player.X, Player.Y, Player.WIDTH, Player.HEIGHT, null);
     }
 
-    /**
-     * Draw the background
-     *
-     * @param g the graphics
-     *//*
+    /*
     private void drawBackground(Graphics g) {
         //TODO: changer, ca tourne quand la route tourne...
 
@@ -137,21 +157,22 @@ public class GameScene extends Scene {
     private void drawRoad(Graphics g) {
         /* Draw the road */
 
-        // Not a for each because of concurrent modification exception
+        /* Not a for each because of concurrent modification exception */
         for (int i = 0; i < road.getRoad().size(); i++) {
-            // Get the curbs
+            /* Get the curb */
             Curb c = road.getRoad().get(i);
 
-            // Draw  the grass background
+            /* Draw  the grass background */
             g.setColor(new Color(86, 125, 70));
             g.drawRect(0, c.getY1(), Scene.WIDTH, -c.getHeight());
 
-            // Draw the segments of the curb
+            /* Draw the segments of the curb */
             drawArray(c.getSeg(), g);
         }
 
         //todo: faire dans l'autre sens
-        for(Obstacle o : road.getObstacles()){
+        /* Draw the obstacles */
+        for (Obstacle o : road.getObstacles()) {
             g.drawImage(o.getSprite(), o.getX(), o.getY(), o.getWidth(), o.getHeight(), null);
         }
 
@@ -169,17 +190,17 @@ public class GameScene extends Scene {
      */
     private void drawArray(ArrayList<Segment> a, Graphics g) {
         //TODO: fix the warnings
-
         /* For each elements of the array (not an actual for each because of concurrent modification exception) */
-        if(!a.isEmpty()) {
+        if (!a.isEmpty()) {
             for (int i = 0; i < a.size(); i++) {
                 System.out.println(i);
-                if(a.get(i) != null) {
+                if (a.get(i) != null) {
                     /* Get his color */
                     g.setColor(a.get(i).getColor());
 
                     /* Print it */
-                    if (!a.isEmpty() && a.get(i).getY() != null && a.get(i).getY1() >= HORIZON && a.get(i).getX() != null) g.fillPolygon(a.get(i).getX(), a.get(i).getY(), 4);
+                    if (!a.isEmpty() && a.get(i).getY() != null && a.get(i).getY1() >= HORIZON && a.get(i).getX() != null)
+                        g.fillPolygon(a.get(i).getX(), a.get(i).getY(), 4);
                 }
             }
         }
@@ -200,13 +221,15 @@ public class GameScene extends Scene {
         // Linear straight line, coefficient = 180/225, the angle is calculate by multiplying it to the player's speed
         int theta = (int) (Math.ceil(player.getSpeed()) * (180f / 225f));
 
-        // Rotation
+        /* Rotation */
         AffineTransform tx = AffineTransform.getRotateInstance(Math.toRadians(theta), Assets.needleAnchor[0], Assets.needleAnchor[1]);
         AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
 
-        // Drawing
+        /* Drawing */
         g.drawImage(op.filter(Assets.needle, null), Scene.WIDTH - Assets.needle.getWidth(), Scene.HEIGHT - Assets.needle.getHeight(), null);
     }
+
+    /* GETTER */
 
     /**
      * Getter to the player

@@ -1,6 +1,12 @@
 package View.UiObjects;
 
+/**
+ * Interface fot click listener
+ */
 public interface ClickListener {
-    /* Clicker */
+
+    /**
+     * What to do on click
+     */
     void onClick();
 }

@@ -16,7 +16,7 @@ public class TH_Game extends Thread {
     /**
      * Player's movement
      */
-    private final TH_KeyListener turn;
+    private final TH_KeyManager turn;
 
     /**
      * The road and objects scrolling
@@ -44,8 +44,8 @@ public class TH_Game extends Thread {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            sceneManager.repaint();
-            sceneManager.getPlayer().addDistanceTraveled();
+            sceneManager.repaint(); // Repaint the scene
+            sceneManager.getPlayer().addDistanceTraveled(); // Update the total distance traveled
         }
 
         // temp
@@ -68,7 +68,7 @@ public class TH_Game extends Thread {
      */
     public TH_Game(SceneManager sceneManager) {
         this.sceneManager = sceneManager;
-        this.turn = new TH_KeyListener(sceneManager.getKeyManager(), sceneManager.getPlayer());
+        this.turn = new TH_KeyManager(sceneManager.getKeyManager(), sceneManager.getPlayer());
         this.scroll = new TH_Scrolling(sceneManager.getRoad(), sceneManager.getPlayer());
     }
 }

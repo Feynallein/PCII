@@ -2,6 +2,7 @@ package Model;
 
 import Model.Road.Road;
 import Model.Threads.TH_Game;
+import View.Gfx.Assets;
 import View.Scenes.Scene;
 
 /**
@@ -11,7 +12,7 @@ public class Player {
     /**
      * Const : The player's horizontal speed
      */
-    public final static int MOVE_SPEED = 3;
+    public final static int MOVE_SPEED = 35;
 
     /**
      * Const : The player's width
@@ -37,6 +38,26 @@ public class Player {
      * Const : The player's max speed
      */
     public static final int MAX_SPEED = 300;
+
+    /**
+     * Const : the braking speed
+     */
+    private static final float BRAKING_SPEED = 0.75f;
+
+    /**
+     * Const : the decelerating speed
+     */
+    private static final float DECELERATING_SPEED = BRAKING_SPEED / 3;
+
+    /**
+     * Const : maximum number of lives
+     */
+    private static final int MAX_LIVES = 5;
+
+    /**
+     * Const : the maximum turning position
+     */
+    private static final int MAX_TURNING_POSITION = 50;
 
     /**
      * Which state (Braking, accelerating, free wheel)
@@ -78,10 +99,14 @@ public class Player {
      */
     private float speed;
 
+    /**
+     * The turning position
+     */
     private int turningPosition;
 
-    private static final int MAX_TURNING_POSITION = 50;
-
+    /**
+     * The actual number of lives
+     */
     private int lives;
 
     /**
@@ -92,7 +117,7 @@ public class Player {
         this.offset = 0;
         this.distanceTraveled = 0;
         this.turningPosition = 0;
-        this.lives = 5;
+        this.lives = MAX_LIVES;
     }
 
     /**
@@ -100,7 +125,7 @@ public class Player {
      */
     public void moveLeft() {
         if (offset < Road.INITIAL_WIDTH) offset += MOVE_SPEED;
-        if(turningPosition > -MAX_TURNING_POSITION) turningPosition--;
+        if (turningPosition > -MAX_TURNING_POSITION) turningPosition--;
     }
 
     /**
@@ -108,7 +133,7 @@ public class Player {
      */
     public void moveRight() {
         if (offset > -Road.INITIAL_WIDTH) offset -= MOVE_SPEED;
-        if(turningPosition < MAX_TURNING_POSITION) turningPosition++;
+        if (turningPosition < MAX_TURNING_POSITION) turningPosition++;
     }
 
     /**
@@ -116,25 +141,20 @@ public class Player {
      */
     public void accelerate() {
         if (speed < MAX_SPEED) {
-            if(speed < 75) speed += 0.7;
-            else if(speed < 200) speed += 0.5;
-            else if(speed < 275) speed += 0.3;
+            if (speed < 75) speed += 0.7;
+            else if (speed < 200) speed += 0.5;
+            else if (speed < 275) speed += 0.3;
             else speed += 0.1;
         }
         state = 2;
         anim();
     }
 
-    public void notTurning(){
-        if(turningPosition > 0) turningPosition--;
-        else if(turningPosition < 0) turningPosition++;
-    }
-
     /**
      * Braking
      */
     public void brake() {
-        if (speed >= 0.75) speed -= 0.75;
+        if (speed >= BRAKING_SPEED) speed -= BRAKING_SPEED;
         else if (speed > 0) speed = 0;
         state = 3;
         anim();
@@ -144,14 +164,17 @@ public class Player {
      * Decelerating (free wheel)
      */
     public void decelerate() {
-        if (speed >= 0.25) speed -= 0.25;
+        if (speed >= DECELERATING_SPEED) speed -= DECELERATING_SPEED;
         else if (speed > 0) speed = 0;
         state = 1;
         if (speed == 0) state = 0;
         anim();
     }
 
-    public void loseLife(){
+    /**
+     * Losing a life
+     */
+    public void loseLife() {
         lives--;
     }
 
@@ -159,13 +182,22 @@ public class Player {
      * Calculate the animation frame
      */
     private void anim() {
-        long setup = calculateSleep();
+        long setup = calculateSleep() / 1000000;
         clock++;
         if (clock > setup) {
             animation++;
-            animation %= 4;
+            animation %= Assets.player[0].length;
             clock = 0;
         }
+    }
+
+    /**
+     * Tell if the time is out
+     *
+     * @return ture if timed out
+     */
+    public boolean timedOut() {
+        return timer <= 0;
     }
 
     /**
@@ -177,8 +209,39 @@ public class Player {
         //TODO: A ameliorer
         //return (long) (MAX_SPEED / (speed + 1)) + 1;
         //return (long) (MAX_SPEED - Math.sqrt(speed));
-        return 1000000+50000;
+        return 1000000 + 50000;
     }
+
+    public void notTurning() {
+        if (turningPosition > 0) turningPosition--;
+        else if (turningPosition < 0) turningPosition++;
+    }
+
+    /**
+     * Add a calculated distance IN CENTIMETERS traveled since last time based on speed
+     */
+    public void addDistanceTraveled() {
+        // Distance traveled
+        // Divided by 3.6 to get m/s therefore the distance traveled is in meters
+        // Clock to update this only every seconds, not as every tick (1 tick = 16 milliseconds)
+
+        // Superior at 1000 millis
+        if (accumulatedTime >= 1000) {
+            distanceTraveled += Math.floor(speed / 3.6);
+            accumulatedTime = 0;
+            timer--;
+        } else accumulatedTime += TH_Game.GAME_SPEED;
+    }
+
+    /* GETTER & SETTER */
+
+    /**
+     * Add a specified time to the timer
+     */
+    public void setTimer(int addedTime) {
+        timer += addedTime;
+    }
+
 
     /**
      * Getter for the speed
@@ -217,44 +280,12 @@ public class Player {
     }
 
     /**
-     * Add a calculated distance IN CENTIMETERS traveled since last time based on speed
-     */
-    public void addDistanceTraveled() {
-        // Distance traveled
-        // Divided by 3.6 to get m/s therefore the distance traveled is in meters
-        // Clock to update this only every seconds, not as every tick (1 tick = 16 milliseconds)
-
-        // Superior at 1000 millis
-        if (accumulatedTime >= 1000) {
-            distanceTraveled += Math.floor(speed / 3.6);
-            accumulatedTime = 0;
-            timer--;
-        } else accumulatedTime += TH_Game.GAME_SPEED;
-    }
-
-    /**
      * Getter for the timer
      *
      * @return the timer
      */
     public int getTimer() {
         return timer;
-    }
-
-    /**
-     * Tell if the time is out
-     *
-     * @return ture if timed out
-     */
-    public boolean timedOut() {
-        return timer <= 0;
-    }
-
-    /**
-     * Add a specified time to the timer
-     */
-    public void addTimer(int addedTime) {
-        timer += addedTime;
     }
 
     /**
@@ -266,10 +297,20 @@ public class Player {
         return offset;
     }
 
+    /**
+     * Getter to the turning position
+     *
+     * @return the turning position
+     */
     public int getTurningPosition() {
         return turningPosition;
     }
 
+    /**
+     * Getter to the lives' number
+     *
+     * @return the number of lives
+     */
     public int getLives() {
         return lives;
     }

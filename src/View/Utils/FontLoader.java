@@ -18,8 +18,10 @@ public class FontLoader {
      */
     public static Font loadFont(String path, int size) {
         try {
+            /* Load the font */
             return Font.createFont(Font.TRUETYPE_FONT, new BufferedInputStream(new FileInputStream(path))).deriveFont(Font.PLAIN, size);
         } catch (FontFormatException | IOException e) {
+            /* Print the error on the error output and exit the program with the status -1 */
             e.printStackTrace();
             System.exit(-1);
         }

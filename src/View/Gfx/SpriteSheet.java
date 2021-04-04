@@ -6,6 +6,9 @@ import java.awt.image.BufferedImage;
  * Sprite sheet handler
  */
 public class SpriteSheet {
+    /**
+     * The sprite sheet
+     */
     private final BufferedImage sheet;
 
     /**
@@ -30,7 +33,15 @@ public class SpriteSheet {
         return sheet.getSubimage(x, y, width, height);
     }
 
-    public int getWidth(){
+
+    /* GETTER */
+
+    /**
+     * Getter to the sprite sheet's width
+     *
+     * @return the sprite sheet's width
+     */
+    public int getWidth() {
         return sheet.getWidth();
     }
 }

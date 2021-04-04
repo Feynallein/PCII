@@ -5,15 +5,21 @@ import View.Scenes.SceneManager;
 
 import javax.swing.*;
 
+/**
+ * Class creating the window
+ */
 public class Display extends JFrame {
-    public Display(){
-        /* Initialization of the sprites */
+    /**
+     * Creating the window
+     */
+    public Display() {
+        /* Assets initialization */
         Assets.init();
 
-        /* Creation of the scene manager */
+        /* Scene manager creation */
         SceneManager sceneManager = new SceneManager(this); // The scene manager
 
-        /* Creating the game's frame */
+        /* Window creation */
         setTitle("Name"); // The name of the window
         setResizable(false); // Not resizable
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // What to do on close
@@ -23,6 +29,13 @@ public class Display extends JFrame {
         (new TH_Handler(sceneManager)).start(); // Start the main thread
     }
 
+    /* GETTER */
+
+    /**
+     * Getter to the display
+     *
+     * @return the display
+     */
     public JFrame getDisplay() {
         return this;
     }

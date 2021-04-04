@@ -14,10 +14,30 @@ public class Segment {
      * Const : middle of the screen
      */
     public final static int center = Scene.WIDTH / 2;
+
+    /**
+     * The y1 (below)
+     */
     private final int y1;
+
+    /**
+     * The y2 (above)
+     */
     private final int y2;
+
+    /**
+     * The color of this segment
+     */
     private final Color color;
+
+    /**
+     * The player
+     */
     private final Player player;
+
+    /**
+     * The x offset
+     */
     private final int xOffset;
 
     /**
@@ -28,9 +48,9 @@ public class Segment {
     /**
      * Constructor
      *
-     * @param y1    the first y (below)
-     * @param color the color
-     * @param player  the player
+     * @param y1     the first y (below)
+     * @param color  the color
+     * @param player the player
      */
     public Segment(int y1, Color color, Player player, int height, int xOffset) {
         this.y1 = y1;
@@ -49,6 +69,8 @@ public class Segment {
                 (int) (((this.y2 - getOriginDecreased()) / coefficients[1]) + Road.INITIAL_WIDTH)
         };
     }
+
+    /* GETTER */
 
     /**
      * Calculate the ordered at the origin with the player's offset
