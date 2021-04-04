@@ -1,8 +1,8 @@
 package View.Scenes;
 
-import View.UiObjects.UiObjectManager;
 import View.Gfx.Assets;
 import View.UiObjects.Button;
+import View.UiObjects.UiObjectManager;
 
 import java.awt.*;
 

@@ -63,6 +63,11 @@ public class Assets {
     public static BufferedImage gate;
 
     /**
+     * First gate's (start) sprite
+     */
+    public static BufferedImage start;
+
+    /**
      * Speed counter's sprite
      */
     public static BufferedImage speed_counter;
@@ -154,6 +159,7 @@ public class Assets {
         speed_counter = ImageLoader.loadImage("/Textures/speed_counter.png");
         needle = ImageLoader.loadImage("/Textures/needle.png");
         menuBg = ImageLoader.loadImage("/Textures/menu_bg.jpg");
+        start= ImageLoader.loadImage("/Textures/Gate_start.png");
     }
 
     /**

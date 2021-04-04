@@ -5,8 +5,8 @@ import Model.Road.Curb;
 import Model.Road.Obstacle;
 import Model.Road.Road;
 import Model.Road.Segment;
-import View.Utils.Text;
 import View.Gfx.Assets;
+import View.Utils.Text;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
@@ -33,6 +33,16 @@ public class GameScene extends Scene {
     private final Road road;
 
     /**
+     * Start instead of checkpoint for first gate
+     */
+    private boolean firstGate;
+
+    /**
+     * First curb of gate = start
+     */
+    private Curb firstCurbGate;
+
+    /**
      * Constructor
      *
      * @param sceneManager the scene manager
@@ -41,6 +51,7 @@ public class GameScene extends Scene {
         super(sceneManager);
         this.player = new Player(); // The player
         this.road = new Road(player); // The road
+        this.firstGate = true;
     }
 
     /**
@@ -178,7 +189,12 @@ public class GameScene extends Scene {
 
         /* Draw the gates */
         for (Curb c : road.getSpecialCurbs()) {
-            g.drawImage(Assets.gate, c.getMiddleX(), c.getMeanY() - c.getMiddleFullWidth() / 2, c.getMiddleFullWidth(), c.getMiddleFullWidth() / 2, null);
+            if(firstGate || c == firstCurbGate){
+                firstCurbGate = c;
+                g.drawImage(Assets.start, c.getMiddleX(), c.getMeanY() - c.getMiddleFullWidth() / 2, c.getMiddleFullWidth(), c.getMiddleFullWidth() / 2, null);
+                firstGate = false;
+            }
+            else g.drawImage(Assets.gate, c.getMiddleX(), c.getMeanY() - c.getMiddleFullWidth() / 2, c.getMiddleFullWidth(), c.getMiddleFullWidth() / 2, null);
         }
     }
 

@@ -4,8 +4,8 @@ import Controller.KeyManager;
 import Controller.MouseManager;
 import Model.Player;
 import Model.Road.Road;
-import View.UiObjects.UiObjectManager;
 import View.Gfx.Display;
+import View.UiObjects.UiObjectManager;
 
 import javax.swing.*;
 import java.awt.*;
