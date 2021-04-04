@@ -110,6 +110,16 @@ public class Player {
     private int lives;
 
     /**
+     * The coefficient of the linear function that calculate sleep of TH_Scrolling's speed
+     */
+    private static final float COEFFICIENT = (1000000 - 2000000) / (MAX_SPEED - 50f);
+
+    /**
+     * The origin ordinate of the linear function described above
+     */
+    private final static int ORDINATE = (int) (2000000 - COEFFICIENT * 50);
+
+    /**
      * Constructor
      */
     public Player() {
@@ -182,6 +192,7 @@ public class Player {
      * Calculate the animation frame
      */
     private void anim() {
+        /* Divided by 1000000 convert in secs instead of nanoseconds */
         long setup = calculateSleep() / 1000000;
         clock++;
         if (clock > setup) {
@@ -206,12 +217,12 @@ public class Player {
      * @return the sleep time
      */
     public long calculateSleep() {
-        //TODO: A ameliorer
-        //return (long) (MAX_SPEED / (speed + 1)) + 1;
-        //return (long) (MAX_SPEED - Math.sqrt(speed));
-        return 1000000 + 50000;
+        return (long) (COEFFICIENT * speed + ORDINATE);
     }
 
+    /**
+     * Return to the center when not turning
+     */
     public void notTurning() {
         if (turningPosition > 0) turningPosition--;
         else if (turningPosition < 0) turningPosition++;
@@ -241,7 +252,6 @@ public class Player {
     public void setTimer(int addedTime) {
         timer += addedTime;
     }
-
 
     /**
      * Getter for the speed
