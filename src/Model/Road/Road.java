@@ -101,6 +101,11 @@ public class Road {
     private boolean hasObstacle;
 
     /**
+     * To not add time for the first gate "Start" gate
+     */
+    private boolean firstGate;
+
+    /**
      * An iterator
      */
     private Iterator<Integer> iterator;
@@ -113,6 +118,7 @@ public class Road {
         this.turningRight = false;
         this.turningLeft = false;
         this.hasObstacle = false;
+        this.firstGate = true;
 
         /* Initialize the turns*/
         rightInitialize();
@@ -231,7 +237,8 @@ public class Road {
                 lastDistance = player.getDistanceTraveled();
 
             /* Adding time to timer if a gate is crossed */
-            if (road.get(0).isSpecialCurb()) player.setTimer(GATE_ADDING_TIME);
+            if (road.get(0).isSpecialCurb() && !firstGate) player.setTimer(GATE_ADDING_TIME);
+            if (road.get(0).isSpecialCurb() && firstGate) firstGate = false;
 
             /* Removing the first curb */
             road.remove(0);
