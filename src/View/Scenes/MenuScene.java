@@ -18,12 +18,12 @@ public class MenuScene extends Scene {
     /**
      * Constructor
      *
-     * @param manager      the UiObject manager
      * @param sceneManager the scene manager
      */
-    public MenuScene(UiObjectManager manager, SceneManager sceneManager) {
+    public MenuScene(SceneManager sceneManager) {
         super(sceneManager);
-        this.uiObjectManager = manager;
+        this.uiObjectManager = new UiObjectManager();
+        sceneManager.setUiObjectManager(this.uiObjectManager);
 
         /* Adding the buttons to the UiObjectManager */
         initialize();
@@ -31,23 +31,19 @@ public class MenuScene extends Scene {
 
     private void initialize() {
         /* Play button */
-        uiObjectManager.addObject(new Button((Scene.WIDTH - (int) (Assets.play[0].getWidth() * Assets.SCALING)) / 2, Scene.HEIGHT * 3 / 8,
+        uiObjectManager.addObject(new Button((Scene.WIDTH - (int) (Assets.play[0].getWidth() * Assets.SCALING)) / 2, Scene.HEIGHT * 4 / 8,
                 Assets.play[0].getWidth(), Assets.play[0].getHeight(), Assets.play, () -> {
             sceneManager.newGameScene();
             sceneManager.setCurrentScene(sceneManager.getGameScene());
         }));
 
         /* High score button */
-        uiObjectManager.addObject(new Button((Scene.WIDTH - Assets.highScore[0].getWidth()) / 2, Scene.HEIGHT * 4 / 8,
-                Assets.highScore[0].getWidth(), Assets.highScore[0].getHeight(), Assets.highScore, () -> {
-            //TODO: high score
-        }));
+        uiObjectManager.addObject(new Button((Scene.WIDTH - (int) (Assets.highScore[0].getWidth() * Assets.SCALING)) / 2, Scene.HEIGHT * 5 / 8,
+                Assets.highScore[0].getWidth(), Assets.highScore[0].getHeight(), Assets.highScore, () -> sceneManager.setCurrentScene(new HighScoreScene(sceneManager))));
 
         /* Credits button */
         uiObjectManager.addObject(new Button((Scene.WIDTH - (int) (Assets.credits[0].getWidth() * Assets.SCALING)) / 2, Scene.HEIGHT * 6 / 8,
-                Assets.credits[0].getWidth(), Assets.credits[0].getHeight(), Assets.credits, () -> {
-            //TODO: credits
-        }));
+                Assets.credits[0].getWidth(), Assets.credits[0].getHeight(), Assets.credits, () -> sceneManager.setCurrentScene(new CreditsScene(sceneManager))));
 
         /* Quit button */
         uiObjectManager.addObject(new Button((Scene.WIDTH - (int) (Assets.quit[0].getWidth() * Assets.SCALING)) / 2, Scene.HEIGHT * 7 / 8,

@@ -13,15 +13,12 @@ public class MouseManager implements MouseListener, MouseMotionListener {
     /**
      * UiObject manager
      */
-    private final UiObjectManager manager;
+    private UiObjectManager manager;
 
     /**
      * Constructor
-     *
-     * @param manager an UiObject manager
      */
-    public MouseManager(UiObjectManager manager) {
-        this.manager = manager;
+    public MouseManager() {
     }
 
     /**
@@ -79,5 +76,9 @@ public class MouseManager implements MouseListener, MouseMotionListener {
     /* Called when the mouse is dragging */
     @Override
     public void mouseDragged(MouseEvent e) {
+    }
+
+    public void setManager(UiObjectManager manager) {
+        this.manager = manager;
     }
 }

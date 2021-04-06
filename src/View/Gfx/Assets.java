@@ -108,6 +108,11 @@ public class Assets {
     public static BufferedImage[] quit;
 
     /**
+     * Main menu button's array of sprites
+     */
+    public static BufferedImage[] mainMenu;
+
+    /**
      * Obstacles' array of sprites
      */
     public static BufferedImage[] obstacles;
@@ -121,6 +126,7 @@ public class Assets {
         highScore = new BufferedImage[3];
         credits = new BufferedImage[3];
         quit = new BufferedImage[3];
+        mainMenu = new  BufferedImage[3];
         obstacles = new BufferedImage[1];
 
         /* Loading sprites sheets */
@@ -129,6 +135,7 @@ public class Assets {
         SpriteSheet highScoreSheet = new SpriteSheet(ImageLoader.loadImage("/Buttons/Highscore.png"));
         SpriteSheet creditsSheet = new SpriteSheet(ImageLoader.loadImage("/Buttons/Credits.png"));
         SpriteSheet quitSheet = new SpriteSheet(ImageLoader.loadImage("/Buttons/Quit.png"));
+        SpriteSheet mainMenuSheet = new SpriteSheet(ImageLoader.loadImage("/Buttons/Main_menu.png"));
         SpriteSheet obstacleSheet = new SpriteSheet(ImageLoader.loadImage("/Textures/Obstacles_Sheet.png"));
 
         /* Crop each different sprites of the player */
@@ -144,6 +151,7 @@ public class Assets {
             highScore[i] = highScoreSheet.crop(i * 1920, 0, 1920, BUTTON_HEIGHT);
             credits[i] = creditsSheet.crop(i * 1550, 0, 1550, BUTTON_HEIGHT);
             quit[i] = quitSheet.crop(i * 910, 0, 910, BUTTON_HEIGHT);
+            mainMenu[i] = mainMenuSheet.crop(i * 1930, 0, 1930, BUTTON_HEIGHT);
         }
 
         /* Rescaling the buttons */
@@ -151,6 +159,7 @@ public class Assets {
         rescale(highScore);
         rescale(credits);
         rescale(quit);
+        rescale(mainMenu);
 
         /* Cropping the different obstacles' sprites*/
         int obstacleWidth = obstacleSheet.getWidth();

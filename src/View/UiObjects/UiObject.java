@@ -1,5 +1,7 @@
 package View.UiObjects;
 
+import View.Gfx.Assets;
+
 import java.awt.*;
 import java.awt.event.MouseEvent;
 
@@ -59,7 +61,7 @@ public abstract class UiObject {
         this.click = false;
 
         /* Creating the hit box*/
-        this.bounds = new Rectangle(x, y, width, height);
+        this.bounds = new Rectangle(x, y, (int) (width * Assets.SCALING), (int) (height * Assets.SCALING));
     }
 
     /**

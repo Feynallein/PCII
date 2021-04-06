@@ -25,11 +25,6 @@ public class SceneManager extends JPanel {
     private GameScene gameScene;
 
     /**
-     * The menu scene
-     */
-    //private final MenuScene menuScene;
-
-    /**
      * The display (aka the window)
      */
     private final Display display;
@@ -38,11 +33,6 @@ public class SceneManager extends JPanel {
      * The mouse manager
      */
     private final MouseManager mouseManager;
-
-    /**
-     * The UiObject manager
-     */
-    private final UiObjectManager uiObjectManager;
 
     /**
      * The game's key manager
@@ -54,18 +44,13 @@ public class SceneManager extends JPanel {
      */
     public SceneManager(Display display) {
         this.display = display;
-        this.uiObjectManager = new UiObjectManager(); // The object manager
-        this.mouseManager = new MouseManager(uiObjectManager); // The mouse manager
-/*        this.menuScene = new MenuScene(uiObjectManager, this);
-        setCurrentScene(menuScene);*/
+        this.mouseManager = new MouseManager(); // The mouse manager
+        MenuScene menuScene = new MenuScene(this);
+        setCurrentScene(menuScene);
 
         setPreferredSize(new Dimension(Scene.WIDTH, Scene.HEIGHT)); // Setting the size
         addMouseListener(mouseManager); // Adding the mouse manager
         addMouseMotionListener(mouseManager); // Adding the mouse motion manager
-
-        /* Temporary */
-        newGameScene();
-        setCurrentScene(gameScene);
     }
 
     /**
@@ -78,8 +63,7 @@ public class SceneManager extends JPanel {
         super.paint(g);
         currentScene.paint(g);
 
-        // Temporary
-        grabFocus();
+        //grabFocus();
     }
 
     /**
@@ -100,6 +84,10 @@ public class SceneManager extends JPanel {
      */
     public void setCurrentScene(Scene s) {
         this.currentScene = s;
+    }
+
+    public void setUiObjectManager(UiObjectManager manager){
+        this.mouseManager.setManager(manager);
     }
 
     /**
