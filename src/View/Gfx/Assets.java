@@ -33,9 +33,14 @@ public class Assets {
     public static final double SCALING = 0.2;
 
     /**
-     * The charybdis font at size 40
+     * The charybdis font at size 40 and italic
      */
     public static final Font charybdisItalic40 = FontLoader.loadFont("Resources/Fonts/charybdis.ttf", 40, true);
+
+    /**
+     * The charybdis font at size 40
+     */
+    public static final Font charybdis40 = FontLoader.loadFont("Resources/Fonts/charybdis.ttf", 40, false);
 
     /**
      * Anchor of the needle's sprite

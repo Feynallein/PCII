@@ -28,9 +28,9 @@ public class CreditsScene extends Scene {
         /* Drawing the back ground */
         g.drawImage(Assets.menuBg, 0, 0, Scene.WIDTH, Scene.HEIGHT, null);
 
-        Text.drawString(g, "A game by Martin BERTHIER & Quentin BERTRAND", WIDTH / 2, HEIGHT * 3 / 9, true, Color.WHITE, Assets.charybdisItalic40);
-        Text.drawString(g, "Font by Tepid Monkey Fonts", WIDTH / 2, HEIGHT * 4 / 9, true, Color.WHITE, Assets.charybdisItalic40);
-        Text.drawString(g, "Menu Background by iywbr (on Pixabay)", WIDTH / 2, HEIGHT * 5 / 9, true, Color.WHITE, Assets.charybdisItalic40);
+        Text.drawString(g, "A game by Martin BERTHIER & Quentin BERTRAND", WIDTH / 2, HEIGHT * 3 / 9, true, Color.lightGray, Assets.charybdis40);
+        Text.drawString(g, "Font by Tepid Monkey Fonts", WIDTH / 2, HEIGHT * 4 / 9, true, Color.lightGray, Assets.charybdis40);
+        Text.drawString(g, "Menu Background by iywbr (on Pixabay)", WIDTH / 2, HEIGHT * 5 / 9, true, Color.lightGray, Assets.charybdis40);
 
         /* Drawing the buttons */
         uiObjectManager.paint(g);
