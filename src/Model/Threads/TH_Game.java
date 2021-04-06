@@ -35,8 +35,6 @@ public class TH_Game extends Thread {
      */
     private final SceneManager sceneManager;
 
-    private boolean isHighScore;
-
     /**
      * Repaint the entire screen
      */
@@ -64,14 +62,14 @@ public class TH_Game extends Thread {
      * What to do when losing
      */
     private void lose() {
-        highScore();
+        boolean highScore = highScore();
 
         String[] buttons = new String[]{"Restart", "Main Menu", "Quit"};
         String randomName = "Player" + ((new Random()).nextInt(100) + 1);
         JPanel panel = new JPanel();
 
         int row = 4;
-        if(isHighScore) row++;
+        if(highScore) row++;
 
         panel.setLayout(new GridLayout(row, 1));
 
@@ -80,7 +78,7 @@ public class TH_Game extends Thread {
         else panel.add(new JLabel("Timed Out!"));
 
         panel.add(new JLabel("\nScore: " + sceneManager.getPlayer().getDistanceTraveled() + " meters"));
-        if(isHighScore) panel.add(new JLabel("\nNew High Score!!!"));
+        if(highScore) panel.add(new JLabel("\nNew High Score!!!"));
         panel.add(new JLabel("Name:"));
 
         /* Creating the text field */
@@ -111,7 +109,7 @@ public class TH_Game extends Thread {
         }
     }
 
-    private void highScore(){
+    private boolean highScore(){
         ArrayList<Integer> scores = new ArrayList<>();
         ArrayList<String> text = Utils.read("Resources/HighScore");
 
@@ -119,7 +117,7 @@ public class TH_Game extends Thread {
             scores.add(Integer.valueOf(s.split(";")[1]));
         }
 
-        isHighScore = scores.isEmpty() || sceneManager.getPlayer().getDistanceTraveled() > Collections.max(scores);
+        return scores.isEmpty() || sceneManager.getPlayer().getDistanceTraveled() > Collections.max(scores);
     }
 
     /**
@@ -129,6 +127,5 @@ public class TH_Game extends Thread {
         this.sceneManager = sceneManager;
         this.turn = new TH_KeyManager(sceneManager.getKeyManager(), sceneManager.getPlayer());
         this.scroll = new TH_Scrolling(sceneManager.getRoad(), sceneManager.getPlayer());
-        this.isHighScore = false;
     }
 }
