@@ -82,7 +82,7 @@ public class Player {
     /**
      * The timer
      */
-    private int timer = 60;
+    private int timer = 0;
 
     /**
      * X offset of the player

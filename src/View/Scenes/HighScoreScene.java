@@ -3,6 +3,7 @@ package View.Scenes;
 import View.Gfx.Assets;
 import View.UiObjects.Button;
 import View.UiObjects.UiObjectManager;
+import View.Utils.ReadFile;
 import View.Utils.Text;
 
 import java.awt.*;
@@ -37,24 +38,12 @@ public class HighScoreScene extends Scene {
         /* Drawing the back ground */
         g.drawImage(Assets.menuBg, 0, 0, Scene.WIDTH, Scene.HEIGHT, null);
 
-        ArrayList<String> text = new ArrayList<>();
-
-        /* Reading the high score file */
-        try {
-            File file = new File("Resources/HighScore.fal");
-            FileReader fileReader = new FileReader(file);
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
-            String line;
-            while ((line = bufferedReader.readLine()) != null && text.size() < MAX_HIGH_SCORES) {
-                text.add(line);
-            }
-            fileReader.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        ArrayList<String> text = ReadFile.read("Resources/HighScore");
 
         /* Printing the high scores */
         for (int i = 0; i < text.size(); i++) {
+            String[] parts = text.get(i).split(";");
+            text.set(i, parts[0] + ".".repeat(Math.max(0, HIGH_SCORE_LENGTH - (parts[0].length() + parts[1].length()))) + parts[1]);
             Text.drawString(g, text.get(i), WIDTH / 2, HEIGHT * (i + 2) / 9, true, Color.lightGray, Assets.charybdis40);
         }
 
