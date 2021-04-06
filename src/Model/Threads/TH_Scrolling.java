@@ -23,9 +23,11 @@ public class TH_Scrolling extends Thread {
     @Override
     public void run() {
         long start = System.nanoTime();
-        while (!player.timedOut()) {
+        while (!player.timedOut() && player.getLives() != 0) {
             //noinspection StatementWithEmptyBody
-            while (System.nanoTime() - start < player.calculateSleep()) ;
+            while (System.nanoTime() - start < player.calculateSleep()){
+
+            }
             start = System.nanoTime();
             /* Update the road */
             if (player.getSpeed() > 0) road.update();

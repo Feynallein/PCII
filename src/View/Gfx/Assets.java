@@ -35,7 +35,7 @@ public class Assets {
     /**
      * The charybdis font at size 40
      */
-    public static final Font charybdis25 = FontLoader.loadFont("Resources/Others/charybdis.ttf", 40);
+    public static final Font charybdisItalic40 = FontLoader.loadFont("Resources/Fonts/charybdis.ttf", 40, true);
 
     /**
      * Anchor of the needle's sprite
@@ -81,6 +81,11 @@ public class Assets {
      * Menu background's sprite
      */
     public static BufferedImage menuBg;
+
+    /**
+     * Life's sprite
+     */
+    public static BufferedImage life;
 
     /**
      * Play button's array of sprites
@@ -159,7 +164,8 @@ public class Assets {
         speed_counter = ImageLoader.loadImage("/Textures/speed_counter.png");
         needle = ImageLoader.loadImage("/Textures/needle.png");
         menuBg = ImageLoader.loadImage("/Textures/menu_bg.jpg");
-        start= ImageLoader.loadImage("/Textures/Gate_start.png");
+        start = ImageLoader.loadImage("/Textures/Gate_start.png");
+        life = ImageLoader.loadImage("/Textures/Lives.png");
     }
 
     /**

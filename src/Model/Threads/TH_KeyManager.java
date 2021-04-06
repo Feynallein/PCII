@@ -22,7 +22,7 @@ public class TH_KeyManager extends Thread {
      */
     @Override
     public void run() {
-        while (!player.timedOut()) {
+        while (!player.timedOut() && player.getLives() != 0) {
             try {
                 // Updating at game's speed
                 //noinspection BusyWait

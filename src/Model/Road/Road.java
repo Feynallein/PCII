@@ -1,6 +1,7 @@
 package Model.Road;
 
 import Model.Player;
+import Model.Threads.TH_Game;
 import View.Gfx.Assets;
 import View.Scenes.GameScene;
 import View.Scenes.Scene;
@@ -47,7 +48,7 @@ public class Road {
     /**
      * Const : the max number of obstacles at the same time
      */
-    public final static int MAX_OBSTACLES = 4;
+    public final static int MAX_OBSTACLES = 10;
 
     /**
      * Hashmap of the different objects that compose the road
@@ -189,17 +190,16 @@ public class Road {
 
                 /* Losing a life */
                 player.loseLife();
-                //Todo: half speed
+                player.halfSpeed();
                 break;
             }
         }
 
         /* Deciding if there is a turn (random) */
         if (!turningLeft && !turningRight && iterator == null && road.get(road.size() - 1).getXOffset() == 0) {
-            int randomInteger = random.nextInt(1000); //todo: 1000 a changer (bcp incr)
-            if (randomInteger < 1) turningRight = true;
-            else if (randomInteger < 2) turningLeft = true;//todo: temp, remettre a true!!
-            //todo: val a changer
+            int randomInteger = random.nextInt(1000 * TH_Game.GAME_SPEED);
+            if (randomInteger < 2) turningRight = true;
+            else if (randomInteger < 4) turningLeft = true;
         }
 
         /* Updating the iterators and the booleans */
@@ -221,7 +221,7 @@ public class Road {
             road.add(c);
 
             /* Adding a new obstacle (random) if the last curb doesn't have one*/
-            if (random.nextInt(100) < 15 && obstacles.size() < MAX_OBSTACLES && !hasObstacle) {//todo: tweak values
+            if (random.nextInt(100) < 15 && obstacles.size() < MAX_OBSTACLES && !hasObstacle) {
                 obstacles.add(new Obstacle(Assets.obstacles[random.nextInt(Assets.obstacles.length)], c));
                 hasObstacle = true;
             } else hasObstacle = false;

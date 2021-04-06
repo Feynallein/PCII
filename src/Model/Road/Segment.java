@@ -13,7 +13,7 @@ public class Segment {
     /**
      * Const : middle of the screen
      */
-    public final static int center = Scene.WIDTH / 2;
+    public final static int CENTER = Scene.WIDTH / 2;
 
     /**
      * The y1 (below)
@@ -63,6 +63,12 @@ public class Segment {
         double[] coefficients = new double[]{-2d * (GameScene.HORIZON - getOriginIncreased()) / (Scene.WIDTH - Road.FINAL_WIDTH),
                 -2d * (GameScene.HORIZON - getOriginDecreased()) / (Scene.WIDTH - Road.FINAL_WIDTH)};
 
+//        this.widths = new int[]{(int) (((this.y1 - getOriginDecreased()) / coefficients[1]) + Road.INITIAL_WIDTH),
+//                (int) (((this.y1 - getOriginIncreased()) / coefficients[0]) + Road.INITIAL_WIDTH),
+//                (int) (((this.y2 - getOriginIncreased()) / coefficients[0]) + Road.INITIAL_WIDTH),
+//                (int) (((this.y2 - getOriginDecreased()) / coefficients[1]) + Road.INITIAL_WIDTH)
+//        };
+
         this.widths = new int[]{(int) (((this.y1 - getOriginDecreased()) / coefficients[1]) + Road.INITIAL_WIDTH),
                 (int) (((this.y1 - getOriginIncreased()) / coefficients[0]) + Road.INITIAL_WIDTH),
                 (int) (((this.y2 - getOriginIncreased()) / coefficients[0]) + Road.INITIAL_WIDTH),
@@ -105,7 +111,7 @@ public class Segment {
      * @return array list of x to get the bounds of this segment
      */
     public int[] getX() {
-        return new int[]{center - widths[0] + xOffset, center + widths[1] + xOffset, center + widths[2] + xOffset, center - widths[3] + xOffset};
+        return new int[]{CENTER - widths[0] + xOffset, CENTER + widths[1] + xOffset, CENTER + widths[2] + xOffset, CENTER - widths[3] + xOffset};
     }
 
     public int[] getWidths() {

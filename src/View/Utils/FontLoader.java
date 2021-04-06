@@ -16,10 +16,11 @@ public class FontLoader {
      * @param size the desired size of the font
      * @return the loaded font
      */
-    public static Font loadFont(String path, int size) {
+    public static Font loadFont(String path, int size, boolean italic) {
         try {
             /* Load the font */
-            return Font.createFont(Font.TRUETYPE_FONT, new BufferedInputStream(new FileInputStream(path))).deriveFont(Font.PLAIN, size);
+            if(italic) return Font.createFont(Font.TRUETYPE_FONT, new BufferedInputStream(new FileInputStream(path))).deriveFont(Font.ITALIC, size);
+            else return Font.createFont(Font.TRUETYPE_FONT, new BufferedInputStream(new FileInputStream(path))).deriveFont(Font.PLAIN, size);
         } catch (FontFormatException | IOException e) {
             /* Print the error on the error output and exit the program with the status -1 */
             e.printStackTrace();

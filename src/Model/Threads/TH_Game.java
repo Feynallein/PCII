@@ -37,7 +37,7 @@ public class TH_Game extends Thread {
         turn.start(); // Key manager
         scroll.start(); // Scrolling
 
-        while (!sceneManager.getPlayer().timedOut()) {
+        while (!sceneManager.getPlayer().timedOut() && sceneManager.getPlayer().getLives() != 0) {
             try {
                 //noinspection BusyWait
                 sleep(GAME_SPEED);
@@ -48,7 +48,6 @@ public class TH_Game extends Thread {
             sceneManager.getPlayer().addDistanceTraveled(); // Update the total distance traveled
         }
 
-        // temp
         lose();
     }
 
@@ -56,8 +55,11 @@ public class TH_Game extends Thread {
      * What to do when losing
      */
     private void lose() {
-        //todo: changer le msg et la conditoin d'arrête des threards
-        JOptionPane.showMessageDialog(sceneManager.getDisplay(), "Timed Out!\nDistance traveled : " + sceneManager.getPlayer().getDistanceTraveled() + " meters", "", JOptionPane.ERROR_MESSAGE);
+        String msg;
+        if(sceneManager.getPlayer().getLives() == 0) msg = "No more lives!";
+        else msg = "Timed Out!\nDistance traveled : " + sceneManager.getPlayer().getDistanceTraveled() + " meters";
+
+        JOptionPane.showMessageDialog(sceneManager.getDisplay(), msg, "Game Over", JOptionPane.ERROR_MESSAGE);
 
         // Quitter
         System.exit(0);

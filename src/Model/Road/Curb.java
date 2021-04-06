@@ -252,4 +252,8 @@ public class Curb {
     public int getXOffset() {
         return xOffset;
     }
+
+    public int getMiddleXLeftOffset(){
+        return seg.size() > 0 ? seg.get(seg.size() / 2).getX()[1] : 0;
+    }
 }

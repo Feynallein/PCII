@@ -254,6 +254,13 @@ public class Player {
     }
 
     /**
+     * Half the speed
+     */
+    public void halfSpeed(){
+        speed = speed/2;
+    }
+
+    /**
      * Getter for the speed
      *
      * @return the speed
