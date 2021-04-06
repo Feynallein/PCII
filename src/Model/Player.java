@@ -82,7 +82,7 @@ public class Player {
     /**
      * The timer
      */
-    private int timer = 0;
+    private int timer = Road.GATE_ADDING_TIME;
 
     /**
      * X offset of the player

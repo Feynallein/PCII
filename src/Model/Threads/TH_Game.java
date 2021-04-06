@@ -3,12 +3,12 @@ package Model.Threads;
 import View.Scenes.HighScoreScene;
 import View.Scenes.MenuScene;
 import View.Scenes.SceneManager;
-import View.Utils.ReadFile;
+import View.Utils.Utils;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 /**
@@ -36,7 +36,6 @@ public class TH_Game extends Thread {
     private final SceneManager sceneManager;
 
     private boolean isHighScore;
-    private boolean isInHighScore;
 
     /**
      * Repaint the entire screen
@@ -93,15 +92,7 @@ public class TH_Game extends Thread {
         int a = JOptionPane.showOptionDialog(sceneManager.getDisplay(), panel, "Game Over",
                 JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, buttons, null);
 
-        if(isInHighScore) {
-            try {
-                FileWriter fileWriter = new FileWriter("Resources/HighScore", true);
-                fileWriter.write(textField.getText() + ";" + sceneManager.getPlayer().getDistanceTraveled() + "\n");
-                fileWriter.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+        Utils.writeHighScore("Resources/HighScore", textField.getText(), sceneManager.getPlayer().getDistanceTraveled());
 
         (new TH_Handler(sceneManager)).start();
 
@@ -122,14 +113,13 @@ public class TH_Game extends Thread {
 
     private void highScore(){
         ArrayList<Integer> scores = new ArrayList<>();
-        ArrayList<String> text = ReadFile.read("Resources/HighScore");
+        ArrayList<String> text = Utils.read("Resources/HighScore");
 
         for(String s: text){
             scores.add(Integer.valueOf(s.split(";")[1]));
         }
 
-        isInHighScore = scores.size() < HighScoreScene.MAX_HIGH_SCORES || sceneManager.getPlayer().getDistanceTraveled() > scores.get(scores.size() - 1);
-        isHighScore = scores.isEmpty() || sceneManager.getPlayer().getDistanceTraveled() > scores.get(0);
+        isHighScore = scores.isEmpty() || sceneManager.getPlayer().getDistanceTraveled() > Collections.max(scores);
     }
 
     /**
@@ -140,6 +130,5 @@ public class TH_Game extends Thread {
         this.turn = new TH_KeyManager(sceneManager.getKeyManager(), sceneManager.getPlayer());
         this.scroll = new TH_Scrolling(sceneManager.getRoad(), sceneManager.getPlayer());
         this.isHighScore = false;
-        this.isInHighScore = false;
     }
 }
