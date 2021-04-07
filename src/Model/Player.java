@@ -55,7 +55,7 @@ public class Player {
     private static final int MAX_LIVES = 5;
 
     /**
-     * Const : the maximum turning position
+     * Const : the maximum turning position (not used)
      */
     private static final int MAX_TURNING_POSITION = 50;
 
@@ -192,7 +192,7 @@ public class Player {
      * Calculate the animation frame
      */
     private void anim() {
-        /* Divided by 1000000 convert in secs instead of nanoseconds */
+        /* Divided by 1000000 convert in secs from nanoseconds */
         long setup = calculateSleep() / 1000000;
         clock++;
         if (clock > setup) {
@@ -236,7 +236,7 @@ public class Player {
         // Divided by 3.6 to get m/s therefore the distance traveled is in meters
         // Clock to update this only every seconds, not as every tick (1 tick = 16 milliseconds)
 
-        // Superior at 1000 millis
+        // Superior at 1000 millis (= 1 sec)
         if (accumulatedTime >= 1000) {
             distanceTraveled += Math.floor(speed / 3.6);
             accumulatedTime = 0;
@@ -256,8 +256,8 @@ public class Player {
     /**
      * Half the speed
      */
-    public void halfSpeed(){
-        speed = speed/2;
+    public void halfSpeed() {
+        speed = speed / 2;
     }
 
     /**

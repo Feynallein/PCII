@@ -25,7 +25,7 @@ public class TH_Scrolling extends Thread {
         long start = System.nanoTime();
         while (!player.timedOut() && player.getLives() != 0) {
             //noinspection StatementWithEmptyBody
-            while (System.nanoTime() - start < player.calculateSleep()){
+            while (System.nanoTime() - start < player.calculateSleep()) {
 
             }
             start = System.nanoTime();

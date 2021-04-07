@@ -39,6 +39,9 @@ public class Obstacle {
      */
     private int height;
 
+    /**
+     * Last x position of the curb
+     */
     private int lastX;
 
     /**
@@ -52,7 +55,7 @@ public class Obstacle {
         this.curb = c;
         this.width = c.getMiddleFullWidth() / 2;
         this.height = this.width / 2;
-        this.x = (new Random()).nextInt(((Scene.WIDTH + c.getMiddleFullWidth())/2) - ((Scene.WIDTH - c.getMiddleFullWidth())/2)) + (Scene.WIDTH - c.getMiddleFullWidth() )/ 2;
+        this.x = (new Random()).nextInt(((Scene.WIDTH + c.getMiddleFullWidth()) / 2) - ((Scene.WIDTH - c.getMiddleFullWidth()) / 2)) + (Scene.WIDTH - c.getMiddleFullWidth()) / 2;
         this.x += curb.getXOffset();
         this.y = c.getMeanY();
         this.lastX = x;
@@ -65,10 +68,9 @@ public class Obstacle {
         y = curb.getMeanY();
         width = curb.getMiddleFullWidth() / 2;
         height = (int) (width * 0.6);
-        if(x < Scene.WIDTH/2) {
+        if (x < Scene.WIDTH / 2) {
             x += curb.getMiddleX() - lastX;
-        }
-        else {
+        } else {
             x += curb.getMiddleXLeftOffset() - lastX;
         }
         lastX = x;

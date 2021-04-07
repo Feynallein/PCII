@@ -86,11 +86,6 @@ public class GameScene extends Scene {
 
         /* Draw the lives */
         drawLives(g);
-
-        /* TEMPORARY with those bad graphics : */
-
-        //Lives
-//        Text.drawString(g, Integer.toString(player.getLives()), 20, 20, true, Color.WHITE, Assets.charybdis40);
     }
 
     /**

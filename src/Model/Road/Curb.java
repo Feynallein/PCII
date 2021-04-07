@@ -253,7 +253,12 @@ public class Curb {
         return xOffset;
     }
 
-    public int getMiddleXLeftOffset(){
+    /**
+     * Getter to second (right) x of the curb at the middle
+     *
+     * @return the middle right of the curb
+     */
+    public int getMiddleXLeftOffset() {
         return seg.size() > 0 ? seg.get(seg.size() / 2).getX()[1] : 0;
     }
 }

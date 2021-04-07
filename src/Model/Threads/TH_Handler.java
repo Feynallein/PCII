@@ -2,8 +2,6 @@ package Model.Threads;
 
 import View.Scenes.*;
 
-import java.awt.*;
-
 /**
  * Class Th_Handler
  */
@@ -21,7 +19,7 @@ public class TH_Handler extends Thread {
         long start = System.nanoTime();
         while (sceneManager.getCurrentScene() instanceof MenuScene || sceneManager.getCurrentScene() instanceof CreditsScene || sceneManager.getCurrentScene() instanceof HighScoreScene) {
             //noinspection StatementWithEmptyBody
-            while (System.nanoTime() - start < 100000000){
+            while (System.nanoTime() - start < 100000000) {
 
             }
             sceneManager.repaint();

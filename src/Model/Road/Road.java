@@ -41,7 +41,7 @@ public class Road {
     public final static int TURNING_SPEED = 10;
 
     /**
-     * Const : Distance between two gates
+     * Const : Distance between two gates : 3km
      */
     public final static int DISTANCE_BW_GATES = 3000;
 

@@ -63,12 +63,6 @@ public class Segment {
         double[] coefficients = new double[]{-2d * (GameScene.HORIZON - getOriginIncreased()) / (Scene.WIDTH - Road.FINAL_WIDTH),
                 -2d * (GameScene.HORIZON - getOriginDecreased()) / (Scene.WIDTH - Road.FINAL_WIDTH)};
 
-//        this.widths = new int[]{(int) (((this.y1 - getOriginDecreased()) / coefficients[1]) + Road.INITIAL_WIDTH),
-//                (int) (((this.y1 - getOriginIncreased()) / coefficients[0]) + Road.INITIAL_WIDTH),
-//                (int) (((this.y2 - getOriginIncreased()) / coefficients[0]) + Road.INITIAL_WIDTH),
-//                (int) (((this.y2 - getOriginDecreased()) / coefficients[1]) + Road.INITIAL_WIDTH)
-//        };
-
         this.widths = new int[]{(int) (((this.y1 - getOriginDecreased()) / coefficients[1]) + Road.INITIAL_WIDTH),
                 (int) (((this.y1 - getOriginIncreased()) / coefficients[0]) + Road.INITIAL_WIDTH),
                 (int) (((this.y2 - getOriginIncreased()) / coefficients[0]) + Road.INITIAL_WIDTH),

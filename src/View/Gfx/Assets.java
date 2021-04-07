@@ -131,7 +131,7 @@ public class Assets {
         highScore = new BufferedImage[3];
         credits = new BufferedImage[3];
         quit = new BufferedImage[3];
-        mainMenu = new  BufferedImage[3];
+        mainMenu = new BufferedImage[3];
         obstacles = new BufferedImage[1];
 
         /* Loading sprites sheets */

@@ -1,6 +1,5 @@
 package Model.Threads;
 
-import View.Scenes.HighScoreScene;
 import View.Scenes.MenuScene;
 import View.Scenes.SceneManager;
 import View.Utils.Utils;
@@ -69,7 +68,7 @@ public class TH_Game extends Thread {
         JPanel panel = new JPanel();
 
         int row = 4;
-        if(highScore) row++;
+        if (highScore) row++;
 
         panel.setLayout(new GridLayout(row, 1));
 
@@ -78,7 +77,7 @@ public class TH_Game extends Thread {
         else panel.add(new JLabel("Timed Out!"));
 
         panel.add(new JLabel("\nScore: " + sceneManager.getPlayer().getDistanceTraveled() + " meters"));
-        if(highScore) panel.add(new JLabel("\nNew High Score!!!"));
+        if (highScore) panel.add(new JLabel("\nNew High Score!!!"));
         panel.add(new JLabel("Name:"));
 
         /* Creating the text field */
@@ -109,11 +108,16 @@ public class TH_Game extends Thread {
         }
     }
 
-    private boolean highScore(){
+    /**
+     * Return true if it's the new high score
+     *
+     * @return true if it's the new high score
+     */
+    private boolean highScore() {
         ArrayList<Integer> scores = new ArrayList<>();
         ArrayList<String> text = Utils.read("Resources/HighScore");
 
-        for(String s: text){
+        for (String s : text) {
             scores.add(Integer.valueOf(s.split(";")[1]));
         }
 

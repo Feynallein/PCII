@@ -33,6 +33,7 @@ public class MenuScene extends Scene {
         /* Play button */
         uiObjectManager.addObject(new Button((Scene.WIDTH - (int) (Assets.play[0].getWidth() * Assets.SCALING)) / 2, Scene.HEIGHT * 4 / 8,
                 Assets.play[0].getWidth(), Assets.play[0].getHeight(), Assets.play, () -> {
+            sceneManager.setUiObjectManager(null);
             sceneManager.newGameScene();
             sceneManager.setCurrentScene(sceneManager.getGameScene());
         }));
