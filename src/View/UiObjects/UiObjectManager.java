@@ -29,13 +29,6 @@ public class UiObjectManager {
     }
 
     /**
-     * Empty the array
-     */
-    public void clear() {
-        uiObjects.clear();
-    }
-
-    /**
      * Paint every UiObjects of the array
      *
      * @param g the graphics

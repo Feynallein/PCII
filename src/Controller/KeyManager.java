@@ -99,15 +99,4 @@ public class KeyManager implements KeyListener {
             return;
         keys[e.getKeyCode()] = false;
     }
-
-    /* GETTER */
-
-    /**
-     * Return true if the player is turning either left or right
-     *
-     * @return if turning left or right
-     */
-    public boolean isTurning() {
-        return left || right;
-    }
 }

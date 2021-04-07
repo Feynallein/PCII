@@ -25,7 +25,7 @@ public abstract class UiObject {
     protected final int width;
 
     /**
-     * the hight
+     * the height
      */
     protected final int height;
 
@@ -67,7 +67,7 @@ public abstract class UiObject {
     /**
      * Painting method
      *
-     * @param g the grpahics
+     * @param g the graphics
      */
     public abstract void paint(Graphics g);
 

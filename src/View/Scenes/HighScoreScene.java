@@ -60,9 +60,7 @@ public class HighScoreScene extends Scene {
     private void initialize() {
         /* Main menu button */
         uiObjectManager.addObject(new Button((Scene.WIDTH - (int) (Assets.mainMenu[0].getWidth() * Assets.SCALING)) / 2, Scene.HEIGHT * 7 / 8,
-                Assets.mainMenu[0].getWidth(), Assets.mainMenu[0].getHeight(), Assets.mainMenu, () -> {
-            sceneManager.setCurrentScene(new MenuScene(sceneManager));
-        }));
+                Assets.mainMenu[0].getWidth(), Assets.mainMenu[0].getHeight(), Assets.mainMenu, () -> sceneManager.setCurrentScene(new MenuScene(sceneManager))));
     }
 
     @Override

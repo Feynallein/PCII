@@ -48,11 +48,6 @@ public class Assets {
     public static final float[] needleAnchor = new float[]{154, 154};
 
     /**
-     * Anchor of the player's sprite
-     */
-    public static final float[] playerAnchor = new float[]{player_img_width / 2f, player_img_height};
-
-    /**
      * Player's array of sprite
      */
     public static BufferedImage[][] player;
